@@ -291,5 +291,5 @@ D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\net10.0\BouncyCastle.Cryptography.dll
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\net10.0\MailKit.dll
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\net10.0\MimeKit.dll
-D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\yu5kgsgupn-{0}-qytdajgrv0-qytdajgrv0.gz
-D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\zb7davj24w-{0}-g85k5osgqd-g85k5osgqd.gz
+D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\yu5kgsgupn-{0}-871sy0pmlu-871sy0pmlu.gz
+D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\zb7davj24w-{0}-7dqio4084v-7dqio4084v.gz

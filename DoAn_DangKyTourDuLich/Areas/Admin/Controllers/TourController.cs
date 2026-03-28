@@ -1,9 +1,9 @@
+using DoAn_DangKyTourDuLich.Data;
+using DoAn_DangKyTourDuLich.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DoAn_DangKyTourDuLich.Data;
-using DoAn_DangKyTourDuLich.Models;
 
 namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 {
@@ -20,7 +20,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             _env = env;
         }
 
-        // GET: Admin/Tour
         public async Task<IActionResult> Index(string? keyword, int? categoryId)
         {
             var query = _context.Tours.Include(t => t.Category).AsQueryable();
@@ -45,7 +44,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(tours);
         }
 
-        // GET: Admin/Tour/Create
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = new SelectList(
@@ -54,16 +52,16 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/Tour/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Tour tour, IFormFile? imageFile)
+        public async Task<IActionResult> Create(Tour tour, List<IFormFile>? imageFiles)
         {
             if (ModelState.IsValid)
             {
-                if (imageFile != null && imageFile.Length > 0)
+                var savedImages = await SaveImages(imageFiles);
+                if (savedImages.Count > 0)
                 {
-                    tour.ImageUrl = await SaveImage(imageFile);
+                    tour.SetGalleryImages(savedImages);
                 }
 
                 tour.CreatedAt = DateTime.Now;
@@ -79,11 +77,13 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(tour);
         }
 
-        // GET: Admin/Tour/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var tour = await _context.Tours.FindAsync(id);
-            if (tour == null) return NotFound();
+            if (tour == null)
+            {
+                return NotFound();
+            }
 
             ViewBag.Categories = new SelectList(
                 await _context.Categories.Where(c => c.IsActive).OrderBy(c => c.DisplayOrder).ToListAsync(),
@@ -91,34 +91,42 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(tour);
         }
 
-        // POST: Admin/Tour/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Tour tour, IFormFile? imageFile)
+        public async Task<IActionResult> Edit(int id, Tour tour, List<IFormFile>? imageFiles)
         {
-            if (id != tour.Id) return NotFound();
+            if (id != tour.Id)
+            {
+                return NotFound();
+            }
 
             if (ModelState.IsValid)
             {
                 var existingTour = await _context.Tours.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
-                if (existingTour == null) return NotFound();
-
-                if (imageFile != null && imageFile.Length > 0)
+                if (existingTour == null)
                 {
-                    // Xóa ảnh cũ nếu có
-                    if (!string.IsNullOrEmpty(existingTour.ImageUrl))
+                    return NotFound();
+                }
+
+                var savedImages = await SaveImages(imageFiles);
+                if (savedImages.Count > 0)
+                {
+                    foreach (var imageUrl in existingTour.GalleryImages)
                     {
-                        DeleteImage(existingTour.ImageUrl);
+                        DeleteImage(imageUrl);
                     }
-                    tour.ImageUrl = await SaveImage(imageFile);
+
+                    tour.SetGalleryImages(savedImages);
                 }
                 else
                 {
                     tour.ImageUrl = existingTour.ImageUrl;
+                    tour.ImageUrlsData = existingTour.ImageUrlsData;
                 }
 
-                tour.UpdatedAt = DateTime.Now;
                 tour.CreatedAt = existingTour.CreatedAt;
+                tour.UpdatedAt = DateTime.Now;
+
                 _context.Update(tour);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Cập nhật tour thành công!";
@@ -131,28 +139,33 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(tour);
         }
 
-        // GET: Admin/Tour/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var tour = await _context.Tours
                 .Include(t => t.Category)
                 .FirstOrDefaultAsync(t => t.Id == id);
-            if (tour == null) return NotFound();
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
             return View(tour);
         }
 
-        // POST: Admin/Tour/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var tour = await _context.Tours.FindAsync(id);
-            if (tour == null) return NotFound();
-
-            // Xóa ảnh
-            if (!string.IsNullOrEmpty(tour.ImageUrl))
+            if (tour == null)
             {
-                DeleteImage(tour.ImageUrl);
+                return NotFound();
+            }
+
+            foreach (var imageUrl in tour.GalleryImages)
+            {
+                DeleteImage(imageUrl);
             }
 
             _context.Tours.Remove(tour);
@@ -161,25 +174,40 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Helper: lưu ảnh
+        private async Task<List<string>> SaveImages(List<IFormFile>? files)
+        {
+            var savedImages = new List<string>();
+
+            if (files == null || files.Count == 0)
+            {
+                return savedImages;
+            }
+
+            foreach (var file in files.Where(file => file.Length > 0))
+            {
+                savedImages.Add(await SaveImage(file));
+            }
+
+            return savedImages;
+        }
+
         private async Task<string> SaveImage(IFormFile file)
         {
             var uploadsDir = Path.Combine(_env.WebRootPath, "images", "tours");
             if (!Directory.Exists(uploadsDir))
+            {
                 Directory.CreateDirectory(uploadsDir);
+            }
 
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadsDir, fileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
 
             return "/images/tours/" + fileName;
         }
 
-        // Helper: xóa ảnh
         private void DeleteImage(string imageUrl)
         {
             var filePath = Path.Combine(_env.WebRootPath, imageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));

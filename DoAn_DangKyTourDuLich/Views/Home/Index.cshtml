@@ -7,9 +7,11 @@
 
 <!-- Hero Section -->
 <section class="hero-section">
+    <div class="hero-orb hero-orb--one"></div>
+    <div class="hero-orb hero-orb--two"></div>
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-7 fade-in-up">
+            <div class="col-lg-7 fade-in-up" data-reveal="left">
                 <h1>Khám Phá Việt Nam<br/>Cùng Chúng Tôi</h1>
                 <p class="lead mb-4">Đặt tour du lịch trực tuyến nhanh chóng, an toàn. Hàng trăm tour hấp dẫn đang chờ bạn khám phá!</p>
                 <a asp-controller="Tour" asp-action="Index" class="btn btn-lg btn-secondary-custom me-3">
@@ -17,7 +19,7 @@
                 </a>
             </div>
             <div class="col-lg-5 mt-4 mt-lg-0">
-                <div class="search-box fade-in-up">
+                <div class="search-box fade-in-up glass-panel" data-reveal="right">
                     <h5 class="text-white mb-3"><i class="fas fa-search me-2"></i>Tìm kiếm Tour</h5>
                     <form asp-controller="Tour" asp-action="Index" method="get">
                         <div class="mb-3">
@@ -45,9 +47,9 @@
 <!-- Categories Section -->
 @if (categories.Any())
 {
-    <section class="py-5">
+    <section class="py-5 section-shell">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4" data-reveal="up">
                 <h2 class="section-title">Danh Mục Tour</h2>
                 <p class="section-subtitle">Chọn loại tour phù hợp với bạn</p>
             </div>
@@ -59,7 +61,7 @@
                 {
                     var cat = categories[i];
                     var icon = i < icons.Length ? icons[i] : "fa-map";
-                    <div class="col-6 col-md-4 col-lg">
+                    <div class="col-6 col-md-4 col-lg" data-reveal="up">
                         <a asp-controller="Tour" asp-action="Index" asp-route-CategoryId="@cat.Id" class="text-decoration-none">
                             <div class="category-card">
                                 <div class="category-icon"><i class="fas @icon"></i></div>
@@ -77,16 +79,16 @@
 <!-- Featured Tours Section -->
 @if (featuredTours.Any())
 {
-    <section class="py-5 bg-white">
+    <section class="py-5 bg-white section-shell">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4" data-reveal="up">
                 <h2 class="section-title">Tour Nổi Bật</h2>
                 <p class="section-subtitle">Những tour du lịch được yêu thích nhất</p>
             </div>
             <div class="row g-4">
                 @foreach (var tour in featuredTours)
                 {
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-4" data-reveal="up">
                         <div class="tour-card card">
                             <div class="card-img-wrapper">
                                 @if (!string.IsNullOrEmpty(tour.ImageUrl))
@@ -138,29 +140,29 @@
 }
 
 <!-- Why Choose Us -->
-<section class="py-5">
+<section class="py-5 section-shell">
     <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" data-reveal="up">
             <h2 class="section-title">Tại Sao Chọn Chúng Tôi?</h2>
             <p class="section-subtitle">Dịch vụ chất lượng, trải nghiệm hoàn hảo</p>
         </div>
         <div class="row g-4">
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center feature-card-wrap" data-reveal="up">
                 <div class="mb-3"><i class="fas fa-shield-alt fa-3x text-primary"></i></div>
                 <h5 class="fw-bold">An Toàn & Uy Tín</h5>
                 <p class="text-muted small">Cam kết chất lượng dịch vụ và bảo mật thông tin</p>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center feature-card-wrap" data-reveal="up">
                 <div class="mb-3"><i class="fas fa-tags fa-3x text-success"></i></div>
                 <h5 class="fw-bold">Giá Tốt Nhất</h5>
                 <p class="text-muted small">Cam kết giá tốt nhất với nhiều ưu đãi hấp dẫn</p>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center feature-card-wrap" data-reveal="up">
                 <div class="mb-3"><i class="fas fa-headset fa-3x text-warning"></i></div>
                 <h5 class="fw-bold">Hỗ Trợ 24/7</h5>
                 <p class="text-muted small">Đội ngũ tư vấn nhiệt tình, hỗ trợ mọi lúc</p>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center feature-card-wrap" data-reveal="up">
                 <div class="mb-3"><i class="fas fa-globe fa-3x text-info"></i></div>
                 <h5 class="fw-bold">Đa Dạng Tour</h5>
                 <p class="text-muted small">Hàng trăm tour du lịch khắp cả nước và quốc tế</p>

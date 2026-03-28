@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace DoAn_DangKyTourDuLich.Models
 {
@@ -60,6 +61,9 @@ namespace DoAn_DangKyTourDuLich.Models
         [StringLength(200)]
         public string? ImageUrl { get; set; }
 
+        [Display(Name = "Danh sÃ¡ch hÃ¬nh áº£nh")]
+        public string? ImageUrlsData { get; set; }
+
         [Display(Name = "Phương tiện di chuyển")]
         [StringLength(100)]
         public string? Transportation { get; set; }
@@ -95,5 +99,60 @@ namespace DoAn_DangKyTourDuLich.Models
 
         [NotMapped]
         public decimal DisplayPrice => DiscountPrice ?? Price;
+
+        [NotMapped]
+        public List<string> GalleryImages
+        {
+            get
+            {
+                var images = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(ImageUrl))
+                {
+                    images.Add(ImageUrl);
+                }
+
+                if (string.IsNullOrWhiteSpace(ImageUrlsData))
+                {
+                    return images;
+                }
+
+                try
+                {
+                    var storedImages = JsonSerializer.Deserialize<List<string>>(ImageUrlsData) ?? new List<string>();
+                    foreach (var image in storedImages)
+                    {
+                        if (!string.IsNullOrWhiteSpace(image) && !images.Contains(image))
+                        {
+                            images.Add(image);
+                        }
+                    }
+                }
+                catch
+                {
+                    foreach (var image in ImageUrlsData.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                    {
+                        if (!images.Contains(image))
+                        {
+                            images.Add(image);
+                        }
+                    }
+                }
+
+                return images;
+            }
+        }
+
+        public void SetGalleryImages(IEnumerable<string?> imageUrls)
+        {
+            var images = imageUrls
+                .Where(url => !string.IsNullOrWhiteSpace(url))
+                .Select(url => url!.Trim())
+                .Distinct()
+                .ToList();
+
+            ImageUrl = images.FirstOrDefault();
+            ImageUrlsData = images.Count == 0 ? null : JsonSerializer.Serialize(images);
+        }
     }
 }

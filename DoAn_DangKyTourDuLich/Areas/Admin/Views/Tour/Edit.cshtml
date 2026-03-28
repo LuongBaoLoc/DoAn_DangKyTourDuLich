@@ -66,10 +66,16 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label class="form-label fw-semibold">Hình ảnh mới (để trống nếu không đổi)</label>
-                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple />
+                    <small class="text-muted d-block mb-2">Bạn có thể chọn nhiều ảnh. Nếu tải ảnh mới, bộ ảnh cũ sẽ được thay thế.</small>
+                    @if (Model.GalleryImages.Any())
                     {
-                        <small class="text-muted">Ảnh hiện tại: <img src="@Model.ImageUrl" style="width:60px;height:40px;object-fit:cover;border-radius:4px;vertical-align:middle;" /></small>
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var image in Model.GalleryImages)
+                            {
+                                <img src="@image" alt="Ảnh tour" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" />
+                            }
+                        </div>
                     }
                 </div>
                 <div class="col-12 mb-3">

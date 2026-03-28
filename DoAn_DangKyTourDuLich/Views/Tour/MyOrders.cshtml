@@ -4,11 +4,19 @@
 }
 
 <div class="container py-4">
+    <section class="page-hero page-hero--compact mb-4" data-reveal="up">
+        <div class="page-hero__content">
+            <span class="page-hero__eyebrow">Quản Lý Đặt Tour</span>
+            <h1 class="page-hero__title mb-2">Đơn Hàng Của Tôi</h1>
+            <p class="page-hero__subtitle mb-0">Theo dõi trạng thái, tổng tiền và lịch sử đặt tour trong một giao diện gọn đẹp hơn.</p>
+        </div>
+    </section>
+
     <h2 class="fw-bold mb-4"><i class="fas fa-clipboard-list text-primary me-2"></i>Đơn hàng của tôi</h2>
 
     @if (!Model.Any())
     {
-        <div class="text-center py-5">
+        <div class="text-center py-5 empty-state panel-card" data-reveal="up">
             <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
             <h5 class="text-muted">Bạn chưa có đơn hàng nào</h5>
             <a asp-controller="Tour" asp-action="Index" class="btn btn-primary mt-3">
@@ -18,8 +26,8 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-hover align-middle bg-white shadow-sm" style="border-radius: var(--radius); overflow: hidden;">
+        <div class="table-responsive panel-card order-table-wrap" data-reveal="up">
+            <table class="table table-hover align-middle bg-white shadow-sm order-table" style="border-radius: var(--radius); overflow: hidden;">
                 <thead class="table-primary">
                     <tr>
                         <th>Mã đơn</th>
