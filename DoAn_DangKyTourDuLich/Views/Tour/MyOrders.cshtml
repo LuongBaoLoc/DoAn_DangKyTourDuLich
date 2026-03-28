@@ -1,0 +1,75 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+}
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4"><i class="fas fa-clipboard-list text-primary me-2"></i>Đơn hàng của tôi</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
+            <h5 class="text-muted">Bạn chưa có đơn hàng nào</h5>
+            <a asp-controller="Tour" asp-action="Index" class="btn btn-primary mt-3">
+                <i class="fas fa-search me-1"></i>Khám phá Tour ngay
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle bg-white shadow-sm" style="border-radius: var(--radius); overflow: hidden;">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Tour</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td><strong class="text-primary">@order.OrderCode</strong></td>
+                            <td>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <div class="mb-1">@item.Tour?.Name</div>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <div>@item.Quantity người</div>
+                                }
+                            </td>
+                            <td class="fw-bold text-danger">@order.TotalAmount.ToString("N0") VNĐ</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @switch (order.Status)
+                                {
+                                    case OrderStatus.Pending:
+                                        <span class="badge bg-warning text-dark badge-status">Chờ xác nhận</span>
+                                        break;
+                                    case OrderStatus.Confirmed:
+                                        <span class="badge bg-info badge-status">Đã xác nhận</span>
+                                        break;
+                                    case OrderStatus.Completed:
+                                        <span class="badge bg-success badge-status">Hoàn thành</span>
+                                        break;
+                                    case OrderStatus.Cancelled:
+                                        <span class="badge bg-danger badge-status">Đã hủy</span>
+                                        break;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

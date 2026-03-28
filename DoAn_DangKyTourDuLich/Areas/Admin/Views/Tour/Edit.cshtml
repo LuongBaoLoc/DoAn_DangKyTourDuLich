@@ -1,0 +1,102 @@
+@model Tour
+@{
+    ViewData["Title"] = "Sửa Tour";
+}
+
+<h2 class="fw-bold mb-4"><i class="fas fa-edit text-primary me-2"></i>Sửa Tour</h2>
+
+<div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CurrentParticipants" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label asp-for="Name" class="form-label fw-semibold"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="CategoryId" class="form-label fw-semibold"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="@(ViewBag.Categories as SelectList)">
+                        <option value="">-- Chọn danh mục --</option>
+                    </select>
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="ShortDescription" class="form-label fw-semibold"></label>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="DetailDescription" class="form-label fw-semibold"></label>
+                    <textarea asp-for="DetailDescription" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Price" class="form-label fw-semibold"></label>
+                    <input asp-for="Price" class="form-control" type="number" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="DiscountPrice" class="form-label fw-semibold"></label>
+                    <input asp-for="DiscountPrice" class="form-control" type="number" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Duration" class="form-label fw-semibold"></label>
+                    <input asp-for="Duration" class="form-control" type="number" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="DepartureLocation" class="form-label fw-semibold"></label>
+                    <input asp-for="DepartureLocation" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Destination" class="form-label fw-semibold"></label>
+                    <input asp-for="Destination" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="DepartureDate" class="form-label fw-semibold"></label>
+                    <input asp-for="DepartureDate" class="form-control" type="date" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="MaxParticipants" class="form-label fw-semibold"></label>
+                    <input asp-for="MaxParticipants" class="form-control" type="number" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Transportation" class="form-label fw-semibold"></label>
+                    <input asp-for="Transportation" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-semibold">Hình ảnh mới (để trống nếu không đổi)</label>
+                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <small class="text-muted">Ảnh hiện tại: <img src="@Model.ImageUrl" style="width:60px;height:40px;object-fit:cover;border-radius:4px;vertical-align:middle;" /></small>
+                    }
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="Schedule" class="form-label fw-semibold"></label>
+                    <textarea asp-for="Schedule" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-check">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label asp-for="IsActive" class="form-check-label">Hiển thị tour</label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-check">
+                        <input asp-for="IsFeatured" class="form-check-input" />
+                        <label asp-for="IsFeatured" class="form-check-label">Tour nổi bật</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Cập nhật</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

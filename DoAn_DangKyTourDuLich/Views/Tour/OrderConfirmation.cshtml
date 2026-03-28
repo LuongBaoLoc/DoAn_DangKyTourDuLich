@@ -1,0 +1,78 @@
+@model Order
+@{
+    ViewData["Title"] = "Đặt tour thành công";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm text-center" style="border-radius: var(--radius);">
+                <div class="card-body p-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                    </div>
+                    <h2 class="fw-bold text-success mb-2">Đặt Tour Thành Công!</h2>
+                    <p class="text-muted fs-5">Cảm ơn bạn đã đặt tour. Chúng tôi sẽ liên hệ xác nhận sớm nhất!</p>
+
+                    <div class="bg-light p-4 rounded mt-4 text-start">
+                        <div class="row mb-2">
+                            <div class="col-5 fw-semibold text-muted">Mã đơn hàng:</div>
+                            <div class="col-7 fw-bold text-primary fs-5">@Model.OrderCode</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 fw-semibold text-muted">Người đặt:</div>
+                            <div class="col-7">@Model.CustomerName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 fw-semibold text-muted">Email:</div>
+                            <div class="col-7">@Model.CustomerEmail</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 fw-semibold text-muted">Ngày đặt:</div>
+                            <div class="col-7">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <hr />
+                            <div class="row mb-2">
+                                <div class="col-5 fw-semibold text-muted">Tour:</div>
+                                <div class="col-7 fw-bold">@item.Tour?.Name</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 fw-semibold text-muted">Số lượng:</div>
+                                <div class="col-7">@item.Quantity người</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 fw-semibold text-muted">Đơn giá:</div>
+                                <div class="col-7">@item.UnitPrice.ToString("N0") VNĐ</div>
+                            </div>
+                            @if (item.Tour != null && !string.IsNullOrEmpty(item.Tour.Schedule))
+                            {
+                                <div class="mt-3 mb-2 text-start">
+                                    <h6 class="fw-semibold text-muted mb-2"><i class="fas fa-calendar-alt me-2 text-info"></i>Lịch trình:</h6>
+                                    <div class="p-3 bg-white rounded border shadow-sm small text-muted" style="max-height: 250px; overflow-y: auto;">
+                                        @Html.Raw(item.Tour.Schedule.Replace("\n", "<br/>"))
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <hr />
+                        <div class="row">
+                            <div class="col-5 fw-bold fs-5 text-start">Tổng tiền:</div>
+                            <div class="col-7 fw-bold fs-5 text-danger text-end">@Model.TotalAmount.ToString("N0") VNĐ</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a asp-controller="Tour" asp-action="MyOrders" class="btn btn-primary me-2">
+                            <i class="fas fa-list me-1"></i>Xem đơn hàng
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+                            <i class="fas fa-home me-1"></i>Về trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

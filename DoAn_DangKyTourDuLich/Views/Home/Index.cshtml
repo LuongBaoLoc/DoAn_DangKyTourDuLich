@@ -1,8 +1,170 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Trang chủ";
+    var featuredTours = ViewBag.FeaturedTours as List<Tour> ?? new List<Tour>();
+    var categories = ViewBag.Categories as List<Category> ?? new List<Category>();
+    var latestTours = ViewBag.LatestTours as List<Tour> ?? new List<Tour>();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 fade-in-up">
+                <h1>Khám Phá Việt Nam<br/>Cùng Chúng Tôi</h1>
+                <p class="lead mb-4">Đặt tour du lịch trực tuyến nhanh chóng, an toàn. Hàng trăm tour hấp dẫn đang chờ bạn khám phá!</p>
+                <a asp-controller="Tour" asp-action="Index" class="btn btn-lg btn-secondary-custom me-3">
+                    <i class="fas fa-search me-2"></i>Xem tất cả Tour
+                </a>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <div class="search-box fade-in-up">
+                    <h5 class="text-white mb-3"><i class="fas fa-search me-2"></i>Tìm kiếm Tour</h5>
+                    <form asp-controller="Tour" asp-action="Index" method="get">
+                        <div class="mb-3">
+                            <input type="text" name="Keyword" class="form-control" placeholder="Nhập điểm đến, tên tour..." />
+                        </div>
+                        <div class="mb-3">
+                            <select name="CategoryId" class="form-select">
+                                <option value="">-- Tất cả danh mục --</option>
+                                @foreach (var cat in categories)
+                                {
+                                    <option value="@cat.Id">@cat.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary-custom w-100">
+                            <i class="fas fa-search me-2"></i>Tìm kiếm
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+@if (categories.Any())
+{
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Danh Mục Tour</h2>
+                <p class="section-subtitle">Chọn loại tour phù hợp với bạn</p>
+            </div>
+            <div class="row g-4">
+                @{
+                    var icons = new[] { "fa-mountain-sun", "fa-plane", "fa-umbrella-beach", "fa-tree", "fa-landmark" };
+                }
+                @for (int i = 0; i < categories.Count; i++)
+                {
+                    var cat = categories[i];
+                    var icon = i < icons.Length ? icons[i] : "fa-map";
+                    <div class="col-6 col-md-4 col-lg">
+                        <a asp-controller="Tour" asp-action="Index" asp-route-CategoryId="@cat.Id" class="text-decoration-none">
+                            <div class="category-card">
+                                <div class="category-icon"><i class="fas @icon"></i></div>
+                                <h6 class="fw-bold text-dark">@cat.Name</h6>
+                                <small class="text-muted">@(cat.Tours?.Count ?? 0) tour</small>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Featured Tours Section -->
+@if (featuredTours.Any())
+{
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Tour Nổi Bật</h2>
+                <p class="section-subtitle">Những tour du lịch được yêu thích nhất</p>
+            </div>
+            <div class="row g-4">
+                @foreach (var tour in featuredTours)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="tour-card card">
+                            <div class="card-img-wrapper">
+                                @if (!string.IsNullOrEmpty(tour.ImageUrl))
+                                {
+                                    <img src="@tour.ImageUrl" class="card-img-top" alt="@tour.Name" />
+                                }
+                                else
+                                {
+                                    <div class="tour-img-placeholder"><i class="fas fa-image"></i></div>
+                                }
+                                @if (tour.IsFeatured)
+                                {
+                                    <span class="card-badge badge badge-featured"><i class="fas fa-star me-1"></i>Nổi bật</span>
+                                }
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="tour-info mb-2">
+                                    <span class="me-3"><i class="fas fa-map-marker-alt text-danger me-1"></i>@tour.Destination</span>
+                                    <span><i class="fas fa-clock text-primary me-1"></i>@tour.Duration ngày</span>
+                                </div>
+                                <h5 class="tour-title">
+                                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.Id" class="text-decoration-none text-dark">@tour.Name</a>
+                                </h5>
+                                <p class="tour-desc">@tour.ShortDescription</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <div>
+                                        @if (tour.DiscountPrice.HasValue)
+                                        {
+                                            <span class="tour-price-old">@tour.Price.ToString("N0")đ</span><br/>
+                                        }
+                                        <span class="tour-price">@tour.DisplayPrice.ToString("N0")đ</span>
+                                    </div>
+                                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.Id" class="btn btn-primary btn-sm">
+                                        Xem chi tiết <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="text-center mt-4">
+                <a asp-controller="Tour" asp-action="Index" class="btn btn-outline-primary btn-lg">
+                    Xem tất cả Tour <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Why Choose Us -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="section-title">Tại Sao Chọn Chúng Tôi?</h2>
+            <p class="section-subtitle">Dịch vụ chất lượng, trải nghiệm hoàn hảo</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="mb-3"><i class="fas fa-shield-alt fa-3x text-primary"></i></div>
+                <h5 class="fw-bold">An Toàn & Uy Tín</h5>
+                <p class="text-muted small">Cam kết chất lượng dịch vụ và bảo mật thông tin</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="mb-3"><i class="fas fa-tags fa-3x text-success"></i></div>
+                <h5 class="fw-bold">Giá Tốt Nhất</h5>
+                <p class="text-muted small">Cam kết giá tốt nhất với nhiều ưu đãi hấp dẫn</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="mb-3"><i class="fas fa-headset fa-3x text-warning"></i></div>
+                <h5 class="fw-bold">Hỗ Trợ 24/7</h5>
+                <p class="text-muted small">Đội ngũ tư vấn nhiệt tình, hỗ trợ mọi lúc</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="mb-3"><i class="fas fa-globe fa-3x text-info"></i></div>
+                <h5 class="fw-bold">Đa Dạng Tour</h5>
+                <p class="text-muted small">Hàng trăm tour du lịch khắp cả nước và quốc tế</p>
+            </div>
+        </div>
+    </div>
+</section>

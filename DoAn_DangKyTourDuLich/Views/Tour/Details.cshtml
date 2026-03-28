@@ -1,0 +1,276 @@
+@model Tour
+@{
+    ViewData["Title"] = Model.Name;
+    var relatedTours = ViewBag.RelatedTours as List<Tour> ?? new List<Tour>();
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Tour" asp-action="Index">Tour</a></li>
+            <li class="breadcrumb-item active">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Tour Image & Info -->
+        <div class="col-lg-8">
+            <div class="tour-detail-img mb-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" />
+                }
+                else
+                {
+                    <div class="tour-img-placeholder" style="height:400px;"><i class="fas fa-image fa-5x"></i></div>
+                }
+            </div>
+
+            <h1 class="fw-bold mb-3">@Model.Name</h1>
+
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                    <i class="fas fa-tag me-1"></i>@Model.Category?.Name
+                </span>
+                <span class="badge bg-success bg-opacity-10 text-success p-2">
+                    <i class="fas fa-clock me-1"></i>@Model.Duration ngày
+                </span>
+                <span class="badge bg-danger bg-opacity-10 text-danger p-2">
+                    <i class="fas fa-map-marker-alt me-1"></i>@Model.Destination
+                </span>
+                @if (!string.IsNullOrEmpty(Model.Transportation))
+                {
+                    <span class="badge bg-info bg-opacity-10 text-info p-2">
+                        <i class="fas fa-bus me-1"></i>@Model.Transportation
+                    </span>
+                }
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3"><i class="fas fa-info-circle text-primary me-2"></i>Mô tả</h4>
+                    <p>@Model.ShortDescription</p>
+                    @if (!string.IsNullOrEmpty(Model.DetailDescription))
+                    {
+                        <hr />
+                        <div>@Html.Raw(Model.DetailDescription?.Replace("\n", "<br/>"))</div>
+                    }
+                </div>
+            </div>
+
+            @if (true) // Wrap Thông tin thêm trong một card riêng biệt để đồng bộ UI
+            {
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+                    <div class="card-body">
+                        <h4 class="fw-bold mb-4"><i class="fas fa-calendar-alt text-primary me-2"></i>Lịch trình tour</h4>
+                        
+                        @if (!string.IsNullOrEmpty(Model.Schedule))
+                        {
+                            <div class="accordion" id="tourSchedule">
+                                @{
+                                    // Parse lịch trình theo từ khóa "Ngày" hoặc "Day"
+                                    var lines = Model.Schedule.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                                    var dayIndex = 1;
+                                    string currentHeader = "";
+                                    List<string> currentBody = new List<string>();
+
+                                    for (int i = 0; i < lines.Length; i++)
+                                    {
+                                        var line = lines[i].Trim();
+                                        if (line.StartsWith("Ngày ", StringComparison.OrdinalIgnoreCase) || line.StartsWith("Day ", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            if (!string.IsNullOrEmpty(currentHeader))
+                                            {
+                                                <div class="accordion-item border-0 mb-3 shadow-none border bg-light" style="border-radius: 8px; overflow: hidden;">
+                                                    <h2 class="accordion-header" id="heading_@dayIndex">
+                                                        <button class="accordion-button @(dayIndex == 1 ? "" : "collapsed") bg-transparent text-dark fw-bold border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@dayIndex" aria-expanded="@(dayIndex == 1 ? "true" : "false")" aria-controls="collapse_@dayIndex">
+                                                            @currentHeader
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse_@dayIndex" class="accordion-collapse collapse @(dayIndex == 1 ? "show" : "")" aria-labelledby="heading_@dayIndex" data-bs-parent="#tourSchedule">
+                                                        <div class="accordion-body bg-white border-top">
+                                                            @Html.Raw(string.Join("<br/>", currentBody))
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                dayIndex++;
+                                            }
+                                            currentHeader = line;
+                                            currentBody.Clear();
+                                        }
+                                        else
+                                        {
+                                            currentBody.Add(line);
+                                        }
+                                    }
+
+                                    // Render Ngày cuối cùng
+                                    if (!string.IsNullOrEmpty(currentHeader))
+                                    {
+                                        <div class="accordion-item border-0 mb-3 shadow-none border bg-light" style="border-radius: 8px; overflow: hidden;">
+                                            <h2 class="accordion-header" id="heading_@dayIndex">
+                                                <button class="accordion-button @(dayIndex == 1 ? "" : "collapsed") bg-transparent text-dark fw-bold border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@dayIndex" aria-expanded="@(dayIndex == 1 ? "true" : "false")" aria-controls="collapse_@dayIndex">
+                                                    @currentHeader
+                                                </button>
+                                            </h2>
+                                            <div id="collapse_@dayIndex" class="accordion-collapse collapse @(dayIndex == 1 ? "show" : "")" aria-labelledby="heading_@dayIndex" data-bs-parent="#tourSchedule">
+                                                <div class="accordion-body bg-white border-top">
+                                                    @Html.Raw(string.Join("<br/>", currentBody))
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (lines.Length > 0 && dayIndex == 1)
+                                    {
+                                        <div>@Html.Raw(Model.Schedule.Replace("\n", "<br/>"))</div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted fst-italic mb-0">Lịch trình đang được cập nhật...</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+                    <div class="card-body">
+                        <h4 class="fw-bold mb-4"><i class="fas fa-info-circle text-primary me-2"></i>Thông tin bổ sung</h4>
+                        <div class="row text-center g-4 align-items-center">
+                            <div class="col-md-4">
+                                <i class="fas fa-map-marked-alt fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Điểm tham quan</h6>
+                                <p class="text-muted small mb-0">@Model.Destination</p>
+                            </div>
+                            @if(!string.IsNullOrEmpty(Model.Transportation))
+                            {
+                                <div class="col-md-4">
+                                    <i class="fas fa-bus fa-2x text-primary mb-2"></i>
+                                    <h6 class="fw-bold">Phương tiện</h6>
+                                    <p class="text-muted small mb-0">@Model.Transportation</p>
+                                </div>
+                            }
+                            <div class="col-md-4">
+                                <i class="fas fa-tags fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Khuyến mãi</h6>
+                                <p class="text-muted small mb-0">@(Model.DiscountPrice.HasValue ? "Đã bao gồm trong giá" : "Chưa có khuyến mãi")</p>
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Thời gian lý tưởng</h6>
+                                <p class="text-muted small mb-0">Quanh năm</p>
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-utensils fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Ẩm thực</h6>
+                                <p class="text-muted small mb-0">Đặc sản địa phương</p>
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-users-cog fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Đối tượng thích hợp</h6>
+                                <p class="text-muted small mb-0">Gia đình, Bạn bè</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Booking Sidebar -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm sticky-top mb-4 p-4" style="top: 100px; border-radius: 12px;">
+                <div class="text-center mb-4">
+                    @if (Model.DiscountPrice.HasValue)
+                    {
+                        <div class="text-decoration-line-through text-muted fs-5 mb-1">@Model.Price.ToString("N0") VNĐ</div>
+                    }
+                    <div class="display-6 fw-bold mb-1" style="color: #ff6a39;">@Model.DisplayPrice.ToString("N0") VNĐ</div>
+                    <div class="text-muted small">/người</div>
+                </div>
+
+                <hr class="text-muted opacity-25 mb-4" />
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted"><i class="fas fa-plane-departure me-2 text-secondary" style="width: 20px; text-align: center;"></i>Khởi hành từ</span>
+                        <strong class="text-dark">@Model.DepartureLocation</strong>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted"><i class="fas fa-map-pin me-2 text-secondary" style="width: 20px; text-align: center;"></i>Điểm đến</span>
+                        <strong class="text-dark">@Model.Destination</strong>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted"><i class="fas fa-clock me-2 text-secondary" style="width: 20px; text-align: center;"></i>Thời gian</span>
+                        <strong class="text-dark">@Model.Duration ngày</strong>
+                    </div>
+                    @if (Model.DepartureDate.HasValue)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted"><i class="fas fa-calendar-alt me-2 text-secondary" style="width: 20px; text-align: center;"></i>Ngày khởi hành</span>
+                            <strong class="text-dark">@Model.DepartureDate.Value.ToString("dd/MM/yyyy")</strong>
+                        </div>
+                    }
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted"><i class="fas fa-users me-2 text-secondary" style="width: 20px; text-align: center;"></i>Còn chỗ</span>
+                        <strong class="@(Model.AvailableSlots <= 5 ? "text-danger" : "text-success") fs-6">
+                            @Model.AvailableSlots <span class="text-muted small fw-normal">/ @Model.MaxParticipants</span>
+                        </strong>
+                    </div>
+                </div>
+
+                @if (Model.AvailableSlots > 0)
+                {
+                    <a asp-action="Book" asp-route-id="@Model.Id" class="btn w-100 py-3 fw-bold text-white fs-5 mb-3 d-flex justify-content-center align-items-center" style="background-color: #ff6a39; border-radius: 8px; border: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                        <i class="fas fa-shopping-cart me-2"></i> Đặt Tour Ngay
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-secondary w-100 py-3 fw-bold fs-5 mb-3" disabled style="border-radius: 8px;">
+                        <i class="fas fa-ban me-2"></i> Đã Hết Chỗ
+                    </button>
+                }
+
+                <div class="text-center">
+                    <small class="text-muted"><i class="fas fa-shield-alt me-1 text-secondary"></i>Đảm bảo hoàn tiền nếu hủy trước 7 ngày</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Tours -->
+    @if (relatedTours.Any())
+    {
+        <section class="mt-5">
+            <h3 class="fw-bold mb-4"><i class="fas fa-compass text-primary me-2"></i>Tour liên quan</h3>
+            <div class="row g-4">
+                @foreach (var tour in relatedTours)
+                {
+                    <div class="col-md-6 col-lg-3">
+                        <div class="tour-card card h-100">
+                            <div class="card-img-wrapper">
+                                @if (!string.IsNullOrEmpty(tour.ImageUrl))
+                                {
+                                    <img src="@tour.ImageUrl" class="card-img-top h-100 w-100" style="object-fit: cover; min-height: 200px;" alt="@tour.Name" />
+                                }
+                                else
+                                {
+                                    <div class="tour-img-placeholder d-flex justify-content-center align-items-center" style="height:200px; background-color: #f8f9fa;"><i class="fas fa-image text-muted fa-3x"></i></div>
+                                }
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="tour-title mb-auto">
+                                    <a asp-action="Details" asp-route-id="@tour.Id" class="text-decoration-none text-dark fw-bold">@tour.Name</a>
+                                </h6>
+                                <div class="tour-price mt-3 fw-bold" style="color: #ff6a39; font-size: 1.1rem;">@tour.DisplayPrice.ToString("N0")đ</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</div>

@@ -1,0 +1,202 @@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Đặt Tour - " + Model.Tour?.Name;
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Tour" asp-action="Details" asp-route-id="@Model.TourId">@Model.Tour?.Name</a></li>
+            <li class="breadcrumb-item active">Đặt tour</li>
+        </ol>
+    </nav>
+
+    <h2 class="fw-bold mb-4"><i class="fas fa-shopping-cart text-primary me-2"></i>Đặt Tour</h2>
+
+    <form asp-action="Book" method="post">
+        <input type="hidden" asp-for="TourId" />
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-user me-2 text-primary"></i>Thông tin người đặt</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CustomerName" class="form-label fw-semibold"></label>
+                                <input asp-for="CustomerName" class="form-control" />
+                                <span asp-validation-for="CustomerName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CustomerEmail" class="form-label fw-semibold"></label>
+                                <input asp-for="CustomerEmail" class="form-control" />
+                                <span asp-validation-for="CustomerEmail" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CustomerPhone" class="form-label fw-semibold"></label>
+                                <input asp-for="CustomerPhone" class="form-control" />
+                                <span asp-validation-for="CustomerPhone" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Quantity" class="form-label fw-semibold"></label>
+                                <input asp-for="Quantity" class="form-control" type="number" min="1" max="@Model.Tour?.AvailableSlots" id="quantity" />
+                                <span asp-validation-for="Quantity" class="text-danger small"></span>
+                                <small class="text-muted">Còn @Model.Tour?.AvailableSlots chỗ trống</small>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label asp-for="CustomerAddress" class="form-label fw-semibold"></label>
+                                <input asp-for="CustomerAddress" class="form-control" />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label asp-for="Note" class="form-label fw-semibold"></label>
+                                <textarea asp-for="Note" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt (nếu có)..."></textarea>
+                            </div>
+                        </div>
+
+                        <h5 class="fw-bold mb-3 mt-2"><i class="fas fa-credit-card me-2 text-primary"></i>Phương thức thanh toán</h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check border rounded p-3">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="0" id="pm0" checked />
+                                    <label class="form-check-label" for="pm0">
+                                        <i class="fas fa-money-bill-wave text-success me-1"></i>Thanh toán khi nhận tour
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check border rounded p-3">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="1" id="pm1" />
+                                    <label class="form-check-label" for="pm1">
+                                        <i class="fas fa-university text-primary me-1"></i>Chuyển khoản ngân hàng
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check border rounded p-3">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="2" id="pm2" />
+                                    <label class="form-check-label" for="pm2">
+                                        <i class="fas fa-globe text-info me-1"></i>Thanh toán online
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Tour != null && !string.IsNullOrEmpty(Model.Tour.Schedule))
+            {
+                <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-calendar-alt text-primary me-2"></i>Lịch trình chuyến đi</h5>
+                        <div class="accordion" id="tourSchedule">
+                            @{
+                                var lines = Model.Tour.Schedule.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                                var dayIndex = 1;
+                                string currentHeader = "";
+                                List<string> currentBody = new List<string>();
+
+                                for (int i = 0; i < lines.Length; i++)
+                                {
+                                    var line = lines[i].Trim();
+                                    if (line.StartsWith("Ngày ", StringComparison.OrdinalIgnoreCase) || line.StartsWith("Day ", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        if (!string.IsNullOrEmpty(currentHeader))
+                                        {
+                                            <div class="accordion-item border-0 mb-3 shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                                                <h2 class="accordion-header" id="heading_@dayIndex">
+                                                    <button class="accordion-button @(dayIndex == 1 ? "" : "collapsed") bg-light text-dark fw-bold border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@dayIndex" aria-expanded="@(dayIndex == 1 ? "true" : "false")" aria-controls="collapse_@dayIndex">
+                                                        @currentHeader
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse_@dayIndex" class="accordion-collapse collapse @(dayIndex == 1 ? "show" : "")" aria-labelledby="heading_@dayIndex" data-bs-parent="#tourSchedule">
+                                                    <div class="accordion-body bg-white border-top">
+                                                        @Html.Raw(string.Join("<br/>", currentBody))
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            dayIndex++;
+                                        }
+                                        currentHeader = line;
+                                        currentBody.Clear();
+                                    }
+                                    else
+                                    {
+                                        currentBody.Add(line);
+                                    }
+                                }
+
+                                if (!string.IsNullOrEmpty(currentHeader))
+                                {
+                                    <div class="accordion-item border-0 mb-3 shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                                        <h2 class="accordion-header" id="heading_@dayIndex">
+                                            <button class="accordion-button @(dayIndex == 1 ? "" : "collapsed") bg-light text-dark fw-bold border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@dayIndex" aria-expanded="@(dayIndex == 1 ? "true" : "false")" aria-controls="collapse_@dayIndex">
+                                                @currentHeader
+                                            </button>
+                                        </h2>
+                                        <div id="collapse_@dayIndex" class="accordion-collapse collapse @(dayIndex == 1 ? "show" : "")" aria-labelledby="heading_@dayIndex" data-bs-parent="#tourSchedule">
+                                            <div class="accordion-body bg-white border-top">
+                                                @Html.Raw(string.Join("<br/>", currentBody))
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (lines.Length > 0 && dayIndex == 1)
+                                {
+                                    <div>@Html.Raw(Model.Tour.Schedule.Replace("\n", "<br/>"))</div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="detail-info-card sticky-top" style="top: 80px;">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-receipt me-2 text-primary"></i>Tóm tắt đơn hàng</h5>
+                    <div class="mb-3">
+                        <h6 class="fw-bold">@Model.Tour?.Name</h6>
+                        <small class="text-muted">
+                            <i class="fas fa-map-marker-alt me-1"></i>@Model.Tour?.Destination |
+                            <i class="fas fa-clock me-1"></i>@Model.Tour?.Duration ngày
+                        </small>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Đơn giá:</span>
+                        <strong>@Model.Tour?.DisplayPrice.ToString("N0") VNĐ</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Số lượng:</span>
+                        <strong id="displayQuantity">1</strong>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold fs-5">Tổng cộng:</span>
+                        <span class="price-display" id="totalPrice" style="font-size: 1.3rem;">@Model.Tour?.DisplayPrice.ToString("N0") VNĐ</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary-custom w-100 py-2 fw-bold mt-4" onclick="return confirm('Bạn xác nhận đặt tour này?')">
+                        <i class="fas fa-check-circle me-2"></i>Xác Nhận Đặt Tour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var unitPrice = @(Model.Tour?.DisplayPrice ?? 0);
+        document.getElementById('quantity').addEventListener('input', function () {
+            var qty = parseInt(this.value) || 1;
+            document.getElementById('displayQuantity').textContent = qty;
+            var total = unitPrice * qty;
+            document.getElementById('totalPrice').textContent = total.toLocaleString('vi-VN') + ' VNĐ';
+        });
+    </script>
+}

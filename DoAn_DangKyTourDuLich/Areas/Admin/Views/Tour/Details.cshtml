@@ -1,0 +1,98 @@
+@model Tour
+@{
+    ViewData["Title"] = "Chi tiết Tour - " + Model.Name;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="fas fa-info-circle text-primary me-2"></i>Chi Tiết Tour</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm"><i class="fas fa-edit me-1"></i>Sửa</a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm ms-1">Quay lại</a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded" />
+                }
+                else
+                {
+                    <div class="tour-img-placeholder rounded"><i class="fas fa-image"></i></div>
+                }
+            </div>
+            <div class="col-md-8">
+                <h3 class="fw-bold">@Model.Name</h3>
+                <span class="badge bg-primary">@Model.Category?.Name</span>
+                @if (Model.IsFeatured) { <span class="badge bg-warning text-dark">Nổi bật</span> }
+                @if (Model.IsActive) { <span class="badge bg-success">Hiển thị</span> } else { <span class="badge bg-secondary">Ẩn</span> }
+
+                <hr />
+                <div class="row">
+                    <div class="col-6 mb-2"><strong>Giá:</strong> @Model.Price.ToString("N0") VNĐ</div>
+                    <div class="col-6 mb-2"><strong>Giá KM:</strong> @(Model.DiscountPrice?.ToString("N0") ?? "Không có") VNĐ</div>
+                    <div class="col-6 mb-2"><strong>Điểm khởi hành:</strong> @Model.DepartureLocation</div>
+                    <div class="col-6 mb-2"><strong>Điểm đến:</strong> @Model.Destination</div>
+                    <div class="col-6 mb-2"><strong>Thời gian:</strong> @Model.Duration ngày</div>
+                    <div class="col-6 mb-2"><strong>Phương tiện:</strong> @(Model.Transportation ?? "N/A")</div>
+                    <div class="col-6 mb-2"><strong>Chỗ trống:</strong> @Model.AvailableSlots / @Model.MaxParticipants</div>
+                    <div class="col-6 mb-2"><strong>Ngày khởi hành:</strong> @(Model.DepartureDate?.ToString("dd/MM/yyyy") ?? "Chưa xác định")</div>
+                </div>
+                <hr />
+                <h6 class="fw-bold">Mô tả:</h6>
+                <p>@Model.ShortDescription</p>
+                @if (!string.IsNullOrEmpty(Model.DetailDescription))
+                {
+                    <p>@Html.Raw(Model.DetailDescription.Replace("\n", "<br/>"))</p>
+                }
+                
+                <hr />
+                <h6 class="fw-bold">Vị trí Tour:</h6>
+                <div class="trackasia-map ratio ratio-21x9 rounded overflow-hidden mt-2 border" data-address="@Model.Destination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link href="https://unpkg.com/trackasia-gl@2.0.1/dist/trackasia-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/trackasia-gl@2.0.1/dist/trackasia-gl.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var el = document.querySelector('.trackasia-map');
+            if (!el) return;
+            var address = el.getAttribute('data-address');
+            if (!address) return;
+            
+            el.id = 'trackasia-map-single';
+            var apiKey = 'dc84b2e177449582153329307c32a54ed9';
+            var geocodeUrl = 'https://maps.track-asia.com/api/v1/autocomplete?text=' + encodeURIComponent(address) + '&key=' + apiKey;
+            
+            fetch(geocodeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.features && data.features.length > 0) {
+                        var coords = data.features[0].geometry.coordinates; // [lng, lat]
+                        var map = new trackasiagl.Map({
+                            container: el.id,
+                            style: 'https://maps.track-asia.com/styles/v1/streets.json?key=' + apiKey,
+                            center: { lat: coords[1], lng: coords[0] },
+                            zoom: 14
+                        });
+                        new trackasiagl.Marker().setLngLat(coords).addTo(map);
+                    } else {
+                        el.innerHTML = '<div class="alert alert-warning m-3">Không tìm thấy tọa độ cho địa điểm này trên TrackAsia.</div>';
+                        el.classList.remove('ratio', 'ratio-21x9');
+                    }
+                })
+                .catch(err => {
+                    console.error("TrackAsia Geocoding error:", err);
+                    el.innerHTML = '<div class="alert alert-danger m-3">Lỗi tải dữ liệu bản đồ.</div>';
+                    el.classList.remove('ratio', 'ratio-21x9');
+                });
+        });
+    </script>
+}

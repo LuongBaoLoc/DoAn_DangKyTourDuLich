@@ -1,0 +1,122 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Dashboard";
+    var totalTours = (int)(ViewBag.TotalTours ?? 0);
+    var totalCategories = (int)(ViewBag.TotalCategories ?? 0);
+    var totalOrders = (int)(ViewBag.TotalOrders ?? 0);
+    var pendingOrders = (int)(ViewBag.PendingOrders ?? 0);
+    var totalRevenue = (decimal)(ViewBag.TotalRevenue ?? 0m);
+}
+
+<h2 class="fw-bold mb-4"><i class="fas fa-tachometer-alt text-primary me-2"></i>Dashboard</h2>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-number">@totalTours</div>
+                    <div>Tour du lịch</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-number">@totalOrders</div>
+                    <div>Đơn hàng</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-number">@pendingOrders</div>
+                    <div>Chờ xác nhận</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-number" style="font-size: 1.2rem;">@totalRevenue.ToString("N0")</div>
+                    <div>Doanh thu (VNĐ)</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-bold"><i class="fas fa-history text-primary me-2"></i>Đơn hàng gần đây</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Tour</th>
+                        <th>Tổng tiền</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td><strong class="text-primary">@order.OrderCode</strong></td>
+                            <td>@order.CustomerName</td>
+                            <td>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <small>@item.Tour?.Name</small>
+                                }
+                            </td>
+                            <td class="fw-bold">@order.TotalAmount.ToString("N0") VNĐ</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @switch (order.Status)
+                                {
+                                    case OrderStatus.Pending:
+                                        <span class="badge bg-warning text-dark">Chờ xác nhận</span>
+                                        break;
+                                    case OrderStatus.Confirmed:
+                                        <span class="badge bg-info">Đã xác nhận</span>
+                                        break;
+                                    case OrderStatus.Completed:
+                                        <span class="badge bg-success">Hoàn thành</span>
+                                        break;
+                                    case OrderStatus.Cancelled:
+                                        <span class="badge bg-danger">Đã hủy</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
