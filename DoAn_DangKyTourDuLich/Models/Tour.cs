@@ -8,6 +8,10 @@ namespace DoAn_DangKyTourDuLich.Models
     {
         public int Id { get; set; }
 
+        [Display(Name = "Mã tour")]
+        [StringLength(50)]
+        public string? TourCode { get; set; }
+
         [Required(ErrorMessage = "Vui lòng nhập tên tour")]
         [Display(Name = "Tên tour")]
         [StringLength(200)]

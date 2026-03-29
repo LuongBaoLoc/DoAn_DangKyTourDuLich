@@ -86,7 +86,10 @@
                             <td>
                                 @foreach (var item in order.OrderDetails)
                                 {
-                                    <small>@item.Tour?.Name</small>
+                                    <div class="mb-1">
+                                        <span class="badge bg-info bg-opacity-10 text-info font-monospace me-1">@(string.IsNullOrEmpty(item.Tour?.TourCode) ? $"T{item.Tour?.Id:D3}" : item.Tour?.TourCode)</span>
+                                        <small>@item.Tour?.Name</small>
+                                    </div>
                                 }
                             </td>
                             <td class="fw-bold">@order.TotalAmount.ToString("N0") VNĐ</td>

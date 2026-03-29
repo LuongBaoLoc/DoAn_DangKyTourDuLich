@@ -73,6 +73,7 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
                 }
 
                 tour.CreatedAt = DateTime.Now;
+                tour.TourCode = await GenerateUniqueTourCodeAsync();
                 _context.Tours.Add(tour);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Thêm tour thành công!";
@@ -152,6 +153,7 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
                     tour.ImageUrlsData = existingTour.ImageUrlsData;
                 }
 
+                tour.TourCode = string.IsNullOrEmpty(existingTour.TourCode) ? $"T{existingTour.Id:D3}" : existingTour.TourCode; // Keep original tour code or fill fallback
                 tour.CreatedAt = existingTour.CreatedAt;
                 tour.UpdatedAt = DateTime.Now;
 
@@ -242,6 +244,20 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
+            }
+        }
+
+        private async Task<string> GenerateUniqueTourCodeAsync()
+        {
+            var prefix = "T" + DateTime.Now.ToString("yyMM");
+            while (true)
+            {
+                var randomStr = new Random().Next(1000, 9999).ToString();
+                var newCode = prefix + randomStr;
+                if (!await _context.Tours.AnyAsync(t => t.TourCode == newCode))
+                {
+                    return newCode;
+                }
             }
         }
     }

@@ -92,6 +92,9 @@
                                     }
                                 }
                                 @Html.Raw(actionHtml)
+                                <a asp-controller="Tour" asp-action="OrderConfirmation" asp-route-orderId="@order.Id" class="btn btn-sm btn-outline-info ms-1" title="Xem chi tiết đơn hàng">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                             </td>
                         </tr>
                     }

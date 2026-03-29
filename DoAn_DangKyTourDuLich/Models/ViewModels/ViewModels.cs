@@ -58,6 +58,8 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public string? Destination { get; set; }
+        public int? Duration { get; set; }
+        public string? Transportation { get; set; }
         public string? SortBy { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 9;
@@ -99,6 +101,24 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         // Tour info for display
         public int TourId { get; set; }
         public Tour? Tour { get; set; }
+
+        [Display(Name = "Ngày khởi hành")]
+        public string SelectedDate { get; set; } = string.Empty;
+
+        [Display(Name = "Số người lớn")]
+        public int AdultQuantity { get; set; } = 1;
+
+        [Display(Name = "Số trẻ em")]
+        public int ChildQuantity { get; set; } = 0;
+
+        [Display(Name = "Số trẻ nhỏ")]
+        public int ToddlerQuantity { get; set; } = 0;
+
+        [Display(Name = "Số em bé")]
+        public int InfantQuantity { get; set; } = 0;
+
+        [Display(Name = "Phụ thu phòng đơn")]
+        public int SingleRoomQuantity { get; set; } = 0;
 
         [Required(ErrorMessage = "Vui lòng nhập số lượng người")]
         [Display(Name = "Số lượng người")]

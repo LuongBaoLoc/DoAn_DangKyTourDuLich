@@ -15,12 +15,17 @@
             <!-- THÔNG TIN CƠ BẢN -->
             <h5 class="text-primary fw-bold mb-3"><i class="fas fa-info-circle me-2"></i>Thông tin cơ bản</h5>
             <div class="row mb-4">
-                <div class="col-md-8 mb-3">
+                <div class="col-md-12 mb-3">
                     <label asp-for="Name" class="form-label fw-semibold"></label>
                     <input asp-for="Name" class="form-control" placeholder="Nhập tên tour" />
                     <span asp-validation-for="Name" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TourCode" class="form-label fw-semibold"></label>
+                    <input asp-for="TourCode" value="@(string.IsNullOrEmpty(Model.TourCode) ? $"T{Model.Id:D3}" : Model.TourCode)" class="form-control bg-light" readonly title="Mã tour được tạo tự động và không thể thay đổi" />
+                    <span asp-validation-for="TourCode" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
                     <label asp-for="CategoryId" class="form-label fw-semibold"></label>
                     <select asp-for="CategoryId" class="form-select" asp-items="@(ViewBag.Categories as SelectList)">
                         <option value="">-- Chọn danh mục --</option>

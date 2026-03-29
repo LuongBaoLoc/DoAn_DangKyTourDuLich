@@ -18,6 +18,7 @@
                     <input asp-for="Name" class="form-control" placeholder="Nhập tên tour" />
                     <span asp-validation-for="Name" class="text-danger small"></span>
                 </div>
+                <!-- Mã Tour sẽ được tự động sinh sau khi lưu -->
                 <div class="col-md-4 mb-3">
                     <label asp-for="CategoryId" class="form-label fw-semibold"></label>
                     <select asp-for="CategoryId" class="form-select" asp-items="@(ViewBag.Categories as SelectList)">

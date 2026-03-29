@@ -93,7 +93,9 @@
                         @foreach (var item in Model.OrderDetails)
                         {
                             <tr>
-                                <td>@item.Tour?.Name</td>
+                                <td>
+                                    @item.Tour?.Name
+                                </td>
                                 <td>@item.UnitPrice.ToString("N0") VNĐ</td>
                                 <td>@item.Quantity người</td>
                                 <td class="fw-bold">@item.SubTotal.ToString("N0") VNĐ</td>

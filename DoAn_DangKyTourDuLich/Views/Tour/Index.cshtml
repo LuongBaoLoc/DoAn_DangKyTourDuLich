@@ -15,50 +15,85 @@
     <div class="row">
         <!-- Sidebar Filter -->
         <div class="col-lg-3 mb-4" data-reveal="left">
-            <div class="filter-sidebar panel-card">
-                <h5><i class="fas fa-filter me-2"></i>Bộ lọc</h5>
+            <div class="filter-sidebar panel-card p-4 shadow-sm rounded-3 bg-white border-0">
+                <h5 class="fw-bold mb-4 pb-2 border-bottom text-primary"><i class="fas fa-filter me-2"></i>Bộ lọc tìm kiếm</h5>
                 <form asp-action="Index" method="get">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Từ khóa</label>
-                        <input type="text" name="Keyword" value="@Model.Keyword" class="form-control form-control-sm" placeholder="Tìm kiếm..." />
+                        <label class="form-label fw-bold small text-muted text-uppercase">Từ khóa</label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" name="Keyword" value="@Model.Keyword" class="form-control form-control-sm border-start-0 ps-0 bg-light" placeholder="Tên tour, mô tả..." />
+                        </div>
                     </div>
+                    
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Danh mục</label>
-                        <select name="CategoryId" class="form-select form-select-sm">
-                            <option value="">-- Tất cả --</option>
+                        <label class="form-label fw-bold small text-muted text-uppercase">Điểm đến</label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-map-marker-alt text-muted"></i></span>
+                            <input type="text" name="Destination" value="@Model.Destination" class="form-control form-control-sm border-start-0 ps-0 bg-light" placeholder="VD: Đà Nẵng, Sa Pa" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Thời gian</label>
+                        <select name="Duration" class="form-select form-select-sm bg-light">
+                            <option value="">-- Mọi thời gian --</option>
+                            <option value="1" selected="@(Model.Duration == 1)">1 ngày</option>
+                            <option value="2" selected="@(Model.Duration == 2)">2 ngày</option>
+                            <option value="3" selected="@(Model.Duration == 3)">3 ngày</option>
+                            <option value="4" selected="@(Model.Duration == 4)">4 ngày</option>
+                            <option value="5" selected="@(Model.Duration == 5)">Từ 5 ngày trở lên</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Phương tiện</label>
+                        <select name="Transportation" class="form-select form-select-sm bg-light">
+                            <option value="">-- Tất cả phương tiện --</option>
+                            <option value="Xe" selected="@(Model.Transportation == "Xe")">Ô tô / Xe khách</option>
+                            <option value="Máy bay" selected="@(Model.Transportation == "Máy bay")">Máy bay</option>
+                            <option value="Tàu" selected="@(Model.Transportation == "Tàu")">Tàu hỏa / Tàu thủy</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Danh mục</label>
+                        <select name="CategoryId" class="form-select form-select-sm bg-light">
+                            <option value="">-- Tất cả danh mục --</option>
                             @foreach (var cat in Model.Categories)
                             {
                                 <option value="@cat.Id" selected="@(Model.CategoryId == cat.Id)">@cat.Name</option>
                             }
                         </select>
                     </div>
+
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Giá từ (VNĐ)</label>
-                        <input type="number" name="MinPrice" value="@Model.MinPrice" class="form-control form-control-sm" placeholder="0" />
+                        <label class="form-label fw-bold small text-muted text-uppercase">Mức giá (VNĐ)</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" name="MinPrice" value="@Model.MinPrice" class="form-control form-control-sm bg-light" placeholder="Từ..." />
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="MaxPrice" value="@Model.MaxPrice" class="form-control form-control-sm bg-light" placeholder="Đến..." />
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold small">Giá đến (VNĐ)</label>
-                        <input type="number" name="MaxPrice" value="@Model.MaxPrice" class="form-control form-control-sm" placeholder="10,000,000" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold small">Điểm đến</label>
-                        <input type="text" name="Destination" value="@Model.Destination" class="form-control form-control-sm" placeholder="VD: Đà Nẵng" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold small">Sắp xếp</label>
-                        <select name="SortBy" class="form-select form-select-sm">
-                            <option value="" selected="@(string.IsNullOrEmpty(Model.SortBy))">Mặc định</option>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Sắp xếp</label>
+                        <select name="SortBy" class="form-select form-select-sm bg-light">
+                            <option value="" selected="@(string.IsNullOrEmpty(Model.SortBy))">Mặc định (Nổi bật nhất)</option>
                             <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Giá tăng dần</option>
                             <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Giá giảm dần</option>
-                            <option value="name" selected="@(Model.SortBy == "name")">Tên A-Z</option>
-                            <option value="newest" selected="@(Model.SortBy == "newest")">Mới nhất</option>
+                            <option value="newest" selected="@(Model.SortBy == "newest")">Tour mới nhất</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 btn-sm">
-                        <i class="fas fa-search me-1"></i>Lọc kết quả
+
+                    <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold" style="border-radius: 8px;">
+                        <i class="fas fa-search me-2"></i>Tìm kiếm Tour
                     </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary w-100 btn-sm mt-2">
-                        <i class="fas fa-redo me-1"></i>Xóa bộ lọc
+                    <a asp-action="Index" class="btn btn-light border w-100 py-2 fw-medium text-muted" style="border-radius: 8px;">
+                        <i class="fas fa-redo me-2"></i>Xóa bộ lọc
                     </a>
                 </form>
             </div>
@@ -95,12 +130,22 @@
                 <!-- Pagination -->
                 @if (Model.TotalPages > 1)
                 {
+                    var routeData = new Dictionary<string, string>();
+                    if (!string.IsNullOrEmpty(Model.Keyword)) routeData["Keyword"] = Model.Keyword;
+                    if (Model.CategoryId.HasValue) routeData["CategoryId"] = Model.CategoryId.ToString();
+                    if (Model.MinPrice.HasValue) routeData["MinPrice"] = Model.MinPrice.ToString();
+                    if (Model.MaxPrice.HasValue) routeData["MaxPrice"] = Model.MaxPrice.ToString();
+                    if (!string.IsNullOrEmpty(Model.Destination)) routeData["Destination"] = Model.Destination;
+                    if (Model.Duration.HasValue) routeData["Duration"] = Model.Duration.ToString();
+                    if (!string.IsNullOrEmpty(Model.Transportation)) routeData["Transportation"] = Model.Transportation;
+                    if (!string.IsNullOrEmpty(Model.SortBy)) routeData["SortBy"] = Model.SortBy;
+
                     <nav class="mt-4" data-reveal="up">
                         <ul class="pagination justify-content-center">
                             @if (Model.Page > 1)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" asp-action="Index" asp-route-Page="@(Model.Page - 1)" asp-route-Keyword="@Model.Keyword" asp-route-CategoryId="@Model.CategoryId" asp-route-SortBy="@Model.SortBy">
+                                    <a class="page-link" asp-action="Index" asp-all-route-data="routeData" asp-route-Page="@(Model.Page - 1)">
                                         <i class="fas fa-chevron-left"></i>
                                     </a>
                                 </li>
@@ -108,13 +153,13 @@
                             @for (int i = 1; i <= Model.TotalPages; i++)
                             {
                                 <li class="page-item @(i == Model.Page ? "active" : "")">
-                                    <a class="page-link" asp-action="Index" asp-route-Page="@i" asp-route-Keyword="@Model.Keyword" asp-route-CategoryId="@Model.CategoryId" asp-route-SortBy="@Model.SortBy">@i</a>
+                                    <a class="page-link" asp-action="Index" asp-all-route-data="routeData" asp-route-Page="@i">@i</a>
                                 </li>
                             }
                             @if (Model.Page < Model.TotalPages)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" asp-action="Index" asp-route-Page="@(Model.Page + 1)" asp-route-Keyword="@Model.Keyword" asp-route-CategoryId="@Model.CategoryId" asp-route-SortBy="@Model.SortBy">
+                                    <a class="page-link" asp-action="Index" asp-all-route-data="routeData" asp-route-Page="@(Model.Page + 1)">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </li>
