@@ -5,49 +5,99 @@
 
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm text-center" style="border-radius: var(--radius);">
-                <div class="card-body p-5">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow" style="border-radius: var(--radius);">
+                <div class="card-body p-5 text-center">
+                    <!-- Success icon -->
                     <div class="mb-4">
-                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                        <div style="font-size: 4rem; color: #28a745;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
                     </div>
-                    <h2 class="fw-bold text-success mb-2">Cảm ơn bạn!</h2>
-                    <p class="text-muted fs-5 mb-4">Đánh giá của bạn đã được ghi nhận thành công.</p>
 
+                    <h2 class="fw-bold text-success mb-2">Cảm ơn bạn!</h2>
+                    <p class="text-muted fs-5 mb-4">Đánh giá của bạn đã được ghi nhận thành công. Nó sẽ giúp những du khách khác có những quyết định tốt hơn.</p>
+
+                    <!-- Review details -->
                     @if (Model.Reviews?.Any() == true)
                     {
                         var review = Model.Reviews.FirstOrDefault();
                         <div class="bg-light p-4 rounded mb-4 text-start">
                             <div class="mb-3">
-                                <strong>Xếp hạng:</strong>
+                                <p class="mb-1"><small class="text-muted">Chuyến đi: <strong>@Model.OrderDetails?.FirstOrDefault()?.Tour?.Name</strong></small></p>
+                                <p class="mb-2"><small class="text-muted">Mã đơn hàng: <strong>@Model.OrderCode</strong></small></p>
+                            </div>
+
+                            <hr />
+
+                            <!-- Star rating -->
+                            <div class="mb-3">
+                                <strong>Xếp hạng của bạn:</strong>
                                 <div class="mt-2">
-                                    @for (int i = 0; i < review.Rating; i++)
+                                    @for (int i = 1; i <= 5; i++)
                                     {
-                                        <i class="fas fa-star text-warning"></i>
+                                        @if (i <= review.Rating)
+                                        {
+                                            <i class="fas fa-star text-warning" style="font-size: 1.3rem;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star text-warning" style="font-size: 1.3rem;"></i>
+                                        }
                                     }
-                                    @for (int i = review.Rating; i < 5; i++)
-                                    {
-                                        <i class="far fa-star text-warning"></i>
-                                    }
+                                    <span class="ms-2 text-muted">(@review.Rating/5)</span>
                                 </div>
                             </div>
+
+                            <!-- Comments -->
                             @if (!string.IsNullOrEmpty(review.Comment))
                             {
+                                <div class="mb-3">
+                                    <strong>Nhận xét:</strong>
+                                    <p class="text-muted mt-2 mb-0">@review.Comment</p>
+                                </div>
+                            }
+
+                            <!-- Images -->
+                            @if (review.ImageUrls.Any())
+                            {
                                 <div>
-                                    <strong>Bình luận:</strong>
-                                    <p class="text-muted mt-2">@review.Comment</p>
+                                    <strong>Ảnh bạn chia sẻ:</strong>
+                                    <div class="d-flex flex-wrap gap-2 mt-2">
+                                        @foreach (var imageUrl in review.ImageUrls)
+                                        {
+                                            <img src="@imageUrl" alt="Review image" 
+                                                 style="max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 8px;" />
+                                        }
+                                    </div>
                                 </div>
                             }
                         </div>
                     }
 
-                    <p class="text-muted mb-4">Đánh giá của bạn giúp chúng tôi cải thiện dịch vụ ngày càng tốt hơn.</p>
+                    <!-- Next actions -->
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <a href="/Review/MyOrders" class="btn btn-primary w-100">
+                                <i class="fas fa-list me-2"></i>Xem danh sách chuyến đi
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/Tour/Index" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-compass me-2"></i>Khám phá tour khác
+                            </a>
+                        </div>
+                    </div>
 
-                    <div class="d-grid gap-2">
-                        <a asp-controller="Tour" asp-action="MyOrders" class="btn btn-primary btn-lg" style="border-radius: var(--radius);">
-                            <i class="fas fa-list me-2"></i>Xem đơn hàng của tôi
-                        </a>
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg" style="border-radius: var(--radius);">
+                    <hr class="my-4" />
+
+                    <p class="text-muted small mb-0">Bạn có thể cập nhật đánh giá này bất kỳ lúc nào bằng cách quay lại danh sách chuyến đi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                             <i class="fas fa-home me-2"></i>Về trang chủ
                         </a>
                     </div>

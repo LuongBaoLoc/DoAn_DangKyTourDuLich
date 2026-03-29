@@ -241,6 +241,53 @@
                     </div>
                 </div>
 
+                <hr class="text-muted opacity-25 mb-4" />
+
+                <!-- Ngày khởi hành chọn được -->
+                @if (Model.DepartureDate.HasValue)
+                {
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-3">
+                            <i class="fas fa-calendar-alt text-primary me-2"></i>Ngày khởi hành
+                        </label>
+                        
+                        <div class="departure-dates d-flex align-items-center gap-2 mb-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary departure-nav-prev" id="datePrevBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            
+                            <div class="departure-dates-scroll" id="departureDatesContainer" style="overflow-x: auto; flex: 1; display: flex; gap: 10px; padding: 5px 0;">
+                                @{
+                                    // Tạo danh sách ngày từ DepartureDate đến 30 ngày sau
+                                    var departureDate = Model.DepartureDate.Value;
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        var date = departureDate.AddDays(i);
+                                        var isSelected = i == 0 ? "selected" : "";
+                                        var dateStr = date.ToString("dd/MM");
+                                        var dayName = date.ToString("ddd", new System.Globalization.CultureInfo("vi-VN"));
+                                        <button type="button" 
+                                                class="btn btn-sm departure-date-btn @isSelected" 
+                                                data-date="@date.ToString("yyyy-MM-dd")"
+                                                style="min-width: 70px; white-space: nowrap; flex-shrink: 0;">
+                                            <div class="small fw-bold">@dateStr</div>
+                                            <div class="x-small text-muted">@dayName</div>
+                                        </button>
+                                    }
+                                }
+                            </div>
+                            
+                            <button type="button" class="btn btn-sm btn-outline-secondary departure-nav-next" id="dateNextBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <input type="hidden" id="selectedDepartureDate" name="selectedDepartureDate" value="@Model.DepartureDate.Value.ToString("yyyy-MM-dd")" />
+                    </div>
+                }
+
+                <hr class="text-muted opacity-25 mb-4" />
+
                 @if (Model.AvailableSlots > 0)
                 {
                     <a asp-action="Book" asp-route-id="@Model.Id" class="btn w-100 py-3 fw-bold text-white fs-5 mb-3 d-flex justify-content-center align-items-center" style="background-color: #ff6a39; border-radius: 8px; border: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
@@ -270,24 +317,7 @@
                 @foreach (var tour in relatedTours)
                 {
                     <div class="col-md-6 col-lg-3" data-reveal="up">
-                        <div class="tour-card card h-100">
-                            <div class="card-img-wrapper">
-                                @if (!string.IsNullOrEmpty(tour.ImageUrl))
-                                {
-                                    <img src="@tour.ImageUrl" class="card-img-top h-100 w-100" style="object-fit: cover; min-height: 200px;" alt="@tour.Name" />
-                                }
-                                else
-                                {
-                                    <div class="tour-img-placeholder d-flex justify-content-center align-items-center" style="height:200px; background-color: #f8f9fa;"><i class="fas fa-image text-muted fa-3x"></i></div>
-                                }
-                            </div>
-                            <div class="card-body d-flex flex-column">
-                                <h6 class="tour-title mb-auto">
-                                    <a asp-action="Details" asp-route-id="@tour.Id" class="text-decoration-none text-dark fw-bold">@tour.Name</a>
-                                </h6>
-                                <div class="tour-price mt-3 fw-bold" style="color: #ff6a39; font-size: 1.1rem;">@tour.DisplayPrice.ToString("N0")đ</div>
-                            </div>
-                        </div>
+                        <partial name="_TourCardPartial" model="tour" />
                     </div>
                 }
             </div>

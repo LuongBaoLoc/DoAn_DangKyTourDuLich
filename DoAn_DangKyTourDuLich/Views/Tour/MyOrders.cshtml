@@ -36,6 +36,7 @@
                         <th>Tổng tiền</th>
                         <th>Ngày đặt</th>
                         <th>Trạng thái</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,6 +74,24 @@
                                         <span class="badge bg-danger badge-status">Đã hủy</span>
                                         break;
                                 }
+                            </td>
+                            <td>
+                                @{
+                                    string actionHtml = "";
+                                    if (order.Status == OrderStatus.Completed && !order.IsReviewed)
+                                    {
+                                        actionHtml = $"<a href='/Review/AddReview/{order.Id}' class='btn btn-sm btn-primary'><i class='fas fa-star me-1'></i>Viết Đánh Giá</a>";
+                                    }
+                                    else if (order.Status == OrderStatus.Completed && order.IsReviewed)
+                                    {
+                                        actionHtml = "<span class='text-muted'><i class='fas fa-check-circle me-1' style='color: #28a745;'></i>Đã đánh giá</span>";
+                                    }
+                                    else
+                                    {
+                                        actionHtml = "<span class='text-muted small'><i class='fas fa-clock me-1'></i>Chưa hoàn thành</span>";
+                                    }
+                                }
+                                @Html.Raw(actionHtml)
                             </td>
                         </tr>
                     }

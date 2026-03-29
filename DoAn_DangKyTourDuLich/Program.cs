@@ -3,12 +3,19 @@ using Microsoft.AspNetCore.Identity;
 using DoAn_DangKyTourDuLich.Data;
 using DoAn_DangKyTourDuLich.Models;
 using DoAn_DangKyTourDuLich.Services;
+using DoAn_DangKyTourDuLich.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //mail tự động nha
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<QRCodeService>();
+
+// Register review system services
+builder.Services.AddScoped<ReviewService>();
+builder.Services.AddScoped<ProfanityFilterService>();
+builder.Services.AddScoped<CloudinaryService>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -128,6 +135,9 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Add review rate limiting middleware
+app.UseReviewRateLimiting();
 
 app.MapStaticAssets();
 

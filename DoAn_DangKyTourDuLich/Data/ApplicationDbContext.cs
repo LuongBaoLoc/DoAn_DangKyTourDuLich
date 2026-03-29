@@ -59,6 +59,28 @@ namespace DoAn_DangKyTourDuLich.Data
                       .HasForeignKey(od => od.TourId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // Cấu hình Review
+            builder.Entity<Review>(entity =>
+            {
+                entity.HasOne(r => r.User)
+                      .WithMany(u => u.Reviews)
+                      .HasForeignKey(r => r.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(r => r.Tour)
+                      .WithMany(t => t.Reviews)
+                      .HasForeignKey(r => r.TourId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(r => r.Booking)
+                      .WithMany(o => o.Reviews)
+                      .HasForeignKey(r => r.BookingId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(r => r.BookingId).IsUnique();
+                entity.HasIndex(r => new { r.UserId, r.BookingId });
+            });
         }
     }
 }

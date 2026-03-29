@@ -79,6 +79,9 @@ namespace DoAn_DangKyTourDuLich.Models
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedAt { get; set; }
 
+        [Display(Name = "Đã được đánh giá")]
+        public bool IsReviewed { get; set; } = false;
+
         // Foreign key
         public string? UserId { get; set; }
 

@@ -89,44 +89,7 @@
                 @foreach (var tour in featuredTours)
                 {
                     <div class="col-md-6 col-lg-4" data-reveal="up">
-                        <div class="tour-card card">
-                            <div class="card-img-wrapper">
-                                @if (!string.IsNullOrEmpty(tour.ImageUrl))
-                                {
-                                    <img src="@tour.ImageUrl" class="card-img-top" alt="@tour.Name" />
-                                }
-                                else
-                                {
-                                    <div class="tour-img-placeholder"><i class="fas fa-image"></i></div>
-                                }
-                                @if (tour.IsFeatured)
-                                {
-                                    <span class="card-badge badge badge-featured"><i class="fas fa-star me-1"></i>Nổi bật</span>
-                                }
-                            </div>
-                            <div class="card-body d-flex flex-column">
-                                <div class="tour-info mb-2">
-                                    <span class="me-3"><i class="fas fa-map-marker-alt text-danger me-1"></i>@tour.Destination</span>
-                                    <span><i class="fas fa-clock text-primary me-1"></i>@tour.Duration ngày</span>
-                                </div>
-                                <h5 class="tour-title">
-                                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.Id" class="text-decoration-none text-dark">@tour.Name</a>
-                                </h5>
-                                <p class="tour-desc">@tour.ShortDescription</p>
-                                <div class="mt-auto d-flex justify-content-between align-items-center">
-                                    <div>
-                                        @if (tour.DiscountPrice.HasValue)
-                                        {
-                                            <span class="tour-price-old">@tour.Price.ToString("N0")đ</span><br/>
-                                        }
-                                        <span class="tour-price">@tour.DisplayPrice.ToString("N0")đ</span>
-                                    </div>
-                                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.Id" class="btn btn-primary btn-sm">
-                                        Xem chi tiết <i class="fas fa-arrow-right ms-1"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <partial name="_TourCardPartial" model="tour" />
                     </div>
                 }
             </div>
