@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //mail tự động nha
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<QRCodeService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

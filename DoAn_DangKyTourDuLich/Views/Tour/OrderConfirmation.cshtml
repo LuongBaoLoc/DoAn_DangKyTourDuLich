@@ -3,6 +3,14 @@
     ViewData["Title"] = "Đặt tour thành công";
 }
 
+@inject DoAn_DangKyTourDuLich.Services.QRCodeService QRCodeService
+
+@{
+    var firstTour = Model.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+    var ticketInfo = QRCodeService.GetBookingTicketInfo(Model.OrderCode, Model.CustomerName, firstTour, Model.OrderDate, Model.TotalAmount);
+    var qrCodeBase64 = QRCodeService.GenerateQRCodeBase64(ticketInfo);
+}
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8" data-reveal="up">
@@ -63,6 +71,22 @@
                         </div>
                     </div>
 
+                    <!-- MÃ QR VÉ -->
+                    <div class="card border-dashed bg-light mt-4">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold text-muted mb-3">
+                                <i class="fas fa-qrcode me-2 text-primary"></i>Mã vé của bạn
+                            </h6>
+                            <div class="d-flex justify-content-center mb-3">
+                                <img src="data:image/png;base64,@qrCodeBase64" alt="QR Code - Thông tin vé" style="width: 200px; height: 200px; border: 2px solid #ddd; border-radius: 8px; padding: 5px; background: white;">
+                            </div>
+                            <p class="text-muted small mb-0">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Vui lòng lưu lại hoặc chụp mã QR này. Bạn sẽ cần mang theo khi tham gia tour.
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="mt-4">
                         <a asp-controller="Tour" asp-action="MyOrders" class="btn btn-primary me-2">
                             <i class="fas fa-list me-1"></i>Xem đơn hàng
@@ -76,3 +100,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    .border-dashed {
+        border: 1px dashed #dee2e6 !important;
+    }
+</style>

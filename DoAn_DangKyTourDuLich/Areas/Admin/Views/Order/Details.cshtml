@@ -163,12 +163,10 @@
                 </form>
 
                 <hr class="my-3" />
-                <form asp-action="SendEmailToCustomer" method="post">
-                    <input type="hidden" name="id" value="@Model.Id" />
-                    <button type="submit" class="btn btn-outline-primary w-100 shadow-sm" style="border-radius: var(--radius);" onclick="return confirm('Bạn chắc chắn muốn gửi email thông báo chi tiết đơn hàng cho khách hàng này?')">
-                        <i class="fas fa-envelope me-2"></i>Gửi email cho khách
-                    </button>
-                </form>
+                <p class="text-muted small mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Email sẽ tự động gửi đến khách hàng khi bạn cập nhật trạng thái đơn hàng.
+                </p>
             </div>
         </div>
 

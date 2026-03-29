@@ -181,18 +181,9 @@ namespace DoAn_DangKyTourDuLich.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            // --- PHẦN QUAN TRỌNG: GỬI MAIL TỰ ĐỘNG ---
+            // --- GỬI THÔNG BÁO CHO ADMIN ---
             try
             {
-                // Gửi email cho khách hàng xác nhận đặt tour
-                await _emailService.SendBookingEmailAsync(
-                    order.CustomerEmail, 
-                    order.CustomerName, 
-                    tour.Name, 
-                    order.OrderCode, 
-                    order.TotalAmount
-                );
-
                 // Gửi email thông báo cho Admin có đơn mới
                 await _emailService.SendAdminNotificationEmailAsync(
                     order.CustomerName,
@@ -205,7 +196,7 @@ namespace DoAn_DangKyTourDuLich.Controllers
             catch (Exception ex)
             {
                 // Nếu mail lỗi vẫn cho đặt tour thành công, chỉ log lỗi lại
-                Console.WriteLine("Lỗi gửi mail: " + ex.Message);
+                Console.WriteLine("Lỗi gửi mail tới admin: " + ex.Message);
             }
 
             TempData["Success"] = $"Đặt tour thành công! Mã đơn hàng: {orderCode}";

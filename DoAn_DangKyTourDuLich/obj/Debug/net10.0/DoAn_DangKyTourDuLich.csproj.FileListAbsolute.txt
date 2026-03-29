@@ -293,3 +293,4 @@ D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\net10.0\MimeKit.dll
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\yu5kgsgupn-{0}-871sy0pmlu-871sy0pmlu.gz
 D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\obj\Debug\net10.0\compressed\zb7davj24w-{0}-7dqio4084v-7dqio4084v.gz
+D:\HỌC\Lập Trình Win\DoAn_DangKyTourDuLich\DoAn_DangKyTourDuLich\bin\Debug\net10.0\QRCoder.dll

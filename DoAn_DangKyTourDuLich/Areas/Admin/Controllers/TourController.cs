@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 {
@@ -54,14 +55,21 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Tour tour, List<IFormFile>? imageFiles)
+        public async Task<IActionResult> Create(Tour tour, IFormFile? mainImage, List<IFormFile>? galleryImages)
         {
             if (ModelState.IsValid)
             {
-                var savedImages = await SaveImages(imageFiles);
-                if (savedImages.Count > 0)
+                // Save main image
+                if (mainImage != null && mainImage.Length > 0)
                 {
-                    tour.SetGalleryImages(savedImages);
+                    tour.ImageUrl = await SaveImage(mainImage);
+                }
+
+                // Save gallery images
+                var savedGalleryImages = await SaveImages(galleryImages);
+                if (savedGalleryImages.Count > 0)
+                {
+                    tour.ImageUrlsData = JsonSerializer.Serialize(savedGalleryImages);
                 }
 
                 tour.CreatedAt = DateTime.Now;
@@ -93,7 +101,7 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Tour tour, List<IFormFile>? imageFiles)
+        public async Task<IActionResult> Edit(int id, Tour tour, IFormFile? mainImage, List<IFormFile>? galleryImages)
         {
             if (id != tour.Id)
             {
@@ -108,19 +116,39 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var savedImages = await SaveImages(imageFiles);
-                if (savedImages.Count > 0)
+                // Handle main image
+                if (mainImage != null && mainImage.Length > 0)
                 {
-                    foreach (var imageUrl in existingTour.GalleryImages)
+                    // Delete old main image if exists
+                    if (!string.IsNullOrEmpty(existingTour.ImageUrl))
                     {
-                        DeleteImage(imageUrl);
+                        DeleteImage(existingTour.ImageUrl);
                     }
-
-                    tour.SetGalleryImages(savedImages);
+                    tour.ImageUrl = await SaveImage(mainImage);
                 }
                 else
                 {
                     tour.ImageUrl = existingTour.ImageUrl;
+                }
+
+                // Handle gallery images
+                if (galleryImages != null && galleryImages.Count > 0)
+                {
+                    // Delete old gallery images
+                    var oldGalleryImages = existingTour.GalleryImages ?? new List<string>();
+                    foreach (var imageUrl in oldGalleryImages)
+                    {
+                        if (imageUrl != tour.ImageUrl) // Don't delete main image
+                        {
+                            DeleteImage(imageUrl);
+                        }
+                    }
+
+                    var savedGalleryImages = await SaveImages(galleryImages);
+                    tour.ImageUrlsData = savedGalleryImages.Count > 0 ? JsonSerializer.Serialize(savedGalleryImages) : null;
+                }
+                else
+                {
                     tour.ImageUrlsData = existingTour.ImageUrlsData;
                 }
 

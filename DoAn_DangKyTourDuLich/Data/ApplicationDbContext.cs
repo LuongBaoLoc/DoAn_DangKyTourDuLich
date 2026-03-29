@@ -15,6 +15,7 @@ namespace DoAn_DangKyTourDuLich.Data
         public DbSet<Tour> Tours { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public DbSet<Review> Reviews { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

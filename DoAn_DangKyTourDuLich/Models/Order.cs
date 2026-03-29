@@ -87,5 +87,6 @@ namespace DoAn_DangKyTourDuLich.Models
 
         // Navigation properties
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

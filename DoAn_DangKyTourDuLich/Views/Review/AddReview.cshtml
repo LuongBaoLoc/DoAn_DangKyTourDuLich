@@ -1,0 +1,142 @@
+@model Order
+@{
+    ViewData["Title"] = "Đánh giá chuyến đi";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-center mb-4">
+                        <i class="fas fa-star text-warning me-2"></i>Đánh giá chuyến đi
+                    </h2>
+
+                    <div class="bg-light p-3 rounded mb-4">
+                        <p class="mb-1"><strong>Mã đơn hàng:</strong> @Model.OrderCode</p>
+                        <p class="mb-1"><strong>Khách hàng:</strong> @Model.CustomerName</p>
+                        @if (Model.OrderDetails.Any())
+                        {
+                            var tourName = Model.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+                            <p class="mb-0"><strong>Tour:</strong> @tourName</p>
+                        }
+                    </div>
+
+                    @if ((bool?)ViewBag.HasReview == true)
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Bạn đã gửi đánh giá trước đây. Bạn có thể cập nhật đánh giá của mình dưới đây.
+                        </div>
+                    }
+
+                    <form method="post" asp-action="AddReview">
+                        <input type="hidden" name="orderId" value="@Model.Id" />
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Chuyến đi của bạn thế nào?</label>
+                            <div class="rating-stars d-flex gap-3 justify-content-center mb-3">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    var isSelected = (int?)ViewBag.ReviewRating == i;
+                                    <div class="form-check">
+                                        <input class="form-check-input rating-input" type="radio" name="rating" 
+                                               id="star@i" value="@i" 
+                                               @(isSelected ? "checked" : "") 
+                                               style="display:none;" />
+                                        <label for="star@i" class="form-check-label" style="cursor: pointer; font-size: 2.5rem; color: @(isSelected ? "#ffc107" : "#ddd");">
+                                            <i class="fas fa-star"></i>
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <p class="text-center text-muted mb-0">
+                                <span id="ratingText">Vui lòng chọn mức độ hài lòng</span>
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="comment" class="form-label fw-semibold">Bình luận (tùy chọn)</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="4" 
+                                      placeholder="Chia sẻ trải nghiệm của bạn..." 
+                                      style="border-radius: var(--radius);">@ViewBag.ReviewComment</textarea>
+                            <small class="text-muted">Tối đa 1000 ký tự</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" style="border-radius: var(--radius);">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi đánh giá
+                            </button>
+                            <a asp-controller="Tour" asp-action="MyOrders" class="btn btn-outline-secondary btn-lg" style="border-radius: var(--radius);">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.rating-input').forEach(input => {
+            input.addEventListener('change', function() {
+                updateStarDisplay();
+                updateRatingText();
+            });
+        });
+
+        function updateStarDisplay() {
+            const selectedRating = document.querySelector('.rating-input:checked');
+            if (selectedRating) {
+                const rating = parseInt(selectedRating.value);
+                document.querySelectorAll('label[for^="star"]').forEach((label, index) => {
+                    if (index + 1 <= rating) {
+                        label.style.color = '#ffc107';
+                    } else {
+                        label.style.color = '#ddd';
+                    }
+                });
+            }
+        }
+
+        function updateRatingText() {
+            const selectedRating = document.querySelector('.rating-input:checked');
+            const ratingText = document.getElementById('ratingText');
+            
+            if (!selectedRating) {
+                ratingText.textContent = 'Vui lòng chọn mức độ hài lòng';
+                return;
+            }
+
+            const rating = parseInt(selectedRating.value);
+            const texts = {
+                1: '😞 Không hài lòng',
+                2: '😕 Chưa hài lòng',
+                3: '😐 Bình thường',
+                4: '😊 Hài lòng',
+                5: '😍 Rất hài lòng'
+            };
+
+            ratingText.textContent = texts[rating] || '';
+        }
+
+        // Initialize on page load
+        updateStarDisplay();
+        updateRatingText();
+    </script>
+
+    <style>
+        .rating-stars label:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transform: scale(1.1);
+            transition: all 0.2s ease;
+        }
+
+        .rating-input:hover + label {
+            color: #ffc107 !important;
+        }
+    </style>
+}

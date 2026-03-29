@@ -60,6 +60,7 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
         {
             var order = await _context.Orders
                 .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Tour)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null) return NotFound();
@@ -81,41 +82,87 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             order.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Cập nhật trạng thái đơn hàng thành công!";
+            // --- GỬI EMAIL TƯƠNG ỨNG VỚI TRẠNG THÁI ---
+            try
+            {
+                if (status == OrderStatus.Confirmed)
+                {
+                    // Gửi email xác nhận đơn với QR code
+                    var firstTour = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+                    await _emailService.SendBookingEmailAsync(
+                        order.CustomerEmail,
+                        order.CustomerName,
+                        firstTour,
+                        order.OrderCode,
+                        order.TotalAmount,
+                        order.OrderDate
+                    );
+                    TempData["Success"] = "Cập nhật trạng thái thành 'Đã xác nhận' và gửi email xác nhận cho khách hàng!";
+                }
+                else if (status == OrderStatus.Completed)
+                {
+                    TempData["Success"] = "Cập nhật trạng thái thành 'Hoàn thành'!";
+                }
+                else if (status == OrderStatus.Cancelled)
+                {
+                    // Gửi email hoàn tiền
+                    var firstTour = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+                    await _emailService.SendRefundEmailAsync(
+                        order.CustomerEmail,
+                        order.CustomerName,
+                        firstTour,
+                        order.OrderCode,
+                        order.TotalAmount
+                    );
+                    TempData["Success"] = "Cập nhật trạng thái thành 'Đã hủy' và gửi email hoàn tiền cho khách hàng!";
+                }
+                else
+                {
+                    TempData["Success"] = "Cập nhật trạng thái đơn hàng thành công!";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi gửi mail: " + ex.Message);
+                TempData["Warning"] = $"Cập nhật trạng thái thành công nhưng gặp lỗi khi gửi email: {ex.Message}";
+            }
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
         // POST: Admin/Order/SendEmailToCustomer
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendEmailToCustomer(int id)
-        {
-            var order = await _context.Orders
-                .Include(o => o.OrderDetails)
-                    .ThenInclude(od => od.Tour)
-                .FirstOrDefaultAsync(o => o.Id == id);
+        // (KHÔNG CÒN DÙNG - Email sẽ tự động gửi khi admin cập nhật trạng thái)
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> SendEmailToCustomer(int id)
+        // {
+        //     var order = await _context.Orders
+        //         .Include(o => o.OrderDetails)
+        //             .ThenInclude(od => od.Tour)
+        //         .FirstOrDefaultAsync(o => o.Id == id);
 
-            if (order == null) return NotFound();
+        //     if (order == null) return NotFound();
 
-            var tourName = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+        //     var tourName = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
 
-            try
-            {
-                await _emailService.SendBookingEmailAsync(
-                    order.CustomerEmail, 
-                    order.CustomerName, 
-                    tourName, 
-                    order.OrderCode, 
-                    order.TotalAmount
-                );
-                TempData["Success"] = "Đã gửi email xác nhận cho khách hàng thành công!";
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = "Lỗi khi gửi mail: " + ex.Message;
-            }
+        //     try
+        //     {
+        //         await _emailService.SendBookingEmailAsync(
+        //             order.CustomerEmail, 
+        //             order.CustomerName, 
+        //             tourName, 
+        //             order.OrderCode, 
+        //             order.TotalAmount,
+        //             order.OrderDate
+        //         );
+        //         TempData["Success"] = "Đã gửi email xác nhận cho khách hàng thành công!";
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         TempData["Error"] = "Lỗi khi gửi mail: " + ex.Message;
+        //     }
 
-            return RedirectToAction(nameof(Details), new { id });
-        }
+        //     return RedirectToAction(nameof(Details), new { id });
+        // }
     }
 }
