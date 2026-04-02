@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vWiQ7YZ6Vn0=",
+  "dgSpecHash": "ADngjMkeJx4=",
   "success": true,
-  "projectFilePath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+  "projectFilePath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
@@ -66,9 +66,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "DoAn_DangKyTourDuLich depends on Microsoft.EntityFrameworkCore.SqlServer (>= 10.0.0-preview.2.25163.2) but Microsoft.EntityFrameworkCore.SqlServer 10.0.0-preview.2.25163.2 was not found. Microsoft.EntityFrameworkCore.SqlServer 10.0.0-preview.2.25163.8 was resolved instead.",
-      "projectPath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+      "projectPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+      "filePath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
       "libraryId": "Microsoft.EntityFrameworkCore.SqlServer",
       "targetGraphs": [
         "net10.0"
@@ -78,9 +78,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "DoAn_DangKyTourDuLich depends on Microsoft.EntityFrameworkCore.Tools (>= 10.0.0-preview.2.25163.2) but Microsoft.EntityFrameworkCore.Tools 10.0.0-preview.2.25163.2 was not found. Microsoft.EntityFrameworkCore.Tools 10.0.0-preview.2.25163.8 was resolved instead.",
-      "projectPath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+      "projectPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+      "filePath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
       "libraryId": "Microsoft.EntityFrameworkCore.Tools",
       "targetGraphs": [
         "net10.0"

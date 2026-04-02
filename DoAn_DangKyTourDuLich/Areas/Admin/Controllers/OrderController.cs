@@ -1,10 +1,10 @@
+using DoAn_DangKyTourDuLich.Data;
+using DoAn_DangKyTourDuLich.Models;
+using DoAn_DangKyTourDuLich.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DoAn_DangKyTourDuLich.Data;
-using DoAn_DangKyTourDuLich.Models;
-
-using DoAn_DangKyTourDuLich.Services;
+using System.Text.RegularExpressions;
 
 namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 {
@@ -21,7 +21,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             _emailService = emailService;
         }
 
-        // GET: Admin/Order
         public async Task<IActionResult> Index(OrderStatus? status)
         {
             var query = _context.Orders
@@ -40,7 +39,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(orders);
         }
 
-        // GET: Admin/Order/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var order = await _context.Orders
@@ -53,7 +51,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             return View(order);
         }
 
-        // POST: Admin/Order/UpdateStatus
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateStatus(int id, OrderStatus status)
@@ -65,7 +62,6 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
 
             if (order == null) return NotFound();
 
-            // Nếu hủy đơn thì hoàn lại số chỗ
             if (status == OrderStatus.Cancelled && order.Status != OrderStatus.Cancelled)
             {
                 foreach (var detail in order.OrderDetails)
@@ -82,127 +78,126 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             order.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
 
-            // --- GỬI EMAIL TƯƠNG ỨNG VỚI TRẠNG THÁI ---
             try
             {
                 if (status == OrderStatus.Confirmed)
                 {
-                    // Gửi email xác nhận đơn với QR code + chi tiết
-                    var firstDetail = order.OrderDetails.FirstOrDefault();
-                    var tour = firstDetail?.Tour;
-                    
-                    // Parse ghi chú để lấy số lượng người lớn/trẻ nhỏ
-                    int adultQty = firstDetail?.Quantity ?? 1;
-                    int childQty = 0;
-                    decimal adultPrice = firstDetail?.UnitPrice ?? order.TotalAmount;
-                    decimal childPrice = adultPrice / 2;
-                    
-                    if (!string.IsNullOrEmpty(order.Note))
-                    {
-                        var match = System.Text.RegularExpressions.Regex.Match(order.Note, @"\[SL:\s*(\d+)\s*Lớn,\s*(\d+)\s*Trẻ nhỏ");
-                        if (match.Success)
-                        {
-                            adultQty = int.Parse(match.Groups[1].Value);
-                            childQty = int.Parse(match.Groups[2].Value);
-                        }
-                    }
-
-                    string paymentDisplay = order.PaymentMethod switch
-                    {
-                        PaymentMethod.CashOnDelivery => "Thanh toán khi nhận tour",
-                        PaymentMethod.BankTransfer => "Chuyển khoản ngân hàng",
-                        PaymentMethod.OnlinePayment => "Thanh toán online",
-                        _ => "N/A"
-                    };
-
-                    await _emailService.SendBookingEmailAsync(new BookingEmailInfo
-                    {
-                        CustomerEmail = order.CustomerEmail,
-                        CustomerName = order.CustomerName,
-                        CustomerPhone = order.CustomerPhone,
-                        CustomerAddress = order.CustomerAddress,
-                        TourName = tour?.Name ?? "Tour du lịch",
-                        TourDestination = tour?.Destination,
-                        TourDepartureLocation = tour?.DepartureLocation,
-                        TourTransportation = tour?.Transportation,
-                        TourDuration = tour?.Duration ?? 1,
-                        TourDepartureDate = tour?.DepartureDate,
-                        OrderCode = order.OrderCode,
-                        TotalAmount = order.TotalAmount,
-                        OrderDate = order.OrderDate,
-                        AdultQuantity = adultQty,
-                        ChildQuantity = childQty,
-                        AdultPrice = adultPrice,
-                        ChildPrice = childPrice,
-                        PaymentMethodDisplay = paymentDisplay,
-                        Note = order.Note
-                    });
-                    TempData["Success"] = "Cập nhật trạng thái thành 'Đã xác nhận' và gửi email xác nhận cho khách hàng!";
+                    await SendConfirmedOrderEmailAsync(order);
+                    TempData["Success"] = "Đã xác nhận chuyến tour và gửi email đầy đủ thông tin cho khách hàng.";
                 }
                 else if (status == OrderStatus.Completed)
                 {
-                    TempData["Success"] = "Cập nhật trạng thái thành 'Hoàn thành'!";
+                    TempData["Success"] = "Đã cập nhật trạng thái đơn hàng thành hoàn thành.";
                 }
                 else if (status == OrderStatus.Cancelled)
                 {
-                    // Gửi email hoàn tiền
                     var firstTour = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
                     await _emailService.SendRefundEmailAsync(
                         order.CustomerEmail,
                         order.CustomerName,
                         firstTour,
                         order.OrderCode,
-                        order.TotalAmount
-                    );
-                    TempData["Success"] = "Cập nhật trạng thái thành 'Đã hủy' và gửi email hoàn tiền cho khách hàng!";
+                        order.TotalAmount);
+
+                    TempData["Success"] = "Đã hủy đơn hàng và gửi email thông báo cho khách hàng.";
                 }
                 else
                 {
-                    TempData["Success"] = "Cập nhật trạng thái đơn hàng thành công!";
+                    TempData["Success"] = "Đã cập nhật trạng thái đơn hàng thành công.";
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi gửi mail: " + ex.Message);
+                Console.WriteLine("Loi gui mail: " + ex.Message);
                 TempData["Warning"] = $"Cập nhật trạng thái thành công nhưng gặp lỗi khi gửi email: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Details), new { id });
         }
 
-        // POST: Admin/Order/SendEmailToCustomer
-        // (KHÔNG CÒN DÙNG - Email sẽ tự động gửi khi admin cập nhật trạng thái)
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> SendEmailToCustomer(int id)
-        // {
-        //     var order = await _context.Orders
-        //         .Include(o => o.OrderDetails)
-        //             .ThenInclude(od => od.Tour)
-        //         .FirstOrDefaultAsync(o => o.Id == id);
+        private async Task SendConfirmedOrderEmailAsync(Order order)
+        {
+            var firstDetail = order.OrderDetails.FirstOrDefault();
+            var tour = firstDetail?.Tour;
 
-        //     if (order == null) return NotFound();
+            int adultQty = firstDetail?.Quantity ?? 1;
+            int childQty = 0;
+            decimal adultPrice = firstDetail?.UnitPrice ?? order.TotalAmount;
+            decimal childPrice = adultPrice / 2;
+            DateTime? selectedDepartureDateTime = null;
+            string groupTypeDisplay = "Tour ghép";
 
-        //     var tourName = order.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+            ParseOrderNote(order.Note, ref adultQty, ref childQty, ref selectedDepartureDateTime, ref groupTypeDisplay);
 
-        //     try
-        //     {
-        //         await _emailService.SendBookingEmailAsync(
-        //             order.CustomerEmail, 
-        //             order.CustomerName, 
-        //             tourName, 
-        //             order.OrderCode, 
-        //             order.TotalAmount,
-        //             order.OrderDate
-        //         );
-        //         TempData["Success"] = "Đã gửi email xác nhận cho khách hàng thành công!";
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         TempData["Error"] = "Lỗi khi gửi mail: " + ex.Message;
-        //     }
+            string paymentDisplay = order.PaymentMethod switch
+            {
+                PaymentMethod.CashOnDelivery => "Thanh toán khi nhận tour",
+                PaymentMethod.BankTransfer => "Chuyển khoản ngân hàng",
+                PaymentMethod.OnlinePayment => "Thanh toán online",
+                _ => "N/A"
+            };
 
-        //     return RedirectToAction(nameof(Details), new { id });
-        // }
+            await _emailService.SendBookingEmailAsync(new BookingEmailInfo
+            {
+                CustomerEmail = order.CustomerEmail,
+                CustomerName = order.CustomerName,
+                CustomerPhone = order.CustomerPhone,
+                CustomerAddress = order.CustomerAddress,
+                TourName = tour?.Name ?? "Tour du lịch",
+                TourDestination = tour?.Destination,
+                TourDepartureLocation = tour?.DepartureLocation,
+                TourTransportation = tour?.Transportation,
+                TourDuration = tour?.Duration ?? 1,
+                TourDepartureDate = tour?.DepartureDate,
+                SelectedDepartureDateTime = selectedDepartureDateTime,
+                GroupTypeDisplay = groupTypeDisplay,
+                OrderCode = order.OrderCode,
+                TotalAmount = order.TotalAmount,
+                OrderDate = order.OrderDate,
+                ConfirmedAt = order.UpdatedAt,
+                AdultQuantity = adultQty,
+                ChildQuantity = childQty,
+                AdultPrice = adultPrice,
+                ChildPrice = childPrice,
+                PaymentMethodDisplay = paymentDisplay,
+                Note = order.Note
+            });
+        }
+
+        private static void ParseOrderNote(
+            string? note,
+            ref int adultQty,
+            ref int childQty,
+            ref DateTime? selectedDepartureDateTime,
+            ref string groupTypeDisplay)
+        {
+            if (string.IsNullOrWhiteSpace(note))
+            {
+                return;
+            }
+
+            if (note.Contains("ĐOÀN RIÊNG", StringComparison.OrdinalIgnoreCase))
+            {
+                groupTypeDisplay = "Đoàn riêng";
+            }
+
+            var quantityMatch = Regex.Match(note, @"\[SL:\s*(\d+)\s*L(?:ớ|á»›)n,\s*(\d+)\s*Tr(?:ẻ|áº»)");
+            if (quantityMatch.Success)
+            {
+                adultQty = int.Parse(quantityMatch.Groups[1].Value);
+                childQty = int.Parse(quantityMatch.Groups[2].Value);
+            }
+
+            var dateMatch = Regex.Match(note, @"Ng(?:à|Ã )y:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})(?:\s+([0-9]{2}:[0-9]{2}))?");
+            if (dateMatch.Success)
+            {
+                var rawDate = dateMatch.Groups[1].Value;
+                var rawTime = dateMatch.Groups[2].Success ? dateMatch.Groups[2].Value : "00:00";
+                if (DateTime.TryParse($"{rawDate} {rawTime}", out var parsed))
+                {
+                    selectedDepartureDateTime = parsed;
+                }
+            }
+        }
     }
 }

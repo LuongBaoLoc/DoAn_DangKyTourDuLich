@@ -6,6 +6,7 @@ namespace DoAn_DangKyTourDuLich.Models
 {
     public class Tour
     {
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Mã tour")]
@@ -26,7 +27,7 @@ namespace DoAn_DangKyTourDuLich.Models
         public string? DetailDescription { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập giá")]
-        [Display(Name = "Giá (VNĐ)")]
+        [Display(Name = "Giá gốc (VNĐ)")]
         [Column(TypeName = "decimal(18,0)")]
         [Range(0, double.MaxValue, ErrorMessage = "Giá phải lớn hơn 0")]
         public decimal Price { get; set; }
@@ -65,7 +66,7 @@ namespace DoAn_DangKyTourDuLich.Models
         [StringLength(200)]
         public string? ImageUrl { get; set; }
 
-        [Display(Name = "Danh sÃ¡ch hÃ¬nh áº£nh")]
+        [Display(Name = "Danh sách hình ảnh (JSON)")]
         public string? ImageUrlsData { get; set; }
 
         [Display(Name = "Phương tiện di chuyển")]
@@ -87,22 +88,25 @@ namespace DoAn_DangKyTourDuLich.Models
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedAt { get; set; }
 
-        // Foreign key
+        // --- KHÓA NGOẠI ---
         [Display(Name = "Danh mục")]
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }
 
-        // Navigation properties
+        // --- LIÊN KẾT BẢNG ---
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
-        // Computed property
+        // --- THUỘC TÍNH TÍNH TOÁN (KHÔNG LƯU DB) ---
+        
         [NotMapped]
+        [Display(Name = "Chỗ còn trống")]
         public int AvailableSlots => MaxParticipants - CurrentParticipants;
 
         [NotMapped]
+        [Display(Name = "Giá hiển thị")]
         public decimal DisplayPrice => DiscountPrice ?? Price;
 
         [NotMapped]
@@ -111,39 +115,31 @@ namespace DoAn_DangKyTourDuLich.Models
             get
             {
                 var images = new List<string>();
+                if (!string.IsNullOrWhiteSpace(ImageUrl)) images.Add(ImageUrl);
 
-                if (!string.IsNullOrWhiteSpace(ImageUrl))
-                {
-                    images.Add(ImageUrl);
-                }
-
-                if (string.IsNullOrWhiteSpace(ImageUrlsData))
-                {
-                    return images;
-                }
+                if (string.IsNullOrWhiteSpace(ImageUrlsData)) return images;
 
                 try
                 {
-                    var storedImages = JsonSerializer.Deserialize<List<string>>(ImageUrlsData) ?? new List<string>();
-                    foreach (var image in storedImages)
+                    var storedImages = JsonSerializer.Deserialize<List<string>>(ImageUrlsData);
+                    if (storedImages != null)
                     {
-                        if (!string.IsNullOrWhiteSpace(image) && !images.Contains(image))
+                        foreach (var img in storedImages)
                         {
-                            images.Add(image);
+                            if (!string.IsNullOrWhiteSpace(img) && !images.Contains(img))
+                                images.Add(img);
                         }
                     }
                 }
                 catch
                 {
-                    foreach (var image in ImageUrlsData.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                    // Xử lý trường hợp dữ liệu cũ lưu dạng chuỗi cách nhau bởi dấu chấm phẩy
+                    var splitImages = ImageUrlsData.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    foreach (var img in splitImages)
                     {
-                        if (!images.Contains(image))
-                        {
-                            images.Add(image);
-                        }
+                        if (!images.Contains(img)) images.Add(img);
                     }
                 }
-
                 return images;
             }
         }

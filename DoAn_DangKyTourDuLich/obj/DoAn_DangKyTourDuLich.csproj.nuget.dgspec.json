@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {}
+    "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {}
   },
   "projects": {
-    "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {
+    "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+        "projectUniqueName": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
         "projectName": "DoAn_DangKyTourDuLich",
-        "projectPath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+        "projectPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\HỌC\\Lập Trình Win\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\obj\\",
+        "outputPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -109,7 +108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

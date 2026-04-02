@@ -89,7 +89,7 @@
                                     <p class="mb-1"><span class="fw-bold text-dark">Trạng thái thanh toán:</span> 
                                         @{
                                             var statusColor = Model.Status == OrderStatus.Completed || Model.Status == OrderStatus.Confirmed ? "text-success" : "text-warning";
-                                            var statusText = Model.Status == OrderStatus.Completed || Model.Status == OrderStatus.Confirmed ? "Đã xác nhận" : "Chờ xử lý";
+                                            var statusText = Model.Status == OrderStatus.Completed || Model.Status == OrderStatus.Confirmed ? "Đã xác nhận" : "Chờ xác nhận";
                                         }
                                         <strong class="@statusColor"><i class="fas fa-circle ms-1" style="font-size:0.6rem;"></i> @statusText</strong>
                                     </p>

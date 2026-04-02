@@ -177,8 +177,9 @@
                         <!-- Transport Info -->
                         @{
                             int travelHoursB = 2 + (Model.TourId % 6);
-                            int depHourB = 5 + (Model.TourId % 4);
-                            int depMinuteB = (Model.TourId % 2 == 0) ? 0 : 30;
+                            DateTime parsedSelectedDate = DateTime.TryParse(Model.SelectedDate, out var selectedDateTime) ? selectedDateTime : DateTime.MinValue;
+                            int depHourB = parsedSelectedDate != DateTime.MinValue ? parsedSelectedDate.Hour : 5 + (Model.TourId % 4);
+                            int depMinuteB = parsedSelectedDate != DateTime.MinValue ? parsedSelectedDate.Minute : ((Model.TourId % 2 == 0) ? 0 : 30);
                             DateTime timeGoStartB = new DateTime(2000, 1, 1, depHourB, depMinuteB, 0);
                             DateTime timeGoEndB = timeGoStartB.AddHours(travelHoursB);
                             string transitIconB = (Model.Tour?.Transportation != null && Model.Tour.Transportation.Contains("Máy bay")) ? "fa-plane" : "fa-bus";
@@ -189,6 +190,9 @@
                             <div class="d-flex justify-content-between text-muted small mb-1">
                                 <div>Ngày khởi hành: <strong class="text-dark" id="dispStartDate">@(string.IsNullOrEmpty(Model.SelectedDate) ? (Model.Tour?.DepartureDate?.ToString("dd/MM/yyyy") ?? "--/--/----") : DateTime.Parse(Model.SelectedDate).ToString("dd/MM/yyyy"))</strong></div>
                                 <div>Thời gian lưu trú: <strong class="text-dark" id="dispDuration">@(Model.Tour?.Duration) ngày</strong></div>
+                            </div>
+                            <div class="text-muted small mb-2">
+                                Giá» khá»Ÿi hÃ nh: <strong class="text-dark" id="dispStartTime">@(string.IsNullOrEmpty(Model.SelectedDate) ? "--:--" : DateTime.Parse(Model.SelectedDate).ToString("HH:mm"))</strong>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="fw-bold fs-5">@timeGoStartB.ToString("HH:mm")</span>

@@ -6,6 +6,8 @@
     var totalOrders = (int)(ViewBag.TotalOrders ?? 0);
     var pendingOrders = (int)(ViewBag.PendingOrders ?? 0);
     var totalRevenue = (decimal)(ViewBag.TotalRevenue ?? 0m);
+    var currentYear = (int)(ViewBag.CurrentYear ?? DateTime.Now.Year);
+    var monthlyRevenue = ViewBag.MonthlyRevenue as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
 }
 
 <h2 class="fw-bold mb-4"><i class="fas fa-tachometer-alt text-primary me-2"></i>Dashboard</h2>
@@ -54,6 +56,33 @@
                 </div>
                 <div class="stat-icon"><i class="fas fa-coins"></i></div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-bold"><i class="fas fa-chart-line text-success me-2"></i>Doanh thu từng tháng năm @currentYear</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tháng</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in monthlyRevenue)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.Label</td>
+                            <td class="fw-bold text-success">@(((decimal)item.Revenue).ToString("N0")) VNĐ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

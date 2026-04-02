@@ -6,12 +6,10 @@
 
 <div class="bg-light py-5">
     <div class="container">
-
-        <!-- Progress Steps (Visual Only) -->
         <div class="row justify-content-center mb-5">
             <div class="col-8 d-flex justify-content-between position-relative">
                 <div class="position-absolute top-50 start-0 w-100" style="height: 2px; background-color: #ddd; z-index: 1;"></div>
-                
+
                 <div class="text-center position-relative" style="z-index: 2;">
                     <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 45px; height: 45px;">
                         <i class="fas fa-check fs-5"></i>
@@ -38,14 +36,14 @@
                 <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
                     <div class="bg-primary text-white p-4 text-center">
                         <h4 class="fw-bold mb-1">Xác Nhận Thanh Toán</h4>
-                        <p class="mb-0 text-white-50">Đơn hàng của bạn đã được ghi nhận. Vui lòng thanh toán để hoàn tất.</p>
+                        <p class="mb-0 text-white-50">Đơn hàng của bạn đã được ghi nhận. Sau khi bạn báo đã thanh toán, admin sẽ kiểm tra và xác nhận đơn.</p>
                     </div>
                     <div class="card-body p-5">
                         <div class="row mb-5">
                             <div class="col-md-6 border-end text-center d-flex flex-column align-items-center justify-content-center">
                                 <h6 class="fw-bold text-uppercase text-muted mb-3">Số tiền cần thanh toán</h6>
                                 <h2 class="fw-bold text-danger mb-4">@Model.TotalAmount.ToString("N0") VNĐ</h2>
-                                
+
                                 <div class="bg-light p-3 rounded text-start w-100" style="font-size: 0.9rem;">
                                     <div class="d-flex justify-content-between mb-2">
                                         <span class="text-muted">Mã đơn hàng:</span>
@@ -61,20 +59,16 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6 text-center ps-md-4">
                                 @if (Model.PaymentMethod == PaymentMethod.BankTransfer || Model.PaymentMethod == PaymentMethod.OnlinePayment)
                                 {
                                     <h6 class="fw-bold text-uppercase text-danger mb-3">
-                                        <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo" style="height: 24px; margin-top: -4px;" class="me-2"/> Thanh toán qua MoMo
+                                        <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo" style="height: 24px; margin-top: -4px;" class="me-2" /> Thanh toán qua MoMo
                                     </h6>
                                     <div class="border rounded p-3 bg-light mb-3">
                                         @{
-                                            var firstTour = Model.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour";
-                                            // Nội dung nạp vào MoMo: Mã Đơn
                                             string transferMsg = $"Ve {Model.OrderCode}";
-                                            
-                                            // Tạo Cổng VietQR x MoMo cực chuẩn. Quét phát nhận diện Số điện thoại, Số tiền và Lời nhắn ngay.
                                             string vietQrUrl = $"https://img.vietqr.io/image/971025-0385353174-compact2.png?amount={(long)Model.TotalAmount}&addInfo={Uri.EscapeDataString(transferMsg)}&accountName=LUONG%20BAO%20LOC";
                                         }
                                         <img src="@vietQrUrl" alt="MoMo VietQR Transfer" class="img-fluid rounded shadow-sm mx-auto" style="max-height: 250px;" />
@@ -84,17 +78,16 @@
                                         <p class="mb-1"><span class="text-muted">Số điện thoại:</span> <strong class="text-danger" style="font-size: 1.1rem;">0385 353 174</strong></p>
                                         <p class="mb-0"><span class="text-muted">Nội dung chuyển:</span> <strong class="text-primary">@transferMsg</strong></p>
                                     </div>
-                                    <div class="text-center mt-2 small text-muted">* Mở app MoMo để quét mã này để chuyển tiền tự động.</div>
+                                    <div class="text-center mt-2 small text-muted">Mở ứng dụng MoMo để quét mã và chuyển tiền.</div>
                                 }
-
                             </div>
                         </div>
 
                         <hr class="mb-4" />
-                        
+
                         <div class="d-flex align-items-center bg-warning bg-opacity-10 text-dark p-3 rounded mb-4" style="font-size: 0.9rem;">
                             <i class="fas fa-info-circle text-warning fs-4 me-3"></i>
-                            <div>Nếu bạn đã thực hiện chuyển khoản/thanh toán, vui lòng nhấn xác nhận phía dưới. Hệ thống sẽ tự động duyệt sớm nhất.</div>
+                            <div>Nếu bạn đã thực hiện thanh toán, vui lòng nhấn xác nhận phía dưới. Đơn sẽ được giữ ở trạng thái chờ xác nhận cho đến khi admin kiểm tra.</div>
                         </div>
 
                         <form asp-action="ConfirmPayment" method="post" class="text-center">
@@ -103,15 +96,13 @@
                                 <i class="fas fa-check-circle me-2"></i>Tôi Đã Thanh Toán
                             </button>
                         </form>
-                        
                     </div>
                 </div>
-                
+
                 <div class="text-center mt-4">
                     <a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none"><i class="fas fa-arrow-left me-1"></i> Trở về trang chủ</a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

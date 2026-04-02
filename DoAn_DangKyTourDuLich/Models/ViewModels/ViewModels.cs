@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using DoAn_DangKyTourDuLich.Models;
 
 namespace DoAn_DangKyTourDuLich.Models.ViewModels
 {
@@ -61,13 +63,29 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         public int? Duration { get; set; }
         public string? Transportation { get; set; }
         public string? SortBy { get; set; }
+        public string? GroupSize { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 9;
-
         public List<Tour> Tours { get; set; } = new List<Tour>();
         public List<Category> Categories { get; set; } = new List<Category>();
         public int TotalPages { get; set; }
         public int TotalItems { get; set; }
+    }
+
+    public class TourRecommendationViewModel
+    {
+        public Tour Tour { get; set; } = null!;
+        public double Score { get; set; }
+        public bool SameCategory { get; set; }
+        public bool SameDestination { get; set; }
+        public bool SimilarPrice { get; set; }
+        public List<string> Reasons { get; set; } = new List<string>();
+    }
+
+    public class TourDetailsViewModel
+    {
+        public Tour Tour { get; set; } = null!;
+        public List<TourRecommendationViewModel> RelatedTours { get; set; } = new List<TourRecommendationViewModel>();
     }
 
     public class CheckoutViewModel
@@ -98,33 +116,37 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         [Display(Name = "Phương thức thanh toán")]
         public PaymentMethod PaymentMethod { get; set; }
 
-        // Tour info for display
         public int TourId { get; set; }
         public Tour? Tour { get; set; }
 
         [Display(Name = "Ngày khởi hành")]
         public string SelectedDate { get; set; } = string.Empty;
 
-        [Display(Name = "Số người lớn")]
+        [Display(Name = "Người lớn")]
+        [Range(1, 100)]
         public int AdultQuantity { get; set; } = 1;
 
-        [Display(Name = "Số trẻ em")]
+        [Display(Name = "Trẻ em (5-11 tuổi)")]
         public int ChildQuantity { get; set; } = 0;
 
-        [Display(Name = "Số trẻ nhỏ")]
+        [Display(Name = "Trẻ nhỏ (2-5 tuổi)")]
         public int ToddlerQuantity { get; set; } = 0;
 
-        [Display(Name = "Số em bé")]
+        [Display(Name = "Em bé (< 2 tuổi)")]
         public int InfantQuantity { get; set; } = 0;
+
+        [Display(Name = "Yêu cầu tách đoàn riêng (Cho khách tập thể)")]
+        public bool IsPrivateGroup { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập tổng số lượng")]
+        [Display(Name = "Tổng số lượng người")]
+        [Range(1, 100, ErrorMessage = "Số lượng phải từ 1 đến 100")]
+        public int Quantity { get; set; } = 1;
 
         [Display(Name = "Phụ thu phòng đơn")]
         public int SingleRoomQuantity { get; set; } = 0;
 
-        [Required(ErrorMessage = "Vui lòng nhập số lượng người")]
-        [Display(Name = "Số lượng người")]
-        [Range(1, 100, ErrorMessage = "Số lượng phải từ 1 đến 100")]
-        public int Quantity { get; set; } = 1;
-
+        [Display(Name = "Tổng tiền tạm tính")]
         public decimal TotalAmount { get; set; }
     }
 }
