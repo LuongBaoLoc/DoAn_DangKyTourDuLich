@@ -235,7 +235,7 @@ namespace DoAn_DangKyTourDuLich.Controllers
             if (order == null || order.UserId != user!.Id) return NotFound();
 
             var pdfBytes = pdfService.GenerateInvoice(order);
-            return File(pdfBytes, "application/pdf", $"Invoice_{order.OrderCode}.pdf");
+            return File(pdfBytes, "application/pdf", $"HOADONDATVE_{order.OrderCode}.pdf");
         }
     }
 }

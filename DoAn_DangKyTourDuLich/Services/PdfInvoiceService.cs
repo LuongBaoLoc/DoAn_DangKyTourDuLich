@@ -7,8 +7,11 @@ namespace DoAn_DangKyTourDuLich.Services
 {
     public class PdfInvoiceService
     {
-        public PdfInvoiceService()
+        private readonly QRCodeService _qrCodeService;
+
+        public PdfInvoiceService(QRCodeService qrCodeService)
         {
+            _qrCodeService = qrCodeService;
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
@@ -19,19 +22,13 @@ namespace DoAn_DangKyTourDuLich.Services
                 container.Page(page =>
                 {
                     page.Size(PageSizes.A4);
-                    page.Margin(2, Unit.Centimetre);
+                    // Lề trang nhìn cân đối hơn
+                    page.Margin(2.5f, Unit.Centimetre);
                     page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(11));
+                    page.DefaultTextStyle(x => x.FontSize(10).FontFamily(Fonts.Arial).FontColor(Colors.Grey.Darken4));
 
                     page.Header().Element(compose => ComposeHeader(compose, order));
                     page.Content().Element(compose => ComposeContent(compose, order));
-                    page.Footer().AlignCenter().Text(x =>
-                    {
-                        x.Span("Trang ");
-                        x.CurrentPageNumber();
-                        x.Span(" / ");
-                        x.TotalPages();
-                    });
                 });
             });
 
@@ -40,47 +37,138 @@ namespace DoAn_DangKyTourDuLich.Services
 
         private void ComposeHeader(IContainer container, Order order)
         {
-            container.Row(row =>
+            container.Column(col =>
             {
-                row.RelativeItem().Column(column =>
+                col.Item().Row(row =>
                 {
-                    column.Item().Text("HÓA ĐƠN ĐẶT TOUR").FontSize(20).SemiBold().FontColor(Colors.Blue.Darken2);
-                    column.Item().Text($"Mã Đơn: {order.OrderCode}").FontSize(14).SemiBold();
-                    column.Item().Text($"Ngày tạo: {order.OrderDate:dd/MM/yyyy HH:mm}");
-                    column.Item().PaddingTop(5).Text("Công ty Du Lịch XYZ").SemiBold();
-                    column.Item().Text("123 Đường Cờ Cờ, TP.HCM");
+                    // Trái: Thông tin công ty
+                    row.RelativeItem().Column(c =>
+                    {
+                        c.Item().Text("CÔNG TY DU LỊCH VIỆT NAM").FontSize(14).SemiBold().FontColor("#0d6efd"); // Xanh dương chủ đạo
+                        c.Item().Text("Tịnh Biên, An Giang, Việt Nam").FontSize(9).FontColor(Colors.Grey.Medium);
+                        c.Item().Text("Hotline: 038 535 3174").FontSize(9).FontColor(Colors.Grey.Medium);
+                    });
+
+                    // Phải: Tiêu đề Hóa Đơn
+                    row.RelativeItem().AlignRight().Column(c =>
+                    {
+                        c.Item().AlignRight().Text("HÓA ĐƠN").FontSize(22).SemiBold().FontColor("#dc3545"); // Đỏ nổi bật
+                        c.Item().AlignRight().Text($"#{order.OrderCode}").FontSize(10).FontColor("#dc3545");
+                    });
                 });
-                // row.ConstantItem(100).Height(50).Placeholder(); // Placeholder for logo
+
+                // Đường kẻ ngang màu xanh
+                col.Item().PaddingVertical(15).LineHorizontal(2).LineColor("#0d6efd");
             });
         }
 
         private void ComposeContent(IContainer container, Order order)
         {
-            container.PaddingVertical(1, Unit.Centimetre).Column(column =>
+            container.PaddingVertical(0).Column(column =>
             {
                 column.Spacing(20);
-
+                
+                // --- Section 1: Customer & Payment ---
                 column.Item().Row(row =>
                 {
-                    row.RelativeItem().Component(new AddressComponent("Thông tin khách hàng", order.CustomerName, order.CustomerEmail, order.CustomerPhone, order.CustomerAddress));
+                    row.RelativeItem().Column(c =>
+                    {
+                        c.Item().PaddingBottom(4).Text("THÔNG TIN KHÁCH HÀNG").FontSize(11).SemiBold().FontColor("#0d6efd");
+                        c.Item().Text(t => { t.Span("Họ tên: ").SemiBold(); t.Span(order.CustomerName); });
+                        c.Item().Text(t => { t.Span("Email: ").SemiBold(); t.Span(order.CustomerEmail); });
+                        c.Item().Text(t => { t.Span("Điện thoại: ").SemiBold(); t.Span(order.CustomerPhone); });
+                        c.Item().Text(t => { t.Span("Địa chỉ: ").SemiBold(); t.Span(!string.IsNullOrEmpty(order.CustomerAddress) ? order.CustomerAddress : "Không có"); });
+                    });
+
+                    row.RelativeItem().AlignRight().Column(c =>
+                    {
+                        c.Item().AlignRight().PaddingBottom(4).Text("CHI TIẾT THANH TOÁN").FontSize(11).SemiBold().FontColor("#0d6efd");
+                        c.Item().AlignRight().Text(t => { t.Span("Ngày đặt: ").SemiBold(); t.Span(order.OrderDate.ToString("dd/MM/yyyy HH:mm")); });
+                        
+                        string method = order.PaymentMethod == PaymentMethod.OnlinePayment ? "VNPay" : "Tiền mặt";
+                        c.Item().AlignRight().Text(t => { t.Span("Phương thức: ").SemiBold(); t.Span(method); });
+                        
+                        string statusTxt = order.Status switch
+                        {
+                            OrderStatus.Pending => "Chờ xác nhận",
+                            OrderStatus.Confirmed => "Đã xác nhận",
+                            OrderStatus.Completed => "Hoàn thành",
+                            OrderStatus.Cancelled => "Đã hủy",
+                            _ => order.Status.ToString()
+                        };
+                        c.Item().AlignRight().Text(t => { t.Span("Trạng thái: ").SemiBold(); t.Span(statusTxt); });
+                    });
                 });
 
-                column.Item().Element(c => ComposeTable(c, order));
-
-                column.Item().AlignRight().Text($"Tổng tiền: {order.TotalAmount:N0} VNĐ").FontSize(16).SemiBold();
-                
-                column.Item().PaddingTop(10).Text(t =>
+                // --- Section 2: Trip Details ---
+                column.Item().Column(c =>
                 {
-                    t.Span("Trạng thái: ").SemiBold();
-                    string statusTxt = order.Status switch
+                    c.Item().PaddingBottom(4).Text("CHI TIẾT CHUYẾN ĐI").FontSize(11).SemiBold().FontColor("#0d6efd");
+                    
+                    var firstDetail = order.OrderDetails.FirstOrDefault();
+                    var tour = firstDetail?.Tour;
+
+                    if (tour != null)
                     {
-                        OrderStatus.Pending => "Chờ xác nhận",
-                        OrderStatus.Confirmed => "Đã xác nhận",
-                        OrderStatus.Completed => "Hoàn thành",
-                        OrderStatus.Cancelled => "Đã hủy",
-                        _ => order.Status.ToString()
-                    };
-                    t.Span(statusTxt).FontColor(order.Status == OrderStatus.Completed ? Colors.Green.Medium : Colors.Orange.Medium);
+                        c.Item().Text(tour.Name).FontSize(13).SemiBold().FontColor(Colors.Black);
+                        c.Item().PaddingBottom(8).Text(t =>
+                        {
+                            t.Span("Điểm đến: ").SemiBold(); t.Span($"{tour.Destination} | ");
+                            t.Span("Thời gian: ").SemiBold(); t.Span($"{tour.Duration} ngày | ");
+                            t.Span("Phương tiện: ").SemiBold(); t.Span(tour.Transportation ?? "Xe du lịch");
+                        });
+                    }
+
+                    // Khung xám Ghi chú
+                    c.Item().Background("#f8f9fa").Padding(10).Column(gc =>
+                    {
+                        gc.Item().Text("Ghi chú:").SemiBold().FontSize(9);
+                        gc.Item().Text(string.IsNullOrEmpty(order.Note) ? "Không có ghi chú" : order.Note).FontSize(9);
+                    });
+                });
+
+                // --- Section 3: Cost Table ---
+                column.Item().Column(c =>
+                {
+                    c.Item().PaddingBottom(4).Text("BẢNG KÊ CHI PHÍ").FontSize(11).SemiBold().FontColor("#0d6efd");
+                    c.Item().Element(tableContainer => ComposeTable(tableContainer, order));
+                });
+
+                // --- Section 4: Total & Footer ---
+                column.Item().PaddingTop(5).Row(row =>
+                {
+                    // Ghi chú bên trái
+                    row.RelativeItem(2).Column(c =>
+                    {
+                        c.Spacing(3);
+                        c.Item().PaddingTop(15).Text("Lưu ý:").FontSize(9).SemiBold();
+                        c.Item().Text("• Vui lòng xuất trình mã QR cho hướng dẫn viên khi tham gia tour.").FontSize(9);
+                        c.Item().Text("• Mọi thắc mắc xin vui lòng liên hệ Hotline: 038 535 3174.").FontSize(9);
+                        c.Item().Text("• Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ!").FontSize(9);
+                    });
+
+                    // Tổng tiền bên phải + QR Code
+                    row.RelativeItem(1).Column(c =>
+                    {
+                        // Ô nổi bật màu hồng tổng cộng
+                        c.Item().Background("#fce8e8").Padding(15).AlignRight().Column(bc =>
+                        {
+                            bc.Item().AlignRight().Text("TỔNG CỘNG").FontSize(11).SemiBold().FontColor("#dc3545");
+                            bc.Item().AlignRight().Text($"{order.TotalAmount:N0} VNĐ").FontSize(18).SemiBold().FontColor("#dc3545");
+                        });
+
+                        // Tạo QR
+                        var firstDetail = order.OrderDetails.FirstOrDefault();
+                        var tour = firstDetail?.Tour;
+                        var qrContent = _qrCodeService.GetBookingTicketInfo(order.OrderCode!, order.CustomerName, tour?.Name ?? "Tour", order.OrderDate, order.TotalAmount);
+                        var qrBytes = _qrCodeService.GenerateQRCode(qrContent);
+
+                        c.Item().PaddingTop(15).AlignRight().Column(qrCol =>
+                        {
+                            qrCol.Item().AlignRight().Width(75).Image(qrBytes);
+                            qrCol.Item().AlignRight().PaddingTop(3).Text("E-Ticket QR").FontSize(8).FontColor("#0d6efd").SemiBold();
+                        });
+                    });
                 });
             });
         }
@@ -91,74 +179,29 @@ namespace DoAn_DangKyTourDuLich.Services
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(30);
-                    columns.RelativeColumn(3);
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
+                    columns.RelativeColumn(4); // Mô tả
+                    columns.RelativeColumn(1); // SL
+                    columns.RelativeColumn(2); // Đơn giá
+                    columns.RelativeColumn(2); // Thành tiền
                 });
 
+                // Dòng Header nền xanh chữ trắng
                 table.Header(header =>
                 {
-                    header.Cell().Element(CellStyle).Text("#");
-                    header.Cell().Element(CellStyle).Text("Tên Tour");
-                    header.Cell().Element(CellStyle).AlignRight().Text("Đơn giá");
-                    header.Cell().Element(CellStyle).AlignRight().Text("Số lượng");
-                    header.Cell().Element(CellStyle).AlignRight().Text("Thành tiền");
-
-                    static IContainer CellStyle(IContainer container)
-                    {
-                        return container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
-                    }
+                    header.Cell().Background("#0d6efd").Padding(6).Text("Mô tả").FontColor(Colors.White).SemiBold();
+                    header.Cell().Background("#0d6efd").Padding(6).AlignCenter().Text("SL").FontColor(Colors.White).SemiBold();
+                    header.Cell().Background("#0d6efd").Padding(6).AlignRight().Text("Đơn giá").FontColor(Colors.White).SemiBold();
+                    header.Cell().Background("#0d6efd").Padding(6).AlignRight().Text("Thành tiền").FontColor(Colors.White).SemiBold();
                 });
 
-                int i = 1;
+                // Dữ liệu dòng
                 foreach (var detail in order.OrderDetails)
                 {
-                    table.Cell().Element(CellStyle).Text(i++.ToString());
-                    table.Cell().Element(CellStyle).Text(detail.Tour?.Name ?? "Tour");
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{detail.UnitPrice:N0} VNĐ");
-                    table.Cell().Element(CellStyle).AlignRight().Text(detail.Quantity.ToString());
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{detail.SubTotal:N0} VNĐ");
-
-                    static IContainer CellStyle(IContainer container)
-                    {
-                        return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
-                    }
+                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(8).Text(detail.Tour?.Name ?? "Tour");
+                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(8).AlignCenter().Text(detail.Quantity.ToString());
+                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(8).AlignRight().Text($"{detail.UnitPrice:N0} đ");
+                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(8).AlignRight().Text($"{detail.SubTotal:N0} đ");
                 }
-            });
-        }
-    }
-
-    public class AddressComponent : IComponent
-    {
-        private string Title { get; }
-        private string Name { get; }
-        private string Email { get; }
-        private string Phone { get; }
-        private string? Address { get; }
-
-        public AddressComponent(string title, string name, string email, string phone, string? address)
-        {
-            Title = title;
-            Name = name;
-            Email = email;
-            Phone = phone;
-            Address = address;
-        }
-
-        public void Compose(IContainer container)
-        {
-            container.Column(column =>
-            {
-                column.Spacing(2);
-
-                column.Item().BorderBottom(1).PaddingBottom(5).Text(Title).SemiBold();
-                column.Item().Text(Name);
-                column.Item().Text(Email);
-                column.Item().Text(Phone);
-                if (!string.IsNullOrEmpty(Address))
-                    column.Item().Text(Address);
             });
         }
     }

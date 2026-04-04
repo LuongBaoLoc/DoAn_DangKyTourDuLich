@@ -145,7 +145,6 @@ using (var scope = app.Services.CreateScope())
                 await userManager.AddToRoleAsync(adminUser, "Admin");
         }
 
-        Log.Information("Seed dữ liệu ban đầu thành công");
     }
     catch (Exception ex)
     {

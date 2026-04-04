@@ -7662,3 +7662,272 @@
 2026-04-05 05:26:11.269 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.8784 ms
 2026-04-05 05:26:11.280 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 1.5065 ms
 2026-04-05 05:26:11.284 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 1.4296 ms
+2026-04-05 05:27:33.273 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:27:33.563 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:30:12.056 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:30:12.340 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:30:28.840 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:30:35.939 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 5641.1534 ms
+2026-04-05 05:30:35.938 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 6709.0221 ms
+2026-04-05 05:30:36.418 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 449.8167 ms
+2026-04-05 05:30:36.438 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 470.4603 ms
+2026-04-05 05:30:36.550 +07:00 [INF] HTTP GET /css/site.css responded 200 in 584.6495 ms
+2026-04-05 05:30:36.555 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 590.4204 ms
+2026-04-05 05:30:36.736 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 104.8627 ms
+2026-04-05 05:30:36.747 +07:00 [INF] HTTP GET /images/tours/tl4.jpg responded 404 in 3.3702 ms
+2026-04-05 05:30:36.749 +07:00 [INF] HTTP GET /images/tours/tl2.jpg responded 404 in 5.9426 ms
+2026-04-05 05:30:36.770 +07:00 [INF] HTTP GET /images/tours/tl5.jpg responded 404 in 3.0768 ms
+2026-04-05 05:30:36.811 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 18.8813 ms
+2026-04-05 05:30:36.821 +07:00 [INF] HTTP GET /js/site.js responded 200 in 19.8961 ms
+2026-04-05 05:30:46.869 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 1611.8531 ms
+2026-04-05 05:30:46.902 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 2.9864 ms
+2026-04-05 05:30:46.945 +07:00 [INF] HTTP GET /js/site.js responded 200 in 33.7338 ms
+2026-04-05 05:30:46.947 +07:00 [INF] HTTP GET /css/site.css responded 200 in 29.7463 ms
+2026-04-05 05:30:47.059 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 154.5115 ms
+2026-04-05 05:30:47.099 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 12.4065 ms
+2026-04-05 05:30:47.293 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 24.6787 ms
+2026-04-05 05:30:47.322 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 5.1187 ms
+2026-04-05 05:30:47.382 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 6.1545 ms
+2026-04-05 05:30:54.677 +07:00 [INF] Đơn hàng mới: 19936476 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:30:54.687 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 2778.8868 ms
+2026-04-05 05:30:55.809 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 1108.8423 ms
+2026-04-05 05:30:55.829 +07:00 [INF] HTTP GET /css/site.css responded 200 in 3.0975 ms
+2026-04-05 05:30:55.833 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.8739 ms
+2026-04-05 05:30:55.834 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.3974 ms
+2026-04-05 05:30:55.835 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.9399 ms
+2026-04-05 05:30:55.836 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 9.7748 ms
+2026-04-05 05:31:03.142 +07:00 [INF] HTTP GET /Tour/DownloadInvoice responded 200 in 4268.2968 ms
+2026-04-05 05:36:33.532 +07:00 [INF] HTTP GET /api/SeedImages/run responded 404 in 1.1286 ms
+2026-04-05 05:37:33.140 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:37:33.441 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:37:43.478 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:37:49.389 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 4987.5217 ms
+2026-04-05 05:37:49.468 +07:00 [INF] HTTP GET /css/site.css responded 200 in 58.5690 ms
+2026-04-05 05:37:49.550 +07:00 [INF] HTTP GET /js/site.js responded 200 in 137.1022 ms
+2026-04-05 05:37:49.622 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 213.3249 ms
+2026-04-05 05:37:49.973 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 563.4084 ms
+2026-04-05 05:37:49.973 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 564.5935 ms
+2026-04-05 05:37:57.901 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 38.6035 ms
+2026-04-05 05:37:57.906 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 36.3002 ms
+2026-04-05 05:37:57.915 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 55.2550 ms
+2026-04-05 05:37:57.915 +07:00 [INF] HTTP GET /css/site.css responded 200 in 46.2250 ms
+2026-04-05 05:37:57.940 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 19.5816 ms
+2026-04-05 05:37:57.969 +07:00 [INF] HTTP GET / responded 200 in 1873.4056 ms
+2026-04-05 05:37:58.040 +07:00 [INF] HTTP GET /images/hinh-nen-viet-nam-4k25.jpg responded 304 in 6.6214 ms
+2026-04-05 05:37:58.075 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 15.9028 ms
+2026-04-05 05:37:58.238 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 7.8831 ms
+2026-04-05 05:37:58.239 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 37.1264 ms
+2026-04-05 05:37:58.293 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 10.1707 ms
+2026-04-05 05:37:58.310 +07:00 [INF] HTTP GET /images/categories/nghi-duong.jpg responded 304 in 1.9435 ms
+2026-04-05 05:37:58.364 +07:00 [INF] HTTP GET /js/site.js responded 200 in 6.3454 ms
+2026-04-05 05:37:58.388 +07:00 [INF] HTTP GET /images/categories/team-building.jpg responded 304 in 2.9263 ms
+2026-04-05 05:37:58.413 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.8624 ms
+2026-04-05 05:37:58.413 +07:00 [INF] HTTP GET /images/categories/mao-hiem.jpg responded 304 in 2.5844 ms
+2026-04-05 05:37:58.458 +07:00 [INF] HTTP GET /images/categories/quoc-te.jpg responded 304 in 3.2559 ms
+2026-04-05 05:37:58.494 +07:00 [INF] HTTP GET /images/categories/am-thuc.jpg responded 304 in 3.5238 ms
+2026-04-05 05:38:06.187 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:38:06.481 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:38:07.053 +07:00 [INF] HTTP GET /Tour responded 200 in 1044.9914 ms
+2026-04-05 05:38:07.067 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.2261 ms
+2026-04-05 05:38:07.076 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 1.6711 ms
+2026-04-05 05:38:07.078 +07:00 [INF] HTTP GET /css/site.css responded 200 in 9.7404 ms
+2026-04-05 05:38:07.079 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 1.2939 ms
+2026-04-05 05:38:07.082 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 14.4523 ms
+2026-04-05 05:38:07.109 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.1792 ms
+2026-04-05 05:38:07.124 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.5039 ms
+2026-04-05 05:38:07.136 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 4.0214 ms
+2026-04-05 05:38:07.143 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 1.4455 ms
+2026-04-05 05:38:07.157 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 1.4321 ms
+2026-04-05 05:38:07.160 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 1.1153 ms
+2026-04-05 05:38:07.171 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.6120 ms
+2026-04-05 05:38:07.179 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 1.9232 ms
+2026-04-05 05:38:07.243 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 5.3778 ms
+2026-04-05 05:38:13.797 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 1121.9241 ms
+2026-04-05 05:38:13.818 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 0.9021 ms
+2026-04-05 05:38:13.819 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 1.0060 ms
+2026-04-05 05:38:13.819 +07:00 [INF] HTTP GET /css/site.css responded 200 in 2.8267 ms
+2026-04-05 05:38:13.823 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.7902 ms
+2026-04-05 05:38:13.829 +07:00 [INF] HTTP GET /images/tours/tl4.jpg responded 404 in 3.4464 ms
+2026-04-05 05:38:13.831 +07:00 [INF] HTTP GET /images/tours/tl5.jpg responded 404 in 1.2338 ms
+2026-04-05 05:38:13.842 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.3747 ms
+2026-04-05 05:38:13.859 +07:00 [INF] HTTP GET /images/tours/tl2.jpg responded 404 in 1.6728 ms
+2026-04-05 05:38:13.868 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 4.8644 ms
+2026-04-05 05:38:13.887 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.7801 ms
+2026-04-05 05:39:48.032 +07:00 [INF] HTTP GET /api/SeedImages/run responded 200 in 117737.2439 ms
+2026-04-05 05:40:13.983 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:40:14.055 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:40:14.087 +07:00 [INF] HTTP GET /Tour responded 200 in 112.1395 ms
+2026-04-05 05:40:14.122 +07:00 [INF] HTTP GET /css/site.css responded 200 in 7.4342 ms
+2026-04-05 05:40:14.132 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 24.5131 ms
+2026-04-05 05:40:14.159 +07:00 [WRN] The static asset '/images/tours/tour_83.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.161 +07:00 [WRN] The static asset '/images/tours/tour_81.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.161 +07:00 [WRN] The static asset '/images/tours/tour_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.161 +07:00 [WRN] The static asset '/images/tours/tour_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.177 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.6046 ms
+2026-04-05 05:40:14.184 +07:00 [WRN] The static asset '/images/tours/tour_86.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.245 +07:00 [INF] HTTP GET /images/tours/tour_83.jpg responded 200 in 101.9943 ms
+2026-04-05 05:40:14.245 +07:00 [INF] HTTP GET /images/tours/tour_78.jpg responded 200 in 102.9124 ms
+2026-04-05 05:40:14.250 +07:00 [INF] HTTP GET /images/tours/tour_76.jpg responded 200 in 109.0802 ms
+2026-04-05 05:40:14.250 +07:00 [INF] HTTP GET /images/tours/tour_81.jpg responded 200 in 109.0759 ms
+2026-04-05 05:40:14.271 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 6.4592 ms
+2026-04-05 05:40:14.280 +07:00 [INF] HTTP GET /images/tours/tour_86.jpg responded 200 in 96.6642 ms
+2026-04-05 05:40:14.293 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.7853 ms
+2026-04-05 05:40:14.306 +07:00 [WRN] The static asset '/images/tours/tour_88.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.330 +07:00 [WRN] The static asset '/images/tours/tour_91.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.356 +07:00 [WRN] The static asset '/images/tours/tour_93.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.370 +07:00 [WRN] The static asset '/images/tours/tour_96.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:14.431 +07:00 [INF] HTTP GET /images/tours/tour_88.jpg responded 200 in 128.3725 ms
+2026-04-05 05:40:14.446 +07:00 [INF] HTTP GET /images/tours/tour_91.jpg responded 200 in 117.5737 ms
+2026-04-05 05:40:14.461 +07:00 [INF] HTTP GET /images/tours/tour_93.jpg responded 200 in 106.1571 ms
+2026-04-05 05:40:14.485 +07:00 [INF] HTTP GET /images/tours/tour_96.jpg responded 200 in 119.6507 ms
+2026-04-05 05:40:14.566 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 4.4909 ms
+2026-04-05 05:40:28.362 +07:00 [INF] HTTP GET /Survey responded 200 in 289.3978 ms
+2026-04-05 05:40:28.403 +07:00 [INF] HTTP GET /css/site.css responded 200 in 18.1617 ms
+2026-04-05 05:40:28.403 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 20.1661 ms
+2026-04-05 05:40:28.411 +07:00 [INF] HTTP GET /js/site.js responded 200 in 12.5942 ms
+2026-04-05 05:40:28.412 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 21.4751 ms
+2026-04-05 05:40:28.412 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 13.5455 ms
+2026-04-05 05:40:39.014 +07:00 [INF] HTTP POST /Survey/Submit responded 200 in 316.1167 ms
+2026-04-05 05:40:39.036 +07:00 [WRN] The static asset '/images/tours/tour_26.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.037 +07:00 [INF] HTTP GET /css/site.css responded 200 in 7.1957 ms
+2026-04-05 05:40:39.037 +07:00 [WRN] The static asset '/images/tours/tour_24.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.037 +07:00 [WRN] The static asset '/images/tours/tour_19.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.039 +07:00 [WRN] The static asset '/images/tours/tour_29.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.040 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 10.8788 ms
+2026-04-05 05:40:39.051 +07:00 [INF] HTTP GET /images/tours/tour_26.jpg responded 200 in 19.3180 ms
+2026-04-05 05:40:39.075 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 5.3834 ms
+2026-04-05 05:40:39.086 +07:00 [INF] HTTP GET /images/tours/tour_24.jpg responded 200 in 49.3440 ms
+2026-04-05 05:40:39.100 +07:00 [INF] HTTP GET /images/tours/tour_19.jpg responded 200 in 63.7715 ms
+2026-04-05 05:40:39.115 +07:00 [INF] HTTP GET /images/tours/tour_29.jpg responded 200 in 76.9172 ms
+2026-04-05 05:40:39.655 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 8.9047 ms
+2026-04-05 05:40:39.674 +07:00 [WRN] The static asset '/images/tours/tour_3.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.689 +07:00 [INF] HTTP GET /js/site.js responded 200 in 6.4308 ms
+2026-04-05 05:40:39.715 +07:00 [WRN] The static asset '/images/tours/tour_8.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:39.934 +07:00 [INF] HTTP GET /images/tours/tour_3.jpg responded 200 in 263.8407 ms
+2026-04-05 05:40:39.996 +07:00 [INF] HTTP GET /images/tours/tour_8.jpg responded 200 in 284.4598 ms
+2026-04-05 05:40:52.636 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:40:52.715 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:40:52.763 +07:00 [INF] HTTP GET /Tour responded 200 in 129.9656 ms
+2026-04-05 05:40:52.780 +07:00 [WRN] The static asset '/images/tours/tour_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.781 +07:00 [WRN] The static asset '/images/tours/tour_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.783 +07:00 [INF] HTTP GET /css/site.css responded 200 in 6.3781 ms
+2026-04-05 05:40:52.785 +07:00 [WRN] The static asset '/images/tours/tour_81.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.786 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 9.3458 ms
+2026-04-05 05:40:52.800 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.9033 ms
+2026-04-05 05:40:52.824 +07:00 [INF] HTTP GET /images/tours/tour_76.jpg responded 200 in 44.4628 ms
+2026-04-05 05:40:52.829 +07:00 [INF] HTTP GET /images/tours/tour_78.jpg responded 200 in 48.0338 ms
+2026-04-05 05:40:52.853 +07:00 [WRN] The static asset '/images/tours/tour_83.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.884 +07:00 [INF] HTTP GET /images/tours/tour_81.jpg responded 200 in 99.6392 ms
+2026-04-05 05:40:52.895 +07:00 [WRN] The static asset '/images/tours/tour_86.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.905 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.1823 ms
+2026-04-05 05:40:52.920 +07:00 [INF] HTTP GET /js/site.js responded 200 in 1.7676 ms
+2026-04-05 05:40:52.927 +07:00 [WRN] The static asset '/images/tours/tour_88.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.937 +07:00 [INF] HTTP GET /images/tours/tour_83.jpg responded 200 in 84.3609 ms
+2026-04-05 05:40:52.943 +07:00 [WRN] The static asset '/images/tours/tour_91.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.953 +07:00 [INF] HTTP GET /images/tours/tour_86.jpg responded 200 in 58.5202 ms
+2026-04-05 05:40:52.959 +07:00 [WRN] The static asset '/images/tours/tour_93.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.967 +07:00 [WRN] The static asset '/images/tours/tour_96.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:40:52.973 +07:00 [INF] HTTP GET /images/tours/tour_88.jpg responded 200 in 46.9407 ms
+2026-04-05 05:40:52.990 +07:00 [INF] HTTP GET /images/tours/tour_91.jpg responded 200 in 47.3751 ms
+2026-04-05 05:40:53.012 +07:00 [INF] HTTP GET /images/tours/tour_93.jpg responded 200 in 54.1663 ms
+2026-04-05 05:40:53.020 +07:00 [INF] HTTP GET /images/tours/tour_96.jpg responded 200 in 53.3167 ms
+2026-04-05 05:48:28.863 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:48:28.938 +07:00 [INF] Bắt đầu tải ảnh cho các tour...
+2026-04-05 05:50:21.859 +07:00 [INF] Hoàn tất tải ảnh cho các tour.
+2026-04-05 05:50:22.087 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:51:00.941 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:51:03.432 +07:00 [INF] HTTP GET / responded 200 in 1405.5540 ms
+2026-04-05 05:51:10.538 +07:00 [INF] HTTP GET / responded 200 in 210.4154 ms
+2026-04-05 05:51:10.555 +07:00 [WRN] The static asset '/images/tours/tour_name_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.558 +07:00 [WRN] The static asset '/images/tours/tour_name_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.566 +07:00 [WRN] The static asset '/images/tours/tour_name_81.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.573 +07:00 [INF] HTTP GET /css/site.css responded 200 in 68.3847 ms
+2026-04-05 05:51:10.599 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 91.9864 ms
+2026-04-05 05:51:10.648 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 12.0848 ms
+2026-04-05 05:51:10.689 +07:00 [INF] HTTP GET /images/tours/tour_name_76.jpg responded 200 in 142.8648 ms
+2026-04-05 05:51:10.693 +07:00 [INF] HTTP GET /images/tours/tour_name_78.jpg responded 200 in 146.8770 ms
+2026-04-05 05:51:10.715 +07:00 [INF] HTTP GET /images/tours/tour_name_81.jpg responded 200 in 149.1573 ms
+2026-04-05 05:51:10.719 +07:00 [WRN] The static asset '/images/tours/tour_name_83.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.730 +07:00 [WRN] The static asset '/images/tours/tour_name_86.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.773 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 4.4541 ms
+2026-04-05 05:51:10.781 +07:00 [WRN] The static asset '/images/tours/tour_name_88.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:10.791 +07:00 [INF] HTTP GET /js/site.js responded 200 in 2.4829 ms
+2026-04-05 05:51:10.823 +07:00 [INF] HTTP GET /images/tours/tour_name_83.jpg responded 200 in 105.2280 ms
+2026-04-05 05:51:10.824 +07:00 [INF] HTTP GET /images/hinh-nen-viet-nam-4k25.jpg responded 200 in 23.5159 ms
+2026-04-05 05:51:10.845 +07:00 [INF] HTTP GET /images/tours/tour_name_86.jpg responded 200 in 116.0157 ms
+2026-04-05 05:51:10.864 +07:00 [INF] HTTP GET /images/categories/mao-hiem.jpg responded 200 in 10.5615 ms
+2026-04-05 05:51:10.876 +07:00 [INF] HTTP GET /images/tours/tour_name_88.jpg responded 200 in 96.7723 ms
+2026-04-05 05:51:10.928 +07:00 [INF] HTTP GET /images/categories/team-building.jpg responded 200 in 9.8012 ms
+2026-04-05 05:51:10.930 +07:00 [INF] HTTP GET /images/categories/nghi-duong.jpg responded 200 in 11.6223 ms
+2026-04-05 05:51:10.972 +07:00 [INF] HTTP GET /images/categories/quoc-te.jpg responded 200 in 18.8616 ms
+2026-04-05 05:51:11.042 +07:00 [INF] HTTP GET /images/categories/am-thuc.jpg responded 200 in 68.6225 ms
+2026-04-05 05:51:11.748 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 8.0069 ms
+2026-04-05 05:51:38.906 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:51:38.968 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:51:39.029 +07:00 [INF] HTTP GET /Tour responded 200 in 213.1070 ms
+2026-04-05 05:51:39.163 +07:00 [WRN] The static asset '/images/tours/tour_name_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.163 +07:00 [WRN] The static asset '/images/tours/tour_name_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.164 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 5.2992 ms
+2026-04-05 05:51:39.164 +07:00 [INF] HTTP GET /css/site.css responded 200 in 2.0916 ms
+2026-04-05 05:51:39.167 +07:00 [WRN] The static asset '/images/tours/tour_name_81.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.171 +07:00 [WRN] The static asset '/images/tours/tour_name_83.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.172 +07:00 [INF] HTTP GET /images/tours/tour_name_76.jpg responded 200 in 9.2978 ms
+2026-04-05 05:51:39.173 +07:00 [INF] HTTP GET /images/tours/tour_name_78.jpg responded 200 in 9.9625 ms
+2026-04-05 05:51:39.180 +07:00 [INF] HTTP GET /images/tours/tour_name_81.jpg responded 200 in 12.6766 ms
+2026-04-05 05:51:39.183 +07:00 [INF] HTTP GET /images/tours/tour_name_83.jpg responded 200 in 12.0825 ms
+2026-04-05 05:51:39.209 +07:00 [WRN] The static asset '/images/tours/tour_name_86.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.215 +07:00 [INF] HTTP GET /images/tours/tour_name_86.jpg responded 200 in 6.2913 ms
+2026-04-05 05:51:39.251 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.5263 ms
+2026-04-05 05:51:39.277 +07:00 [WRN] The static asset '/images/tours/tour_name_91.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.281 +07:00 [WRN] The static asset '/images/tours/tour_name_88.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.284 +07:00 [INF] HTTP GET /images/tours/tour_name_91.jpg responded 200 in 7.8407 ms
+2026-04-05 05:51:39.285 +07:00 [INF] HTTP GET /js/site.js responded 200 in 1.4068 ms
+2026-04-05 05:51:39.288 +07:00 [INF] HTTP GET /images/tours/tour_name_88.jpg responded 200 in 6.7302 ms
+2026-04-05 05:51:39.320 +07:00 [WRN] The static asset '/images/tours/tour_name_93.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.325 +07:00 [INF] HTTP GET /images/tours/tour_name_93.jpg responded 200 in 5.5857 ms
+2026-04-05 05:51:39.342 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.2773 ms
+2026-04-05 05:51:39.345 +07:00 [WRN] The static asset '/images/tours/tour_name_96.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:51:39.350 +07:00 [INF] HTTP GET /images/tours/tour_name_96.jpg responded 200 in 4.7549 ms
+2026-04-05 05:52:50.276 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 883.5248 ms
+2026-04-05 05:52:50.425 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.0927 ms
+2026-04-05 05:52:50.427 +07:00 [WRN] The static asset '/images/tours/tour_name_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:52:50.428 +07:00 [INF] HTTP GET /css/site.css responded 200 in 1.4081 ms
+2026-04-05 05:52:50.430 +07:00 [WRN] The static asset '/images/tours/tour_name_79.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:52:50.431 +07:00 [WRN] The static asset '/images/tours/tour_name_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:52:50.431 +07:00 [WRN] The static asset '/images/tours/tour_name_77.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:52:50.442 +07:00 [INF] HTTP GET /images/tours/tour_name_79.jpg responded 200 in 12.4512 ms
+2026-04-05 05:52:50.437 +07:00 [INF] HTTP GET /images/tours/tour_name_76.jpg responded 200 in 9.2818 ms
+2026-04-05 05:52:50.443 +07:00 [INF] HTTP GET /images/tours/tour_name_78.jpg responded 200 in 11.9487 ms
+2026-04-05 05:52:50.445 +07:00 [INF] HTTP GET /images/tours/tour_name_77.jpg responded 200 in 13.5447 ms
+2026-04-05 05:52:50.467 +07:00 [WRN] The static asset '/images/tours/tour_name_80.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:52:50.472 +07:00 [INF] HTTP GET /images/tours/tour_name_80.jpg responded 200 in 5.0364 ms
+2026-04-05 05:52:50.507 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.2268 ms
+2026-04-05 05:52:50.507 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.0662 ms
+2026-04-05 05:52:50.508 +07:00 [INF] HTTP GET /js/site.js responded 200 in 1.0864 ms
+2026-04-05 05:54:36.891 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 82.8405 ms
+2026-04-05 05:54:36.929 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 5.4734 ms
+2026-04-05 05:54:36.972 +07:00 [WRN] The static asset '/images/tours/tour_name_78.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:54:36.973 +07:00 [WRN] The static asset '/images/tours/tour_name_76.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:54:36.973 +07:00 [WRN] The static asset '/images/tours/tour_name_79.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:54:36.977 +07:00 [INF] HTTP GET /css/site.css responded 200 in 4.3997 ms
+2026-04-05 05:54:37.092 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.4268 ms
+2026-04-05 05:54:37.113 +07:00 [WRN] The static asset '/images/tours/tour_name_77.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:54:37.133 +07:00 [INF] HTTP GET /images/tours/tour_name_78.jpg responded 200 in 161.3176 ms
+2026-04-05 05:54:37.143 +07:00 [INF] HTTP GET /images/tours/tour_name_76.jpg responded 200 in 170.8129 ms
+2026-04-05 05:54:37.167 +07:00 [INF] HTTP GET /images/tours/tour_name_79.jpg responded 200 in 193.9744 ms
+2026-04-05 05:54:37.181 +07:00 [WRN] The static asset '/images/tours/tour_name_80.jpg' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-04-05 05:54:37.196 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.9790 ms
+2026-04-05 05:54:37.247 +07:00 [INF] HTTP GET /images/tours/tour_name_77.jpg responded 200 in 134.3298 ms
+2026-04-05 05:54:37.286 +07:00 [INF] HTTP GET /js/site.js responded 200 in 2.1749 ms
+2026-04-05 05:54:37.338 +07:00 [INF] HTTP GET /images/tours/tour_name_80.jpg responded 200 in 156.8291 ms
+2026-04-05 05:54:38.410 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 5.5916 ms
+2026-04-05 05:54:40.261 +07:00 [INF] HTTP GET /Account/Login responded 200 in 1294.4886 ms
+2026-04-05 05:54:40.332 +07:00 [INF] HTTP GET /css/site.css responded 200 in 14.3021 ms
+2026-04-05 05:54:40.347 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 33.0965 ms
+2026-04-05 05:54:40.351 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 20.8640 ms
+2026-04-05 05:54:40.355 +07:00 [INF] HTTP GET /js/site.js responded 200 in 16.9760 ms
+2026-04-05 05:54:40.355 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 18.8261 ms
+2026-04-05 05:54:42.131 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 10.4524 ms
+2026-04-05 05:54:42.278 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 7.4978 ms
+2026-04-05 05:54:45.847 +07:00 [INF] HTTP POST /Account/ExternalLogin responded 302 in 56.9862 ms
+2026-04-05 05:54:48.998 +07:00 [INF] HTTP POST /Account/ExternalLogin responded 302 in 46.9287 ms
