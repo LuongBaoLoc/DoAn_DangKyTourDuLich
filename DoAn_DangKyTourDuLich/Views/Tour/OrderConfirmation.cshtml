@@ -48,16 +48,31 @@
             <div class="col-lg-9">
 
                 <!-- Alert Message -->
-                <div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm d-print-none" role="alert" style="border-radius: 12px;">
-                    <i class="fas fa-check-circle fa-3x me-3"></i>
-                    <div>
-                        <h4 class="alert-heading fw-bold mb-1">Giao dịch thành công!</h4>
-                        <p class="mb-0">Cảm ơn bạn đã tin tưởng và chọn dịch vụ của chúng tôi. Dưới đây là biên lai xác nhận của bạn.</p>
+                @if (TempData["Error"] != null || Model.Status == OrderStatus.Cancelled)
+                {
+                    <div class="alert alert-danger d-flex align-items-center mb-4 border-0 shadow-sm d-print-none" role="alert" style="border-radius: 12px;">
+                        <i class="fas fa-times-circle fa-3x me-3"></i>
+                        <div>
+                            <h4 class="alert-heading fw-bold mb-1">Thanh toán không thành công!</h4>
+                            <p class="mb-0">@(TempData["Error"] ?? "Giao dịch đã bị hủy hoặc thất bại.")</p>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm d-print-none" role="alert" style="border-radius: 12px;">
+                        <i class="fas fa-check-circle fa-3x me-3"></i>
+                        <div>
+                            <h4 class="alert-heading fw-bold mb-1">Giao dịch thành công!</h4>
+                            <p class="mb-0">@(TempData["Success"] ?? "Cảm ơn bạn đã tin tưởng và chọn dịch vụ của chúng tôi. Dưới đây là biên lai xác nhận của bạn.")</p>
+                        </div>
+                    </div>
+                }
 
-                <!-- INVOICE SECTION -->
-                <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;" id="invoice-section">
+                @if (TempData["Error"] == null && Model.Status != OrderStatus.Cancelled)
+                {
+                    <!-- INVOICE SECTION -->
+                    <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;" id="invoice-section">
                     <!-- Invoice Header -->
                     <div class="bg-dark text-white p-4 p-md-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
                         <div class="mb-3 mb-md-0 text-center text-md-start">
@@ -183,6 +198,22 @@
                         </a>
                     </div>
                 </div>
+                }
+                else
+                {
+                    <div class="card border-0 shadow-sm text-center p-5 bg-white" style="border-radius: 12px;">
+                        <div class="mb-4">
+                            <i class="fas fa-file-invoice-dollar fa-4x text-muted opacity-50"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-3">Đơn đặt tour chưa được thanh toán</h4>
+                        <p class="text-muted mb-4">Hóa đơn sẽ chỉ được hiển thị khi giao dịch thanh toán thành công.<br/>Khách hàng có thể tiến hành đặt lại tour nếu bị hủy nhầm.</p>
+                        <div>
+                            <a asp-controller="Tour" asp-action="Index" class="btn btn-primary shadow-sm px-4 rounded-pill fw-bold">
+                                <i class="fas fa-search me-2"></i> Khám phá tour mới
+                            </a>
+                        </div>
+                    </div>
+                }
 
                 <div class="text-center mt-4 mb-5 d-print-none">
                     <a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none"><i class="fas fa-arrow-left me-1"></i> Quay lại trang chủ</a>

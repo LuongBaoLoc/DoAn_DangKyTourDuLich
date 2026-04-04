@@ -7217,3 +7217,448 @@
 2026-04-05 03:54:48.905 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 10.2159 ms
 2026-04-05 03:54:48.906 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 6.1286 ms
 2026-04-05 03:54:48.907 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.5817 ms
+2026-04-05 04:40:50.477 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 04:40:51.806 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 04:50:02.670 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 04:50:03.257 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 04:51:31.936 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 04:51:32.561 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 04:51:33.811 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 04:51:34.650 +07:00 [INF] HTTP GET /Tour responded 200 in 2388.2171 ms
+2026-04-05 04:51:34.650 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 12.1015 ms
+2026-04-05 04:51:34.651 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 10.7586 ms
+2026-04-05 04:51:34.650 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 15.2850 ms
+2026-04-05 04:51:34.770 +07:00 [INF] HTTP GET /css/site.css responded 200 in 133.2669 ms
+2026-04-05 04:51:34.844 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 207.2798 ms
+2026-04-05 04:51:35.020 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 2.3477 ms
+2026-04-05 04:51:35.085 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 31.5426 ms
+2026-04-05 04:51:35.199 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 0.7049 ms
+2026-04-05 04:51:35.219 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 0.6104 ms
+2026-04-05 04:51:35.228 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 0.6666 ms
+2026-04-05 04:51:35.247 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 8.4787 ms
+2026-04-05 04:51:35.255 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 0.6023 ms
+2026-04-05 04:51:35.264 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.0480 ms
+2026-04-05 04:51:35.294 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 0.7558 ms
+2026-04-05 04:51:40.771 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 2422.2065 ms
+2026-04-05 04:51:40.795 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 0.4828 ms
+2026-04-05 04:51:40.796 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.6602 ms
+2026-04-05 04:51:40.808 +07:00 [INF] HTTP GET /css/site.css responded 200 in 8.3413 ms
+2026-04-05 04:51:40.810 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 16.5836 ms
+2026-04-05 04:51:40.810 +07:00 [INF] HTTP GET /images/tours/tl4.jpg responded 404 in 3.8468 ms
+2026-04-05 04:51:40.813 +07:00 [INF] HTTP GET /images/tours/tl2.jpg responded 404 in 4.9951 ms
+2026-04-05 04:51:40.866 +07:00 [INF] HTTP GET /js/site.js responded 200 in 8.3539 ms
+2026-04-05 04:51:40.882 +07:00 [INF] HTTP GET /images/tours/tl5.jpg responded 404 in 0.6137 ms
+2026-04-05 04:51:40.904 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.2432 ms
+2026-04-05 04:51:41.633 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.8775 ms
+2026-04-05 04:51:46.175 +07:00 [INF] HTTP GET /Tour/Book/76 responded 302 in 42.4997 ms
+2026-04-05 04:51:46.439 +07:00 [INF] HTTP GET /Account/Login responded 200 in 242.3118 ms
+2026-04-05 04:51:46.471 +07:00 [INF] HTTP GET /css/site.css responded 200 in 7.2558 ms
+2026-04-05 04:51:46.473 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 9.4306 ms
+2026-04-05 04:51:46.475 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 14.2543 ms
+2026-04-05 04:51:46.475 +07:00 [INF] HTTP GET /js/site.js responded 200 in 9.2654 ms
+2026-04-05 04:51:46.476 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 9.9035 ms
+2026-04-05 04:51:46.491 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 19.8527 ms
+2026-04-05 04:51:46.562 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 24.8787 ms
+2026-04-05 04:51:48.913 +07:00 [INF] HTTP POST /Account/Login responded 302 in 659.1364 ms
+2026-04-05 04:51:50.186 +07:00 [INF] HTTP GET /Admin responded 200 in 1255.2827 ms
+2026-04-05 04:51:50.210 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 2.9088 ms
+2026-04-05 04:51:50.215 +07:00 [INF] HTTP GET /css/site.css responded 200 in 12.7734 ms
+2026-04-05 04:51:50.216 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 9.2523 ms
+2026-04-05 04:51:50.218 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 15.7947 ms
+2026-04-05 04:51:50.254 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 44.8067 ms
+2026-04-05 04:51:50.258 +07:00 [INF] HTTP GET /js/site.js responded 200 in 45.6703 ms
+2026-04-05 04:51:54.882 +07:00 [INF] HTTP GET / responded 200 in 302.6471 ms
+2026-04-05 04:51:54.911 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 1.4739 ms
+2026-04-05 04:51:54.911 +07:00 [INF] HTTP GET /css/site.css responded 200 in 6.9505 ms
+2026-04-05 04:51:54.911 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 3.7225 ms
+2026-04-05 04:51:54.913 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 0.9081 ms
+2026-04-05 04:51:54.913 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 1.1423 ms
+2026-04-05 04:51:54.915 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 13.3577 ms
+2026-04-05 04:51:54.959 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 14.8903 ms
+2026-04-05 04:51:55.409 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 4.8672 ms
+2026-04-05 04:51:55.496 +07:00 [INF] HTTP GET /images/categories/nghi-duong.jpg responded 200 in 60.5567 ms
+2026-04-05 04:51:55.500 +07:00 [INF] HTTP GET /images/categories/mao-hiem.jpg responded 200 in 16.6573 ms
+2026-04-05 04:51:55.518 +07:00 [INF] HTTP GET /images/categories/team-building.jpg responded 200 in 10.1405 ms
+2026-04-05 04:51:55.525 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.5792 ms
+2026-04-05 04:51:55.547 +07:00 [INF] HTTP GET /images/hinh-nen-viet-nam-4k25.jpg responded 200 in 18.7781 ms
+2026-04-05 04:51:55.563 +07:00 [INF] HTTP GET /images/categories/am-thuc.jpg responded 200 in 7.2858 ms
+2026-04-05 04:51:55.572 +07:00 [INF] HTTP GET /images/categories/quoc-te.jpg responded 200 in 7.8221 ms
+2026-04-05 04:51:55.578 +07:00 [INF] HTTP GET /js/site.js responded 200 in 2.8707 ms
+2026-04-05 04:51:55.589 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 3.3681 ms
+2026-04-05 04:51:57.026 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 04:51:57.080 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 04:51:57.107 +07:00 [INF] HTTP GET /Tour responded 200 in 98.5476 ms
+2026-04-05 04:51:57.126 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.5749 ms
+2026-04-05 04:51:57.135 +07:00 [INF] HTTP GET /css/site.css responded 200 in 11.1967 ms
+2026-04-05 04:51:57.136 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 3.9799 ms
+2026-04-05 04:51:57.137 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 4.4710 ms
+2026-04-05 04:51:57.137 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 1.1872 ms
+2026-04-05 04:51:57.139 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 15.1417 ms
+2026-04-05 04:51:57.163 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 6.1338 ms
+2026-04-05 04:51:57.168 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 4.1483 ms
+2026-04-05 04:51:57.179 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 1.2582 ms
+2026-04-05 04:51:57.187 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 0.9954 ms
+2026-04-05 04:51:57.196 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 2.7828 ms
+2026-04-05 04:51:57.208 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 7.0419 ms
+2026-04-05 04:51:57.219 +07:00 [INF] HTTP GET /js/site.js responded 200 in 5.0209 ms
+2026-04-05 04:51:57.372 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 1.6224 ms
+2026-04-05 04:51:59.192 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 136.5827 ms
+2026-04-05 04:51:59.225 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.0172 ms
+2026-04-05 04:51:59.225 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 0.9977 ms
+2026-04-05 04:51:59.227 +07:00 [INF] HTTP GET /css/site.css responded 200 in 11.9417 ms
+2026-04-05 04:51:59.236 +07:00 [INF] HTTP GET /images/tours/tl4.jpg responded 404 in 1.0042 ms
+2026-04-05 04:51:59.244 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 32.1574 ms
+2026-04-05 04:51:59.484 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.1729 ms
+2026-04-05 04:51:59.510 +07:00 [INF] HTTP GET /js/site.js responded 200 in 6.0596 ms
+2026-04-05 04:51:59.529 +07:00 [INF] HTTP GET /images/tours/tl5.jpg responded 404 in 1.0028 ms
+2026-04-05 04:51:59.553 +07:00 [INF] HTTP GET /images/tours/tl2.jpg responded 404 in 1.4153 ms
+2026-04-05 04:51:59.563 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.4747 ms
+2026-04-05 04:52:03.782 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 314.7435 ms
+2026-04-05 04:52:03.811 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.2875 ms
+2026-04-05 04:52:03.816 +07:00 [INF] HTTP GET /css/site.css responded 200 in 7.8565 ms
+2026-04-05 04:52:03.823 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 14.8556 ms
+2026-04-05 04:52:03.828 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 9.0436 ms
+2026-04-05 04:52:03.832 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 19.6209 ms
+2026-04-05 04:52:03.831 +07:00 [INF] HTTP GET /js/site.js responded 200 in 7.3118 ms
+2026-04-05 04:52:03.925 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 6.1807 ms
+2026-04-05 04:52:04.100 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 7.4406 ms
+2026-04-05 04:52:08.702 +07:00 [INF] Đơn hàng mới: A0866989 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 04:52:08.726 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 974.6072 ms
+2026-04-05 04:52:09.075 +07:00 [INF] Tạo VNPay URL cho đơn hàng 7, số tiền: 6990000
+2026-04-05 04:52:09.081 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn A0866989
+2026-04-05 04:52:09.084 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 172.5301 ms
+2026-04-05 04:56:32.836 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 109.7087 ms
+2026-04-05 04:59:56.616 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 04:59:57.305 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:00:21.838 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:00:25.454 +07:00 [INF] Đơn hàng mới: C0F9A617 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:00:25.629 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 3118.0090 ms
+2026-04-05 05:00:26.087 +07:00 [INF] Tạo VNPay URL cho đơn hàng 8, số tiền: 6990000
+2026-04-05 05:00:26.092 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn C0F9A617
+2026-04-05 05:00:26.099 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 333.5273 ms
+2026-04-05 05:02:04.310 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:02:04.590 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:02:19.281 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:02:23.310 +07:00 [INF] Đơn hàng mới: 543EACF7 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:02:23.428 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 3403.4220 ms
+2026-04-05 05:02:23.840 +07:00 [INF] Tạo VNPay URL cho đơn hàng 9, số tiền: 6990000
+2026-04-05 05:02:23.851 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn 543EACF7
+2026-04-05 05:02:23.864 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 348.9729 ms
+2026-04-05 05:04:10.960 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:04:11.238 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:04:25.038 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:04:28.047 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 2611.6075 ms
+2026-04-05 05:04:29.224 +07:00 [INF] Đơn hàng mới: 57AEE27D - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:04:29.253 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 2011.4667 ms
+2026-04-05 05:04:29.677 +07:00 [INF] Tạo VNPay URL cho đơn hàng 10, số tiền: 6990000
+2026-04-05 05:04:29.693 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn 57AEE27D
+2026-04-05 05:04:29.711 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 386.5156 ms
+2026-04-05 05:04:45.948 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 33.5046 ms
+2026-04-05 05:05:08.620 +07:00 [INF] Đơn hàng mới: 4FBB3856 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:05:08.625 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 63.5767 ms
+2026-04-05 05:05:08.672 +07:00 [INF] Tạo VNPay URL cho đơn hàng 11, số tiền: 6990000
+2026-04-05 05:05:08.726 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn 4FBB3856
+2026-04-05 05:05:08.739 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 89.5705 ms
+2026-04-05 05:06:18.823 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 1634.6391 ms
+2026-04-05 05:06:23.576 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 331.6368 ms
+2026-04-05 05:06:23.670 +07:00 [INF] HTTP GET /css/site.css responded 200 in 39.9249 ms
+2026-04-05 05:06:23.751 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 16.0552 ms
+2026-04-05 05:06:23.865 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 122.3254 ms
+2026-04-05 05:06:23.865 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 178.8781 ms
+2026-04-05 05:06:23.871 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 205.8702 ms
+2026-04-05 05:06:23.875 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.8388 ms
+2026-04-05 05:06:23.890 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 4.3202 ms
+2026-04-05 05:06:24.059 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 3.9657 ms
+2026-04-05 05:06:30.180 +07:00 [INF] HTTP POST /Tour/Book/76 responded 200 in 43.3528 ms
+2026-04-05 05:06:30.242 +07:00 [INF] HTTP GET /css/site.css responded 200 in 17.4268 ms
+2026-04-05 05:06:30.241 +07:00 [INF] HTTP GET /js/site.js responded 200 in 15.0575 ms
+2026-04-05 05:06:30.248 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 23.2925 ms
+2026-04-05 05:06:30.288 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.6039 ms
+2026-04-05 05:06:30.300 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.4220 ms
+2026-04-05 05:06:30.381 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 16.3955 ms
+2026-04-05 05:06:30.399 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 8.2847 ms
+2026-04-05 05:06:30.835 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 31.2058 ms
+2026-04-05 05:06:33.784 +07:00 [INF] Đơn hàng mới: 56EFEE5F - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:06:33.790 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 39.7711 ms
+2026-04-05 05:06:33.848 +07:00 [INF] Tạo VNPay URL cho đơn hàng 12, số tiền: 76890000
+2026-04-05 05:06:33.863 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn 56EFEE5F
+2026-04-05 05:06:33.874 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 59.7102 ms
+2026-04-05 05:08:00.205 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:08:00.487 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:08:20.323 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:08:23.427 +07:00 [INF] HTTP POST /Tour/Book/76 responded 200 in 2724.5075 ms
+2026-04-05 05:08:23.487 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 31.4091 ms
+2026-04-05 05:08:23.902 +07:00 [INF] HTTP GET /css/site.css responded 200 in 446.5885 ms
+2026-04-05 05:08:24.006 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 551.1901 ms
+2026-04-05 05:08:24.010 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 549.7193 ms
+2026-04-05 05:08:24.016 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 561.0131 ms
+2026-04-05 05:08:24.231 +07:00 [INF] HTTP GET /js/site.js responded 200 in 261.9017 ms
+2026-04-05 05:08:24.284 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 12.9830 ms
+2026-04-05 05:08:24.303 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 5.9561 ms
+2026-04-05 05:08:29.225 +07:00 [INF] Đơn hàng mới: 5E5D9F5D - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:08:29.234 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 1630.8152 ms
+2026-04-05 05:08:29.496 +07:00 [INF] Tạo VNPay URL cho đơn hàng 13, số tiền: 76890000
+2026-04-05 05:08:29.503 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn 5E5D9F5D
+2026-04-05 05:08:29.507 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 259.2052 ms
+2026-04-05 05:08:33.853 +07:00 [INF] VNPay callback: OrderId=13, ResponseCode=24, Success=false
+2026-04-05 05:08:34.163 +07:00 [WRN] VNPay: Thanh toán thất bại cho đơn 5E5D9F5D, Mã lỗi: 24
+2026-04-05 05:08:34.370 +07:00 [INF] HTTP GET /VnPay/PaymentCallback responded 302 in 588.4812 ms
+2026-04-05 05:08:36.918 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 2453.0631 ms
+2026-04-05 05:08:36.990 +07:00 [INF] HTTP GET /css/site.css responded 200 in 28.9390 ms
+2026-04-05 05:08:37.001 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.7984 ms
+2026-04-05 05:08:37.008 +07:00 [INF] HTTP GET /js/site.js responded 200 in 11.0420 ms
+2026-04-05 05:08:37.225 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 14.4017 ms
+2026-04-05 05:08:37.498 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 14.3340 ms
+2026-04-05 05:10:58.627 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:10:58.927 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:11:04.554 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:11:07.288 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 2509.1672 ms
+2026-04-05 05:11:10.298 +07:00 [INF] HTTP POST /Tour/Book/76 responded 200 in 256.7132 ms
+2026-04-05 05:11:10.464 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 88.9862 ms
+2026-04-05 05:11:10.508 +07:00 [INF] HTTP GET /js/site.js responded 200 in 156.7313 ms
+2026-04-05 05:11:10.509 +07:00 [INF] HTTP GET /css/site.css responded 200 in 156.6024 ms
+2026-04-05 05:11:10.529 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 176.8700 ms
+2026-04-05 05:11:10.529 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 184.5346 ms
+2026-04-05 05:11:10.530 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 125.3314 ms
+2026-04-05 05:11:10.560 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 6.1624 ms
+2026-04-05 05:11:10.576 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 13.3994 ms
+2026-04-05 05:11:15.052 +07:00 [INF] Đơn hàng mới: F1E67257 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:11:15.061 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 1623.0287 ms
+2026-04-05 05:11:15.863 +07:00 [INF] Tạo VNPay URL cho đơn hàng 14, số tiền: 6990000
+2026-04-05 05:11:15.868 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn F1E67257
+2026-04-05 05:11:15.872 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 798.0947 ms
+2026-04-05 05:11:20.046 +07:00 [INF] VNPay callback: OrderId=14, ResponseCode=24, Success=false
+2026-04-05 05:11:20.103 +07:00 [WRN] VNPay: Thanh toán thất bại cho đơn F1E67257, Mã lỗi: 24
+2026-04-05 05:11:20.133 +07:00 [INF] HTTP GET /VnPay/PaymentCallback responded 302 in 148.7933 ms
+2026-04-05 05:11:21.774 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 1621.4097 ms
+2026-04-05 05:11:21.807 +07:00 [INF] HTTP GET /css/site.css responded 200 in 7.8557 ms
+2026-04-05 05:11:21.810 +07:00 [INF] HTTP GET /js/site.js responded 200 in 5.5198 ms
+2026-04-05 05:11:21.930 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 47.5774 ms
+2026-04-05 05:11:21.930 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 129.3239 ms
+2026-04-05 05:11:22.142 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 9.7798 ms
+2026-04-05 05:12:48.821 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:12:49.676 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:12:55.303 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:12:59.460 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 3843.2928 ms
+2026-04-05 05:12:59.598 +07:00 [INF] HTTP GET /js/site.js responded 200 in 109.7665 ms
+2026-04-05 05:12:59.599 +07:00 [INF] HTTP GET /css/site.css responded 200 in 110.4000 ms
+2026-04-05 05:12:59.604 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 116.1570 ms
+2026-04-05 05:12:59.604 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 115.4569 ms
+2026-04-05 05:12:59.604 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 116.4619 ms
+2026-04-05 05:12:59.709 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 62.4614 ms
+2026-04-05 05:13:03.033 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:13:03.692 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:13:03.837 +07:00 [INF] HTTP GET /Tour responded 200 in 984.0105 ms
+2026-04-05 05:13:03.858 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 3.9402 ms
+2026-04-05 05:13:03.859 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 5.3733 ms
+2026-04-05 05:13:03.861 +07:00 [INF] HTTP GET /css/site.css responded 200 in 6.5788 ms
+2026-04-05 05:13:03.906 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 3.4063 ms
+2026-04-05 05:13:03.907 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 3.5839 ms
+2026-04-05 05:13:03.907 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 47.1803 ms
+2026-04-05 05:13:03.917 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 2.1789 ms
+2026-04-05 05:13:03.922 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.6355 ms
+2026-04-05 05:13:03.928 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 2.0195 ms
+2026-04-05 05:13:03.931 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 2.1647 ms
+2026-04-05 05:13:03.946 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 3.1360 ms
+2026-04-05 05:13:03.946 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 3.8746 ms
+2026-04-05 05:13:03.968 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 5.7073 ms
+2026-04-05 05:13:04.046 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 4.5284 ms
+2026-04-05 05:13:06.924 +07:00 [INF] HTTP GET /Tour/Details/76 responded 200 in 1052.8857 ms
+2026-04-05 05:13:06.941 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.1277 ms
+2026-04-05 05:13:06.942 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 1.8219 ms
+2026-04-05 05:13:06.944 +07:00 [INF] HTTP GET /css/site.css responded 200 in 4.7842 ms
+2026-04-05 05:13:06.947 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.2634 ms
+2026-04-05 05:13:06.948 +07:00 [INF] HTTP GET /images/tours/tl4.jpg responded 404 in 1.7654 ms
+2026-04-05 05:13:06.949 +07:00 [INF] HTTP GET /images/tours/tl2.jpg responded 404 in 1.8781 ms
+2026-04-05 05:13:06.960 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.5521 ms
+2026-04-05 05:13:06.964 +07:00 [INF] HTTP GET /images/tours/tl5.jpg responded 404 in 2.3350 ms
+2026-04-05 05:13:06.966 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.9709 ms
+2026-04-05 05:13:06.974 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.0544 ms
+2026-04-05 05:13:18.944 +07:00 [INF] HTTP GET /Tour/Book/76 responded 200 in 538.7484 ms
+2026-04-05 05:13:18.960 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 0.7997 ms
+2026-04-05 05:13:18.963 +07:00 [INF] HTTP GET /css/site.css responded 200 in 3.4898 ms
+2026-04-05 05:13:18.976 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 14.9023 ms
+2026-04-05 05:13:18.976 +07:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 3.8924 ms
+2026-04-05 05:13:18.977 +07:00 [INF] HTTP GET /js/site.js responded 200 in 4.8568 ms
+2026-04-05 05:13:18.978 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 18.2735 ms
+2026-04-05 05:13:19.007 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 13.6445 ms
+2026-04-05 05:13:19.010 +07:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 3.2826 ms
+2026-04-05 05:13:23.694 +07:00 [INF] Đơn hàng mới: A47DF665 - Tour: Thái Lan: Nghỉ dưỡng Pattaya biển xanh - Khách: Quản trị viên
+2026-04-05 05:13:23.703 +07:00 [INF] HTTP POST /Tour/Book/76 responded 302 in 1088.2827 ms
+2026-04-05 05:13:23.779 +07:00 [INF] Tạo VNPay URL cho đơn hàng 15, số tiền: 6990000
+2026-04-05 05:13:23.782 +07:00 [INF] Redirect khách Quản trị viên đến VNPay cho đơn A47DF665
+2026-04-05 05:13:23.786 +07:00 [INF] HTTP GET /VnPay/CreatePayment responded 302 in 69.4411 ms
+2026-04-05 05:13:27.446 +07:00 [INF] VNPay callback: OrderId=15, ResponseCode=24, Success=false
+2026-04-05 05:13:27.481 +07:00 [WRN] VNPay: Thanh toán thất bại cho đơn A47DF665, Mã lỗi: 24
+2026-04-05 05:13:27.509 +07:00 [INF] HTTP GET /VnPay/PaymentCallback responded 302 in 101.7318 ms
+2026-04-05 05:13:27.728 +07:00 [INF] HTTP GET /Tour/OrderConfirmation responded 200 in 204.4905 ms
+2026-04-05 05:13:27.748 +07:00 [INF] HTTP GET /css/site.css responded 200 in 2.0526 ms
+2026-04-05 05:13:27.751 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 6.8191 ms
+2026-04-05 05:13:27.751 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.5841 ms
+2026-04-05 05:13:27.753 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 4.5221 ms
+2026-04-05 05:13:27.753 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.9708 ms
+2026-04-05 05:13:43.862 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:13:43.917 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:13:43.952 +07:00 [INF] HTTP GET /css/site.css responded 200 in 2.7838 ms
+2026-04-05 05:13:43.953 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 1.0202 ms
+2026-04-05 05:13:43.955 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 0.7603 ms
+2026-04-05 05:13:43.957 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 1.1809 ms
+2026-04-05 05:13:43.962 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 13.0909 ms
+2026-04-05 05:13:43.974 +07:00 [INF] HTTP GET /Tour responded 200 in 121.0383 ms
+2026-04-05 05:13:43.976 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 0.8016 ms
+2026-04-05 05:13:43.983 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 0.7827 ms
+2026-04-05 05:13:43.987 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 0.6710 ms
+2026-04-05 05:13:43.992 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 0.5859 ms
+2026-04-05 05:13:43.994 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 0.6053 ms
+2026-04-05 05:13:43.998 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 0.7610 ms
+2026-04-05 05:13:44.026 +07:00 [INF] HTTP GET /js/site.js responded 200 in 2.3388 ms
+2026-04-05 05:13:44.026 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.0687 ms
+2026-04-05 05:13:44.026 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.1711 ms
+2026-04-05 05:22:45.365 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:22:45.699 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:22:45.991 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:22:46.603 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:22:46.894 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:22:47.171 +07:00 [INF] HTTP GET /Tour responded 200 in 1075.3241 ms
+2026-04-05 05:22:47.287 +07:00 [INF] HTTP GET /css/site.css responded 200 in 93.6747 ms
+2026-04-05 05:22:47.295 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 101.7806 ms
+2026-04-05 05:22:47.310 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 24.7892 ms
+2026-04-05 05:22:47.310 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 3.6034 ms
+2026-04-05 05:22:47.310 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 113.0424 ms
+2026-04-05 05:22:47.330 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 1.0832 ms
+2026-04-05 05:22:47.330 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 0.9896 ms
+2026-04-05 05:22:47.335 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.7608 ms
+2026-04-05 05:22:47.351 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.6179 ms
+2026-04-05 05:22:47.356 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.0924 ms
+2026-04-05 05:22:47.370 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 0.9935 ms
+2026-04-05 05:22:47.396 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 0.9071 ms
+2026-04-05 05:22:47.405 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 0.9835 ms
+2026-04-05 05:22:47.406 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 0.7974 ms
+2026-04-05 05:22:48.438 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 2.6492 ms
+2026-04-05 05:23:09.998 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:23:10.160 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:23:10.222 +07:00 [INF] HTTP GET /Tour responded 200 in 234.0447 ms
+2026-04-05 05:23:10.262 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 7.0441 ms
+2026-04-05 05:23:10.262 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 12.1394 ms
+2026-04-05 05:23:10.268 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 22.0165 ms
+2026-04-05 05:23:10.269 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 6.0900 ms
+2026-04-05 05:23:10.271 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 6.2875 ms
+2026-04-05 05:23:10.273 +07:00 [INF] HTTP GET /css/site.css responded 200 in 10.5282 ms
+2026-04-05 05:23:10.331 +07:00 [INF] HTTP GET /js/site.js responded 200 in 11.0625 ms
+2026-04-05 05:23:10.368 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 2.6533 ms
+2026-04-05 05:23:10.385 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 7.8268 ms
+2026-04-05 05:23:10.400 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 2.2123 ms
+2026-04-05 05:23:10.501 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 6.2028 ms
+2026-04-05 05:23:10.502 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 6.7670 ms
+2026-04-05 05:23:10.551 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 4.2181 ms
+2026-04-05 05:23:10.600 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 9.1365 ms
+2026-04-05 05:23:10.676 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 24.3595 ms
+2026-04-05 05:23:14.319 +07:00 [INF] HTTP GET / responded 200 in 716.7761 ms
+2026-04-05 05:23:14.344 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 8.2287 ms
+2026-04-05 05:23:14.345 +07:00 [INF] HTTP GET /css/site.css responded 200 in 9.2828 ms
+2026-04-05 05:23:14.346 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 8.0749 ms
+2026-04-05 05:23:14.347 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 2.0506 ms
+2026-04-05 05:23:14.350 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 1.7034 ms
+2026-04-05 05:23:14.353 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 17.2723 ms
+2026-04-05 05:23:14.371 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.0286 ms
+2026-04-05 05:23:14.396 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 8.5326 ms
+2026-04-05 05:23:14.442 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 9.4031 ms
+2026-04-05 05:23:14.453 +07:00 [INF] HTTP GET /images/hinh-nen-viet-nam-4k25.jpg responded 304 in 2.3966 ms
+2026-04-05 05:23:14.473 +07:00 [INF] HTTP GET /images/categories/nghi-duong.jpg responded 304 in 4.6328 ms
+2026-04-05 05:23:14.519 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 10.5703 ms
+2026-04-05 05:23:14.542 +07:00 [INF] HTTP GET /js/site.js responded 200 in 5.8280 ms
+2026-04-05 05:23:14.661 +07:00 [INF] HTTP GET /images/categories/mao-hiem.jpg responded 304 in 5.5622 ms
+2026-04-05 05:23:14.673 +07:00 [INF] HTTP GET /images/categories/am-thuc.jpg responded 304 in 2.2105 ms
+2026-04-05 05:23:14.709 +07:00 [INF] HTTP GET /images/categories/quoc-te.jpg responded 304 in 2.1821 ms
+2026-04-05 05:23:14.721 +07:00 [INF] HTTP GET /images/categories/team-building.jpg responded 304 in 2.0135 ms
+2026-04-05 05:23:19.960 +07:00 [INF] HTTP GET /Survey responded 200 in 56.4392 ms
+2026-04-05 05:23:19.985 +07:00 [INF] HTTP GET /css/site.css responded 200 in 5.4379 ms
+2026-04-05 05:23:19.987 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 8.9653 ms
+2026-04-05 05:23:19.987 +07:00 [INF] HTTP GET /js/site.js responded 200 in 6.7918 ms
+2026-04-05 05:23:19.989 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.6417 ms
+2026-04-05 05:23:19.993 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 10.0215 ms
+2026-04-05 05:23:37.171 +07:00 [INF] HTTP POST /Survey/Submit responded 200 in 217.3947 ms
+2026-04-05 05:23:37.195 +07:00 [INF] HTTP GET /images/tours/hue1.jpg responded 404 in 1.2196 ms
+2026-04-05 05:23:37.197 +07:00 [INF] HTTP GET /images/tours/dn3.jpg responded 404 in 0.6757 ms
+2026-04-05 05:23:37.202 +07:00 [INF] HTTP GET /images/tours/ha1.jpg responded 404 in 0.9815 ms
+2026-04-05 05:23:37.202 +07:00 [INF] HTTP GET /css/site.css responded 200 in 9.6119 ms
+2026-04-05 05:23:37.205 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 12.7802 ms
+2026-04-05 05:23:37.390 +07:00 [INF] HTTP GET /images/tours/ha3.jpg responded 404 in 1.1506 ms
+2026-04-05 05:23:37.409 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 12.3248 ms
+2026-04-05 05:23:37.515 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 9.7811 ms
+2026-04-05 05:23:37.516 +07:00 [INF] HTTP GET /images/tours/hue3.jpg responded 404 in 2.9367 ms
+2026-04-05 05:23:37.540 +07:00 [INF] HTTP GET /js/site.js responded 200 in 7.8883 ms
+2026-04-05 05:23:37.947 +07:00 [INF] HTTP GET /images/tours/dn1.jpg responded 200 in 739.7782 ms
+2026-04-05 05:23:52.567 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:23:52.601 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:23:52.639 +07:00 [INF] HTTP GET /Tour responded 200 in 89.0363 ms
+2026-04-05 05:23:52.643 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 0.9029 ms
+2026-04-05 05:23:52.647 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 1.4709 ms
+2026-04-05 05:23:52.650 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 1.5708 ms
+2026-04-05 05:23:52.651 +07:00 [INF] HTTP GET /css/site.css responded 200 in 9.2737 ms
+2026-04-05 05:23:52.653 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 13.1946 ms
+2026-04-05 05:23:52.676 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 5.0859 ms
+2026-04-05 05:23:52.689 +07:00 [INF] HTTP GET /js/site.js responded 200 in 3.0146 ms
+2026-04-05 05:23:52.694 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 0.9225 ms
+2026-04-05 05:23:52.701 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 0.7743 ms
+2026-04-05 05:23:52.703 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 0.6406 ms
+2026-04-05 05:23:52.708 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 0.7292 ms
+2026-04-05 05:23:52.722 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 6.7397 ms
+2026-04-05 05:23:52.738 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 0.8306 ms
+2026-04-05 05:23:53.680 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 5.5295 ms
+2026-04-05 05:25:36.586 +07:00 [INF] Seed dữ liệu ban đầu thành công
+2026-04-05 05:25:36.859 +07:00 [INF] Ứng dụng Tour Du Lịch khởi chạy
+2026-04-05 05:25:42.493 +07:00 [WRN] Failed to determine the https port for redirect.
+2026-04-05 05:25:43.167 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:25:44.377 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:25:45.173 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 22.0722 ms
+2026-04-05 05:25:45.173 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 21.8746 ms
+2026-04-05 05:25:45.173 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 21.6470 ms
+2026-04-05 05:25:45.173 +07:00 [INF] HTTP GET /Tour responded 200 in 2361.1606 ms
+2026-04-05 05:25:45.275 +07:00 [INF] HTTP GET /css/site.css responded 200 in 124.9610 ms
+2026-04-05 05:25:45.318 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 168.6001 ms
+2026-04-05 05:25:45.408 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 41.3034 ms
+2026-04-05 05:25:45.411 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 40.1600 ms
+2026-04-05 05:25:45.408 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 35.8669 ms
+2026-04-05 05:25:45.412 +07:00 [INF] HTTP GET /js/site.js responded 200 in 78.1368 ms
+2026-04-05 05:25:45.415 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 13.4290 ms
+2026-04-05 05:25:45.418 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 106.8160 ms
+2026-04-05 05:25:45.437 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 2.0073 ms
+2026-04-05 05:25:45.466 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 3.3311 ms
+2026-04-05 05:25:45.474 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 2.6488 ms
+2026-04-05 05:25:45.527 +07:00 [INF] HTTP GET /favicon.ico responded 200 in 5.3362 ms
+2026-04-05 05:25:53.013 +07:00 [INF] HTTP GET /Survey responded 200 in 79.4218 ms
+2026-04-05 05:25:53.051 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 15.3418 ms
+2026-04-05 05:25:53.053 +07:00 [INF] HTTP GET /css/site.css responded 200 in 9.0709 ms
+2026-04-05 05:25:53.054 +07:00 [INF] HTTP GET /js/site.js responded 200 in 7.2809 ms
+2026-04-05 05:25:53.109 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 13.9242 ms
+2026-04-05 05:25:53.603 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.2037 ms
+2026-04-05 05:26:02.332 +07:00 [INF] HTTP POST /Survey/Submit responded 200 in 268.2877 ms
+2026-04-05 05:26:02.360 +07:00 [INF] HTTP GET /images/tours/sp5.jpg responded 404 in 3.4122 ms
+2026-04-05 05:26:02.363 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 12.1455 ms
+2026-04-05 05:26:02.364 +07:00 [INF] HTTP GET /css/site.css responded 200 in 8.8724 ms
+2026-04-05 05:26:02.364 +07:00 [INF] HTTP GET /images/tours/qn5.jpg responded 404 in 1.9295 ms
+2026-04-05 05:26:02.369 +07:00 [INF] HTTP GET /images/tours/nb4.jpg responded 404 in 1.7113 ms
+2026-04-05 05:26:02.467 +07:00 [INF] HTTP GET /images/tours/sp2.jpg responded 404 in 4.4209 ms
+2026-04-05 05:26:02.481 +07:00 [INF] HTTP GET /images/tours/nb5.jpg responded 404 in 2.5859 ms
+2026-04-05 05:26:02.526 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 5.4419 ms
+2026-04-05 05:26:02.546 +07:00 [INF] HTTP GET /js/site.js responded 200 in 13.3308 ms
+2026-04-05 05:26:02.578 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.2308 ms
+2026-04-05 05:26:02.795 +07:00 [INF] HTTP GET /images/tours/nb1.jpg responded 200 in 440.2839 ms
+2026-04-05 05:26:11.125 +07:00 [INF] Tìm kiếm tour với keyword: null, CategoryId: null
+2026-04-05 05:26:11.148 +07:00 [INF] Tìm thấy 100 tour phù hợp
+2026-04-05 05:26:11.174 +07:00 [INF] HTTP GET /Tour responded 200 in 52.8347 ms
+2026-04-05 05:26:11.199 +07:00 [INF] HTTP GET /images/tours/tl1.jpg responded 404 in 0.6413 ms
+2026-04-05 05:26:11.200 +07:00 [INF] HTTP GET /images/tours/tl3.jpg responded 404 in 0.6941 ms
+2026-04-05 05:26:11.202 +07:00 [INF] HTTP GET /images/tours/jp1.jpg responded 404 in 0.6572 ms
+2026-04-05 05:26:11.202 +07:00 [INF] HTTP GET /css/site.css responded 200 in 4.9009 ms
+2026-04-05 05:26:11.203 +07:00 [INF] HTTP GET /images/tours/jp3.jpg responded 404 in 0.7046 ms
+2026-04-05 05:26:11.211 +07:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 12.8977 ms
+2026-04-05 05:26:11.233 +07:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.8649 ms
+2026-04-05 05:26:11.236 +07:00 [INF] HTTP GET /js/site.js responded 200 in 2.5424 ms
+2026-04-05 05:26:11.246 +07:00 [INF] HTTP GET /images/tours/sg3.jpg responded 404 in 0.8475 ms
+2026-04-05 05:26:11.255 +07:00 [INF] HTTP GET /images/tours/kr1.jpg responded 404 in 1.0636 ms
+2026-04-05 05:26:11.263 +07:00 [INF] HTTP GET /images/tours/fr1.jpg responded 404 in 0.8944 ms
+2026-04-05 05:26:11.269 +07:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.8784 ms
+2026-04-05 05:26:11.280 +07:00 [INF] HTTP GET /images/tours/kr3.jpg responded 404 in 1.5065 ms
+2026-04-05 05:26:11.284 +07:00 [INF] HTTP GET /images/tours/sg1.jpg responded 404 in 1.4296 ms

@@ -1,0 +1,82 @@
+@model DoAn_DangKyTourDuLich.Models.ViewModels.SurveyResultViewModel
+@{
+    ViewData["Title"] = "Kết Quả Phân Tích Tour";
+}
+
+<div class="py-5" style="background-color: #f8faff; min-height: 80vh;">
+    <div class="container">
+        <div class="text-center mb-5 fade-in-up">
+            <h1 class="fw-bold text-primary mb-3"><i class="fas fa-check-circle me-3"></i>Đã Chọn Xong!</h1>
+            <p class="lead text-muted">Dựa vào các tiêu chí mức giá, sở thích và phương tiện di chuyển bạn yêu cầu, thuật toán đã phân tích và đề xuất Top Tour sau đây:</p>
+        </div>
+
+        <div class="row g-4">
+            @if(Model.RecommendedTours.Any())
+            {
+                var rank = 1;
+                foreach (var item in Model.RecommendedTours)
+                {
+                    <div class="col-md-6 col-lg-4 fade-in-up" style="transition-delay: @(rank * 100)ms">
+                        <div class="card h-100 border-0 shadow-sm tour-card" style="border-radius: 16px; overflow: hidden;">
+                            <div class="position-relative">
+                                <img src="@item.Tour.ImageUrl" class="card-img-top" alt="@item.Tour.Name" style="height: 220px; object-fit: cover;">
+                                
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <span class="badge bg-danger shadow-sm py-2 px-3" style="font-size: 14px; border-radius: 20px;">
+                                        Top @rank
+                                    </span>
+                                </div>
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <div class="badge bg-success shadow-sm py-2 px-3" style="font-size: 14px; border-radius: 20px;">
+                                        <i class="fas fa-bullseye me-1"></i> Phù hợp @item.MatchPercentage%
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body p-4">
+                                <span class="text-primary fw-bold small text-uppercase mb-2 d-block">
+                                    <i class="fas fa-map-marker-alt me-1"></i> @item.Tour.Destination
+                                </span>
+                                <h5 class="card-title fw-bold mb-3">
+                                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Tour.Id" class="text-decoration-none text-dark stretched-link">
+                                        @item.Tour.Name
+                                    </a>
+                                </h5>
+                                
+                                <div class="d-flex align-items-center justify-content-between text-muted small mt-auto">
+                                    <span><i class="far fa-clock me-1"></i> @item.Tour.Duration ngày</span>
+                                     @if (!string.IsNullOrEmpty(item.Tour.Transportation))
+                                    {
+                                        <span><i class="fas fa-car-side me-1"></i> @item.Tour.Transportation</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-top-0 p-4 pt-0">
+                                <h4 class="text-danger fw-bold mb-0">@item.Tour.DisplayPrice.ToString("N0")đ <small class="text-muted fs-6 fw-normal">/khách</small></h4>
+                            </div>
+                        </div>
+                    </div>
+                    rank++;
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="fas fa-search-minus fa-3x mb-3"></i>
+                    <p>Chưa tìm được tour phù hợp tuyệt đối. Vui lòng thử lại với các tiêu chí khác.</p>
+                    <a asp-action="Index" class="btn btn-outline-primary mt-3">Làm lại khảo sát</a>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-5 pt-3 border-top fade-in-up">
+            <a asp-controller="Tour" asp-action="Index" class="btn btn-secondary-custom btn-lg me-3"><i class="fas fa-search me-2"></i>Tìm Tour Thủ Công</a>
+            <a asp-action="Index" class="btn btn-outline-primary btn-lg"><i class="fas fa-redo me-2"></i>Làm Lại Khảo Sát</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tour-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .tour-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
+</style>

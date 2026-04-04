@@ -82,12 +82,13 @@ namespace DoAn_DangKyTourDuLich.Controllers
             }
             else
             {
-                order.Note = (order.Note ?? "") + $"\n[VNPay] Thanh toán thất bại - Mã lỗi: {response.ResponseCode}";
+                order.Status = OrderStatus.Cancelled;
+                order.Note = (order.Note ?? "") + $"\n[VNPay] Thanh toán thất bại hoặc hủy - Mã lỗi: {response.ResponseCode}";
 
                 _logger.LogWarning("VNPay: Thanh toán thất bại cho đơn {OrderCode}, Mã lỗi: {ResponseCode}",
                     order.OrderCode, response.ResponseCode);
 
-                TempData["Error"] = $"Thanh toán thất bại. Mã lỗi: {response.ResponseCode}. Vui lòng thử lại hoặc chọn phương thức khác.";
+                TempData["Error"] = $"Thanh toán bị hủy hoặc thất bại (Mã: {response.ResponseCode}).";
             }
 
             await _unitOfWork.SaveChangesAsync();

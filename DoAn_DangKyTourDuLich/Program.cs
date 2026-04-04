@@ -43,6 +43,7 @@ builder.Services.AddSingleton<DoAn_DangKyTourDuLich.Services.HtmlSanitizeService
 // Service với Interface (dễ test, dễ mock)
 builder.Services.AddScoped<ITourService, TourService>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddScoped<ISurveyService, SurveyService>();
 
 // ═══════════════════════════════════════════════════════════════
 // Đăng ký Repository + Unit of Work Pattern

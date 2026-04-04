@@ -1,0 +1,167 @@
+@model List<DoAn_DangKyTourDuLich.Models.ViewModels.SurveyQuestion>
+@{
+    ViewData["Title"] = "Khảo Sát Gợi Ý Tour";
+}
+
+<div class="survey-container py-5 mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <div class="survey-card glass-panel fade-in-up">
+                    <div class="text-center mb-5">
+                        <span class="badge bg-primary text-white p-2 px-3 rounded-pill mb-3" style="font-size: 14px;">
+                            <i class="fas fa-robot me-2"></i> Trợ lý ảo tìm Tour
+                        </span>
+                        <h2 class="fw-bold">Bạn mong muốn chuyến đi thế nào?</h2>
+                        <p class="text-muted">Chọn các đáp án phù hợp, thuật toán sẽ tính toán ra Tour tối ưu nhất cho bạn.</p>
+                    </div>
+
+                    <form asp-controller="Survey" asp-action="Submit" method="post" id="surveyForm">
+                        
+                        <div class="progress-indicator mb-4">
+                            <div class="progress" style="height: 10px; border-radius: 10px;">
+                                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" id="surveyProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-end mt-2 text-muted fw-bold">
+                                Câu <span id="currentStepText">1</span> / @Model.Count
+                            </div>
+                        </div>
+
+                        <div class="survey-steps-wrapper position-relative" style="min-height: 350px;">
+                            
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                var question = Model[i];
+                                <div class="survey-step" data-step="@i" style="display: @(i == 0 ? "block" : "none");">
+                                    <h4 class="mb-4 fw-bold">Câu @(i + 1): @question.Text</h4>
+                                    
+                                    <div class="row g-3">
+                                        @foreach (var ans in question.Answers)
+                                        {
+                                            <div class="col-md-6">
+                                                <label class="survey-option-label w-100">
+                                                    <input type="radio" name="Answers[@question.Id]" value="@ans.Id" class="d-none survey-radio" required>
+                                                    <div class="survey-option-box p-4 h-100 d-flex align-items-center justify-content-center text-center">
+                                                        <span class="fw-bold fs-5">@ans.Text</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-5 pt-3 border-top">
+                            <button type="button" class="btn btn-outline-secondary btn-lg btn-prev" disabled>
+                                <i class="fas fa-arrow-left me-2"></i> Quay lại
+                            </button>
+                            
+                            <button type="button" class="btn btn-primary btn-lg px-5 btn-next">
+                                Tiếp tục <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                            
+                            <button type="submit" class="btn btn-success btn-lg px-5 btn-submit" style="display: none;">
+                                Khám Phá Ngay <i class="fas fa-magic ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8faff; }
+    .survey-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .survey-option-box {
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fff;
+    }
+    .survey-option-box:hover {
+        border-color: #cbd5e1;
+        background: #f8fafc;
+        transform: translateY(-2px);
+    }
+    .survey-radio:checked + .survey-option-box {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.05);
+        color: #1d4ed8;
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+        transform: translateY(-4px);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            let currentStep = 0;
+            const totalSteps = @Model.Count;
+            
+            function updateUI() {
+                $('.survey-step').hide();
+                $(`.survey-step[data-step="${currentStep}"]`).fadeIn(300);
+                
+                let progress = ((currentStep) / totalSteps) * 100;
+                $('#surveyProgress').css('width', progress + '%');
+                $('#currentStepText').text(currentStep + 1);
+
+                $('.btn-prev').prop('disabled', currentStep === 0);
+                
+                if (currentStep === totalSteps - 1) {
+                    $('.btn-next').hide();
+                    $('.btn-submit').show();
+                    $('#surveyProgress').css('width', '100%');
+                } else {
+                    $('.btn-next').show();
+                    $('.btn-submit').hide();
+                }
+            }
+
+            $('.survey-radio').change(function() {
+                // Auto next on selection
+                setTimeout(function() {
+                    if (currentStep < totalSteps - 1) {
+                        currentStep++;
+                        updateUI();
+                    }
+                }, 400);
+            });
+
+            $('.btn-next').click(function() {
+                // Thêm validation nhẹ, cấm next nếu chưa chọn
+                const currentQuestion = $(`.survey-step[data-step="${currentStep}"]`);
+                if(currentQuestion.find('input[type="radio"]:checked').length === 0) {
+                    alert("Vui lòng chọn 1 đáp án để tiếp tục!");
+                    return;
+                }
+
+                if (currentStep < totalSteps - 1) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+
+            $('.btn-prev').click(function() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+
+            updateUI();
+        });
+    </script>
+}
