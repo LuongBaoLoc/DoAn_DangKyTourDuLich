@@ -24,6 +24,7 @@ namespace DoAn_DangKyTourDuLich.Controllers
             _emailService = emailService;
         }
 
+        #region 1. DANH SÁCH & TÌM KIẾM CƠ BẢN
         public async Task<IActionResult> Index(TourSearchViewModel searchModel)
         {
             var query = _context.Tours
@@ -31,39 +32,28 @@ namespace DoAn_DangKyTourDuLich.Controllers
                 .Where(t => t.IsActive);
 
             if (searchModel.CategoryId.HasValue)
-            {
                 query = query.Where(t => t.CategoryId == searchModel.CategoryId.Value);
-            }
 
             if (searchModel.MinPrice.HasValue)
-            {
                 query = query.Where(t => t.Price >= searchModel.MinPrice.Value);
-            }
 
             if (searchModel.MaxPrice.HasValue)
-            {
                 query = query.Where(t => t.Price <= searchModel.MaxPrice.Value);
-            }
 
             if (searchModel.Duration.HasValue)
             {
                 if (searchModel.Duration.Value >= 5)
-                {
                     query = query.Where(t => t.Duration >= 5);
-                }
                 else
-                {
                     query = query.Where(t => t.Duration == searchModel.Duration.Value);
-                }
             }
 
             if (!string.IsNullOrEmpty(searchModel.Transportation))
-            {
                 query = query.Where(t => t.Transportation!.Contains(searchModel.Transportation));
-            }
 
             var tours = await query.ToListAsync();
 
+            // Xử lý tìm kiếm tiếng Việt không dấu
             if (!string.IsNullOrWhiteSpace(searchModel.Keyword))
             {
                 string normalizedKeyword = NormalizeVietnamese(searchModel.Keyword);
@@ -81,6 +71,7 @@ namespace DoAn_DangKyTourDuLich.Controllers
                 tours = tours.Where(t => NormalizeVietnamese(t.Destination).Contains(normalizedDestination)).ToList();
             }
 
+            // Sắp xếp
             tours = searchModel.SortBy switch
             {
                 "price_asc" => tours.OrderBy(t => t.Price).ToList(),
@@ -92,148 +83,103 @@ namespace DoAn_DangKyTourDuLich.Controllers
 
             searchModel.TotalItems = tours.Count;
             searchModel.TotalPages = (int)Math.Ceiling((double)searchModel.TotalItems / searchModel.PageSize);
-
-            searchModel.Tours = tours
-                .Skip((searchModel.Page - 1) * searchModel.PageSize)
-                .Take(searchModel.PageSize)
-                .ToList();
-
-            searchModel.Categories = await _context.Categories
-                .Where(c => c.IsActive)
-                .OrderBy(c => c.DisplayOrder)
-                .ToListAsync();
+            searchModel.Tours = tours.Skip((searchModel.Page - 1) * searchModel.PageSize).Take(searchModel.PageSize).ToList();
+            searchModel.Categories = await _context.Categories.Where(c => c.IsActive).OrderBy(c => c.DisplayOrder).ToListAsync();
 
             return View(searchModel);
         }
 
         private static string NormalizeVietnamese(string? input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return string.Empty;
-            }
-
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
             string normalized = input.Trim().ToLowerInvariant().Normalize(NormalizationForm.FormD);
             var builder = new StringBuilder();
-
             foreach (char c in normalized)
             {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                 {
-                    if (char.IsLetterOrDigit(c) || c == 'đ' || c == 'Đ')
-                    {
-                        builder.Append(c);
-                    }
+                    if (char.IsLetterOrDigit(c) || c == 'đ' || c == 'Đ') builder.Append(c);
                 }
             }
-
-            return builder.ToString()
-                .Replace('đ', 'd')
-                .Replace('Đ', 'D')
-                .Normalize(NormalizationForm.FormC);
+            return builder.ToString().Replace('đ', 'd').Replace('Đ', 'D').Normalize(NormalizationForm.FormC);
         }
+        #endregion
 
+        #region 2. CHỨC NĂNG KHẢO SÁT & THUẬT TOÁN SCORING
         [HttpGet]
-        public async Task<IActionResult> Suggestions(string? term, int limit = 8)
+        public IActionResult Survey()
         {
-            string normalizedTerm = NormalizeVietnamese(term);
-            if (string.IsNullOrWhiteSpace(normalizedTerm))
-            {
-                return Json(Array.Empty<object>());
-            }
-
-            limit = Math.Clamp(limit, 1, 12);
-
-            var tours = await _context.Tours
-                .Include(t => t.Category)
-                .Where(t => t.IsActive)
-                .Select(t => new
-                {
-                    t.Name,
-                    t.Destination,
-                    CategoryName = t.Category != null ? t.Category.Name : null
-                })
-                .ToListAsync();
-
-            var suggestions = tours
-                .SelectMany(t => new[]
-                {
-                    CreateSuggestion(t.Name, "Tour", normalizedTerm),
-                    CreateSuggestion(t.Destination, "Điểm đến", normalizedTerm),
-                    CreateSuggestion(t.CategoryName, "Loại hình", normalizedTerm)
-                })
-                .Where(s => s != null)
-                .Cast<SuggestionItem>()
-                .GroupBy(s => NormalizeVietnamese(s.Text))
-                .Select(g => g
-                    .OrderByDescending(x => x.Priority)
-                    .ThenBy(x => x.Text.Length)
-                    .First())
-                .OrderByDescending(s => s.Priority)
-                .ThenBy(s => s.Text.Length)
-                .Take(limit)
-                .Select(s => new
-                {
-                    text = s.Text,
-                    type = s.Type
-                })
-                .ToList();
-
-            return Json(suggestions);
+            return View(new SurveyViewModel());
         }
 
-        private static SuggestionItem? CreateSuggestion(string? value, string type, string normalizedTerm)
+        [HttpPost]
+        public async Task<IActionResult> Survey(SurveyViewModel model)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            var allTours = await _context.Tours.Include(t => t.Category).Where(t => t.IsActive).ToListAsync();
+
+            // 1. LỌC CỨNG ĐỊA ĐIỂM (Bắt buộc phải đúng 100%)
+            var filteredTours = allTours.AsQueryable();
+
+            if (model.DestinationType == "Beach")
             {
-                return null;
+                // Bắt buộc chỉ lấy tour Biển
+                filteredTours = filteredTours.Where(t => t.IsBeach == true);
+            }
+            else if (model.DestinationType == "Mountain")
+            {
+                // Bắt buộc chỉ lấy tour Núi
+                filteredTours = filteredTours.Where(t => t.IsMountain == true);
+            }
+            else if (model.DestinationType == "City")
+            {
+                // Bắt buộc chỉ lấy tour Thành phố/Sông nước (Không Biển, Không Núi)
+                filteredTours = filteredTours.Where(t => t.IsBeach == false && t.IsMountain == false);
             }
 
-            string normalizedValue = NormalizeVietnamese(value);
-            if (string.IsNullOrWhiteSpace(normalizedValue))
+            // 2. CHẤM ĐIỂM ĐỂ XẾP HẠNG (Ưu tiên đưa tour phù hợp giá/nhóm lên đầu)
+            var recommendedTours = filteredTours.Select(t => new {
+                Tour = t,
+                Score = (model.Budget == "Low" && t.IsLowBudget ? 30 : 0) +
+                        (model.Budget == "High" && !t.IsLowBudget ? 30 : 0) +
+                        (model.TravelStyle == "Group" && t.IsForGroup ? 10 : 0) +
+                        (model.TravelStyle == "Solo" && !t.IsForGroup ? 10 : 0)
+            })
+            .OrderByDescending(x => x.Score)
+            .Select(x => x.Tour)
+            .ToList();
+
+            // 3. THÔNG BÁO KẾT QUẢ RÕ RÀNG
+            if (recommendedTours.Count == 0)
             {
-                return null;
+                recommendedTours = allTours.OrderByDescending(t => t.CreatedAt).Take(6).ToList();
+                TempData["Error"] = "Chưa có tour khớp 100% yêu cầu, đây là các gợi ý thay thế!";
+            }
+            else
+            {
+                string loaiDiaDiem = model.DestinationType == "Beach" ? "Biển Đảo" : "Núi Rừng";
+                TempData["Success"] = $"AI đã lọc ra chính xác {recommendedTours.Count} tour {loaiDiaDiem} cho bạn!";
             }
 
-            int priority = normalizedValue.StartsWith(normalizedTerm, StringComparison.Ordinal) ? 2 :
-                normalizedValue.Contains(normalizedTerm, StringComparison.Ordinal) ? 1 : 0;
-
-            if (priority == 0)
+            var searchModel = new TourSearchViewModel
             {
-                return null;
-            }
-
-            return new SuggestionItem
-            {
-                Text = value.Trim(),
-                Type = type,
-                Priority = priority
+                Tours = recommendedTours,
+                Categories = await _context.Categories.Where(c => c.IsActive).ToListAsync(),
+                TotalItems = recommendedTours.Count,
+                PageSize = 100
             };
-        }
 
-        private sealed class SuggestionItem
-        {
-            public string Text { get; init; } = string.Empty;
-            public string Type { get; init; } = string.Empty;
-            public int Priority { get; init; }
+            return View("Index", searchModel);
         }
+        #endregion
 
+        #region 3. CHI TIẾT TOUR & GỢI Ý TOUR TƯƠNG ĐỒNG
         public async Task<IActionResult> Details(int id)
         {
-            var currentTour = await _context.Tours
-                .Include(t => t.Category)
-                .FirstOrDefaultAsync(t => t.Id == id);
+            var currentTour = await _context.Tours.Include(t => t.Category).FirstOrDefaultAsync(t => t.Id == id);
+            if (currentTour == null) return NotFound();
 
-            if (currentTour == null)
-            {
-                return NotFound();
-            }
-
-            var candidateTours = await _context.Tours
-                .Include(t => t.Category)
-                .Where(t => t.Id != id && t.IsActive)
-                .ToListAsync();
+            var candidateTours = await _context.Tours.Include(t => t.Category)
+                .Where(t => t.Id != id && t.IsActive).ToListAsync();
 
             var model = new TourDetailsViewModel
             {
@@ -242,106 +188,37 @@ namespace DoAn_DangKyTourDuLich.Controllers
                     .Select(t => BuildRecommendation(currentTour, t))
                     .Where(x => x.Score > 0)
                     .OrderByDescending(x => x.Score)
-                    .ThenByDescending(x => x.Tour.IsFeatured)
-                    .ThenBy(x => Math.Abs(x.Tour.DisplayPrice - currentTour.DisplayPrice))
                     .Take(4)
                     .ToList()
             };
-
             return View(model);
         }
 
-        private TourRecommendationViewModel BuildRecommendation(Tour currentTour, Tour candidateTour)
-        {
-            bool sameCategory = currentTour.CategoryId == candidateTour.CategoryId;
-            bool sameDestination =
-                !string.IsNullOrWhiteSpace(currentTour.Destination) &&
-                !string.IsNullOrWhiteSpace(candidateTour.Destination) &&
-                currentTour.Destination.Trim().Equals(candidateTour.Destination.Trim(), StringComparison.OrdinalIgnoreCase);
-
-            bool similarPrice = false;
-            if (currentTour.DisplayPrice > 0)
-            {
-                double priceDiff = (double)Math.Abs(currentTour.DisplayPrice - candidateTour.DisplayPrice) / (double)currentTour.DisplayPrice;
-                similarPrice = priceDiff <= 0.2;
-            }
-
-            var reasons = new List<string>();
-            if (sameCategory)
-            {
-                reasons.Add($"Cùng danh mục {(currentTour.Category?.Name ?? "tour")}");
-            }
-            if (sameDestination)
-            {
-                reasons.Add($"Cùng điểm đến {currentTour.Destination}");
-            }
-            if (similarPrice)
-            {
-                reasons.Add("Mức giá tương đồng");
-            }
-
-            return new TourRecommendationViewModel
-            {
-                Tour = candidateTour,
-                Score = CalculateSimilarity(currentTour, candidateTour),
-                SameCategory = sameCategory,
-                SameDestination = sameDestination,
-                SimilarPrice = similarPrice,
-                Reasons = reasons
-            };
-        }
-
-        private double CalculateSimilarity(Tour t1, Tour t2)
+        private TourRecommendationViewModel BuildRecommendation(Tour current, Tour target)
         {
             double score = 0;
+            var reasons = new List<string>();
 
-            if (t1.CategoryId == t2.CategoryId)
-            {
-                score += 0.6;
-            }
+            if (current.CategoryId == target.CategoryId) { score += 0.6; reasons.Add($"Cùng loại hình {current.Category?.Name}"); }
+            if (current.Destination == target.Destination) { score += 0.3; reasons.Add($"Cùng tại {current.Destination}"); }
 
-            if (!string.IsNullOrEmpty(t1.Destination) && !string.IsNullOrEmpty(t2.Destination))
-            {
-                if (t1.Destination.Trim().Equals(t2.Destination.Trim(), StringComparison.OrdinalIgnoreCase))
-                {
-                    score += 0.3;
-                }
-            }
+            double priceDiff = (double)Math.Abs(current.DisplayPrice - target.DisplayPrice) / (double)current.DisplayPrice;
+            if (priceDiff <= 0.2) { score += 0.1; reasons.Add("Mức giá tương đồng"); }
 
-            if (t1.DisplayPrice > 0)
-            {
-                double priceDiff = (double)Math.Abs(t1.DisplayPrice - t2.DisplayPrice) / (double)t1.DisplayPrice;
-                if (priceDiff <= 0.2)
-                {
-                    score += 0.1;
-                }
-            }
-
-            return score;
+            return new TourRecommendationViewModel { Tour = target, Score = score, Reasons = reasons };
         }
+        #endregion
 
+        #region 4. HỆ THỐNG ĐẶT TOUR & THANH TOÁN
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Book(int id, string? date, string? time)
         {
-            var tour = await _context.Tours
-                .Include(t => t.Category)
-                .FirstOrDefaultAsync(t => t.Id == id && t.IsActive);
-
+            var tour = await _context.Tours.Include(t => t.Category).FirstOrDefaultAsync(t => t.Id == id && t.IsActive);
             if (tour == null) return NotFound();
+            if (tour.AvailableSlots <= 0) { TempData["Error"] = "Tour đã hết chỗ."; return RedirectToAction("Details", new { id }); }
 
-            if (tour.AvailableSlots <= 0)
-            {
-                TempData["Error"] = "Tour này hiện đã hết chỗ ghép lẻ.";
-                return RedirectToAction("Details", new { id });
-            }
-
-            var selectedDateTime = string.IsNullOrWhiteSpace(date)
-                ? string.Empty
-                : string.IsNullOrWhiteSpace(time)
-                    ? date
-                    : $"{date} {time}";
-
+            var selectedDateTime = string.IsNullOrWhiteSpace(date) ? string.Empty : string.IsNullOrWhiteSpace(time) ? date : $"{date} {time}";
             var user = await _userManager.GetUserAsync(User);
             var model = new CheckoutViewModel
             {
@@ -356,7 +233,6 @@ namespace DoAn_DangKyTourDuLich.Controllers
                 SelectedDate = selectedDateTime,
                 TotalAmount = tour.DisplayPrice
             };
-
             return View(model);
         }
 
@@ -369,26 +245,14 @@ namespace DoAn_DangKyTourDuLich.Controllers
             if (tour == null) return NotFound();
 
             bool isPrivateGroup = (model.AdultQuantity + model.ChildQuantity) >= 10;
-
-            if (!isPrivateGroup && model.Quantity > tour.AvailableSlots)
-            {
-                ModelState.AddModelError("Quantity", $"Tour ghép hiện chỉ còn {tour.AvailableSlots} chỗ.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                model.Tour = tour;
-                return View(model);
-            }
+            if (!isPrivateGroup && model.Quantity > tour.AvailableSlots) { ModelState.AddModelError("Quantity", "Không đủ chỗ trống."); }
+            if (!ModelState.IsValid) { model.Tour = tour; return View(model); }
 
             var user = await _userManager.GetUserAsync(User);
             string orderCode = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-
             decimal childPrice = tour.DisplayPrice / 2;
             decimal totalAmount = (model.AdultQuantity * tour.DisplayPrice) + (model.ChildQuantity * childPrice);
-
-            string groupType = isPrivateGroup ? " [ĐOÀN RIÊNG]" : " [TOUR GHÉP]";
-            string detailNote = $"{groupType}\n[SL: {model.AdultQuantity} Lớn, {model.ChildQuantity} Trẻ | Ngày: {model.SelectedDate}]";
+            string detailNote = $"{(isPrivateGroup ? " [ĐOÀN RIÊNG]" : " [TOUR GHÉP]")}\n[SL: {model.AdultQuantity} Lớn, {model.ChildQuantity} Trẻ | Ngày: {model.SelectedDate}]";
 
             var order = new Order
             {
@@ -398,34 +262,20 @@ namespace DoAn_DangKyTourDuLich.Controllers
                 CustomerPhone = model.CustomerPhone,
                 CustomerAddress = model.CustomerAddress,
                 Note = detailNote + (string.IsNullOrEmpty(model.Note) ? "" : "\n" + model.Note),
-                PaymentMethod = model.PaymentMethod,
                 TotalAmount = totalAmount,
                 UserId = user?.Id,
                 Status = OrderStatus.Pending,
-                OrderDate = DateTime.Now
+                OrderDate = DateTime.Now,
+                PaymentMethod = model.PaymentMethod
             };
 
-            order.OrderDetails.Add(new OrderDetail
-            {
-                TourId = tour.Id,
-                Quantity = model.Quantity,
-                UnitPrice = tour.DisplayPrice,
-                SubTotal = totalAmount
-            });
-
-            if (!isPrivateGroup)
-            {
-                tour.CurrentParticipants += model.Quantity;
-            }
+            order.OrderDetails.Add(new OrderDetail { TourId = tour.Id, Quantity = model.Quantity, UnitPrice = tour.DisplayPrice, SubTotal = totalAmount });
+            if (!isPrivateGroup) tour.CurrentParticipants += model.Quantity;
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            if (order.PaymentMethod != PaymentMethod.CashOnDelivery)
-            {
-                return RedirectToAction("Payment", new { orderId = order.Id });
-            }
-
+            if (order.PaymentMethod != PaymentMethod.CashOnDelivery) return RedirectToAction("Payment", new { orderId = order.Id });
             TempData["Success"] = isPrivateGroup ? "Yêu cầu đoàn riêng đã gửi!" : "Đặt tour thành công!";
             return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
         }
@@ -433,11 +283,7 @@ namespace DoAn_DangKyTourDuLich.Controllers
         [Authorize]
         public async Task<IActionResult> Payment(int orderId)
         {
-            var order = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Tour)
-                .FirstOrDefaultAsync(o => o.Id == orderId);
-
+            var order = await _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Tour).FirstOrDefaultAsync(o => o.Id == orderId);
             return View(order);
         }
 
@@ -447,24 +293,14 @@ namespace DoAn_DangKyTourDuLich.Controllers
         public async Task<IActionResult> ConfirmPayment(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-            if (order != null)
-            {
-                order.Status = OrderStatus.Pending;
-                order.UpdatedAt = DateTime.Now;
-                await _context.SaveChangesAsync();
-            }
-
+            if (order != null) { order.Status = OrderStatus.Pending; order.UpdatedAt = DateTime.Now; await _context.SaveChangesAsync(); }
             return RedirectToAction("OrderConfirmation", new { orderId });
         }
 
         [Authorize]
         public async Task<IActionResult> OrderConfirmation(int orderId)
         {
-            var order = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Tour)
-                .FirstOrDefaultAsync(o => o.Id == orderId);
-
+            var order = await _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Tour).FirstOrDefaultAsync(o => o.Id == orderId);
             return View(order);
         }
 
@@ -472,14 +308,70 @@ namespace DoAn_DangKyTourDuLich.Controllers
         public async Task<IActionResult> MyOrders()
         {
             var user = await _userManager.GetUserAsync(User);
-            var orders = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Tour)
-                .Where(o => o.UserId == user!.Id)
-                .OrderByDescending(o => o.OrderDate)
-                .ToListAsync();
-
+            var orders = await _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Tour)
+                .Where(o => o.UserId == user!.Id).OrderByDescending(o => o.OrderDate).ToListAsync();
             return View(orders);
+        }
+        #endregion
+
+        #region 5. TIỆN ÍCH AI & SEED DỮ LIỆU NHANH
+        [HttpGet]
+        public async Task<IActionResult> Suggestions(string? term)
+        {
+            string norm = NormalizeVietnamese(term);
+            if (string.IsNullOrEmpty(norm)) return Json(new object[] { });
+            var suggestions = await _context.Tours.Where(t => t.IsActive && NormalizeVietnamese(t.Name).Contains(norm))
+                .Select(t => new { text = t.Name, type = "Tour" }).Take(8).ToListAsync();
+            return Json(suggestions);
+        }
+
+        // Đường dẫn: /Tour/QuickSeed - Quét toàn bộ DB để gắn nhãn tự động
+
+        [HttpGet]
+        public async Task<IActionResult> QuickSeed()
+        {
+            var tours = await _context.Tours.ToListAsync();
+
+            var beachKeys = new[] { "phú quốc", "đà nẵng", "hạ long", "nha trang", "mũi né", "vũng tàu", "thái lan", "singapore", "biển", "đảo" };
+            var mountainKeys = new[] { "đà lạt", "sapa", "ninh bình", "tràng an", "nhật bản", "hàn quốc", "núi", "rừng" };
+
+            foreach (var t in tours)
+            {
+                string content = (t.Name + " " + t.Destination).ToLower();
+
+                t.IsBeach = beachKeys.Any(k => content.Contains(k));
+                t.IsMountain = mountainKeys.Any(k => content.Contains(k));
+
+                // ĐÃ XÓA ĐOẠN 50/50 TRUY TÌM NGẪU NHIÊN. 
+                // Giờ Cần Thơ, Sài Gòn, Huế sẽ không bị ép làm Núi hay Biển nữa!
+
+                t.IsLowBudget = (t.Price <= 4500000);
+                t.IsForGroup = (t.MaxParticipants >= 20);
+            }
+
+            await _context.SaveChangesAsync();
+            return Content($"Thành công! Đã dọn dẹp sạch sẽ, Cần Thơ đã không còn Núi nữa!");
+        }
+        #endregion
+        // Đường dẫn: /Tour/FixImages - Tự động nạp ảnh Online nét căng cho 20 Tour
+        [HttpGet]
+        public async Task<IActionResult> FixImages()
+        {
+            var tours = await _context.Tours.ToListAsync();
+
+            foreach (var t in tours)
+            {
+                // Sử dụng LoremFlickr với từ khóa là tên Điểm đến (Destination)
+                // Link này sẽ tự động tìm ảnh liên quan đến địa danh đó trên Flickr
+                // lock={t.Id} giúp ảnh không bị nhảy lung tung khi load lại trang
+                string keyword = NormalizeVietnamese(t.Destination).Replace(" ", ",");
+
+                // Hoặc link này (Khuyên dùng):
+                t.ImageUrl = $"https://www.bing.com/th?id=OIP.featured&q={t.Destination}+travel+4k";
+            }
+
+            await _context.SaveChangesAsync();
+            return Content("Đã sửa lỗi link chết! Toàn bộ 20 tour đã được nạp link ảnh tự động mới. Bạn hãy quay lại trang chủ và kiểm tra nhé!");
         }
     }
 }

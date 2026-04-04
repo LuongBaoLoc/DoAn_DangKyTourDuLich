@@ -1169,4 +1169,9 @@ footer a:hover {
         height: 20px;
         right: 14px;
     }
+    .floating-contact__link--survey {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #fff !important;
+        font-size: 1.5rem;
+    }
 }

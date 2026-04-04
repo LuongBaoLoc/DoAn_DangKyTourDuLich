@@ -1,0 +1,292 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\controllers\\tourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\controllers\\tourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\views\\tour\\survey.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\views\\tour\\survey.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\models\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\models\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\areas\\admin\\controllers\\tourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\areas\\admin\\controllers\\tourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\areas\\admin\\views\\tour\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\areas\\admin\\views\\tour\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\areas\\admin\\views\\tour\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\areas\\admin\\views\\tour\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\models\\viewmodels\\viewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\models\\viewmodels\\viewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|c:\\users\\windows 11\\desktop\\doan_dangkytourdulich\\doan_dangkytourdulich\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F62CF627-D948-6D2C-81D7-D2E91AC27554}|DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj|solutionrelative:doan_dangkytourdulich\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "20260404183617_DATABASE.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Migrations\\20260404183617_DATABASE.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:36:17.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Edit.cshtml",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Edit.cshtml",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Edit.cshtml",
+              "ViewState": "AgIAADoAAAAAAAAAAAAMwEkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-04T18:11:03.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Survey.cshtml",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Views\\Tour\\Survey.cshtml",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Views\\Tour\\Survey.cshtml",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Views\\Tour\\Survey.cshtml",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Views\\Tour\\Survey.cshtml",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAcwGQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-04T17:57:36.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TourController.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Controllers\\TourController.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Controllers\\TourController.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Controllers\\TourController.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Controllers\\TourController.cs",
+              "ViewState": "AgIAAFsBAAAAAAAAAAAuwGsBAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T17:35:20.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20260404185730_DataBase.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Migrations\\20260404185730_DataBase.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:57:30.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAPwBAAAAAAAAAAAmwE0CAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:23:07.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Create.cshtml",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Create.cshtml",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Views\\Tour\\Create.cshtml",
+              "ViewState": "AgIAADgAAAAAAAAAAAAMwEQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-04T18:11:33.307Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TourController.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Controllers\\TourController.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Controllers\\TourController.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Areas\\Admin\\Controllers\\TourController.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Areas\\Admin\\Controllers\\TourController.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAMwJ0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:10:55.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20260404182444_Seed100ToursData.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Migrations\\20260404182444_Seed100ToursData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:24:44.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20260404183031_InitDB.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Migrations\\20260404183031_InitDB.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T18:30:32.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAIUEAAAAAAAAAAAAAJkEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-04T17:40:35.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAAANsAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-04T17:40:12.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Tour.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Models\\Tour.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Models\\Tour.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Models\\Tour.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Models\\Tour.cs",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAcwJ8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T17:34:43.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ViewModels.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Models\\ViewModels\\ViewModels.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Models\\ViewModels\\ViewModels.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Models\\ViewModels\\ViewModels.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Models\\ViewModels\\ViewModels.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAmwKoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T17:32:09.256Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "20260404173125_UpdateTourForSurvey.cs",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\Migrations\\20260404173125_UpdateTourForSurvey.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T17:31:25.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\appsettings.json",
+              "RelativeDocumentMoniker": "DoAn_DangKyTourDuLich\\appsettings.json",
+              "ToolTip": "C:\\Users\\Windows 11\\Desktop\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\appsettings.json",
+              "RelativeToolTip": "DoAn_DangKyTourDuLich\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-04T17:30:45.307Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

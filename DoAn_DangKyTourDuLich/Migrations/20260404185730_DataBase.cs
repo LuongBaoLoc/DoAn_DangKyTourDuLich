@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DoAn_DangKyTourDuLich.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class DataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -195,6 +195,7 @@ namespace DoAn_DangKyTourDuLich.Migrations
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsReviewed = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -214,6 +215,7 @@ namespace DoAn_DangKyTourDuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    TourCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     DetailDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -226,13 +228,18 @@ namespace DoAn_DangKyTourDuLich.Migrations
                     MaxParticipants = table.Column<int>(type: "int", nullable: false),
                     CurrentParticipants = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    ImageUrlsData = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Transportation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Schedule = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsFeatured = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    IsBeach = table.Column<bool>(type: "bit", nullable: false),
+                    IsMountain = table.Column<bool>(type: "bit", nullable: false),
+                    IsForGroup = table.Column<bool>(type: "bit", nullable: false),
+                    IsLowBudget = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -274,29 +281,83 @@ namespace DoAn_DangKyTourDuLich.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TourId = table.Column<int>(type: "int", nullable: false),
+                    BookingId = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    ImagesData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsHidden = table.Column<bool>(type: "bit", nullable: false),
+                    HideReason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Orders_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Tours_TourId",
+                        column: x => x.TourId,
+                        principalTable: "Tours",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Description", "DisplayOrder", "ImageUrl", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Các tour du lịch trong nước Việt Nam", 1, null, true, "Tour Trong Nước" },
-                    { 2, "Các tour du lịch quốc tế", 2, null, true, "Tour Nước Ngoài" },
-                    { 3, "Các tour du lịch biển đảo", 3, null, true, "Tour Biển Đảo" },
-                    { 4, "Các tour du lịch núi rừng, trekking", 4, null, true, "Tour Núi Rừng" },
-                    { 5, "Các tour khám phá văn hóa, di sản", 5, null, true, "Tour Văn Hóa" }
+                    { 1, null, 1, null, true, "Tour Trong Nước" },
+                    { 2, null, 2, null, true, "Tour Nước Ngoài" },
+                    { 3, null, 3, null, true, "Tour Biển Đảo" },
+                    { 4, null, 4, null, true, "Tour Núi Rừng" },
+                    { 5, null, 5, null, true, "Tour Văn Hóa" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Tours",
-                columns: new[] { "Id", "CategoryId", "CreatedAt", "CurrentParticipants", "DepartureDate", "DepartureLocation", "Destination", "DetailDescription", "DiscountPrice", "Duration", "ImageUrl", "IsActive", "IsFeatured", "MaxParticipants", "Name", "Price", "Schedule", "ShortDescription", "Transportation", "UpdatedAt" },
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "CurrentParticipants", "DepartureDate", "DepartureLocation", "Destination", "DetailDescription", "DiscountPrice", "Duration", "ImageUrl", "ImageUrlsData", "IsActive", "IsBeach", "IsFeatured", "IsForGroup", "IsLowBudget", "IsMountain", "MaxParticipants", "Name", "Price", "Schedule", "ShortDescription", "TourCode", "Transportation", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP. Hồ Chí Minh", "Đà Nẵng", "Tour Đà Nẵng - Hội An - Bà Nà Hills 4 ngày 3 đêm. Tham quan Cầu Rồng, bán đảo Sơn Trà, phố cổ Hội An, Bà Nà Hills với Cầu Vàng nổi tiếng.", null, 4, "/images/tours/danang.jpg", true, true, 30, "Đà Nẵng - Hội An - Bà Nà Hills", 5990000m, null, "Khám phá thành phố đáng sống nhất Việt Nam cùng phố cổ Hội An và Bà Nà Hills.", "Máy bay", null },
-                    { 2, 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP. Hồ Chí Minh", "Phú Quốc", "Tour Phú Quốc 3 ngày 2 đêm. Khám phá Vinpearl Safari, bãi Sao, chợ đêm Phú Quốc, lặn ngắm san hô.", null, 3, "/images/tours/phuquoc.jpg", true, true, 25, "Phú Quốc - Đảo Ngọc Thiên Đường", 4500000m, null, "Nghỉ dưỡng tại đảo ngọc Phú Quốc với bãi biển xanh ngắt và ẩm thực hấp dẫn.", "Máy bay", null },
-                    { 3, 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hà Nội", "Sapa", "Tour Sapa 3 ngày 2 đêm. Chinh phục đỉnh Fansipan, tham quan bản Cát Cát, chợ tình Sapa, ruộng bậc thang.", null, 3, "/images/tours/sapa.jpg", true, true, 20, "Sapa - Fansipan - Bản Cát Cát", 3800000m, null, "Chinh phục nóc nhà Đông Dương và khám phá văn hóa vùng cao Tây Bắc.", "Xe du lịch", null },
-                    { 4, 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP. Hồ Chí Minh", "Nha Trang", "Tour Nha Trang 4 ngày 3 đêm. Tham quan Vinpearl Land, tháp bà Ponagar, đảo Hòn Mun, Viện Hải dương học.", null, 4, "/images/tours/nhatrang.jpg", true, true, 35, "Nha Trang - Vinpearl Land", 4200000m, null, "Tắm biển Nha Trang và vui chơi tại thiên đường giải trí Vinpearl Land.", "Máy bay", null },
-                    { 5, 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP. Hồ Chí Minh", "Huế", "Tour Huế 3 ngày 2 đêm. Tham quan Đại Nội, lăng Tự Đức, chùa Thiên Mụ, sông Hương, ẩm thực Huế.", null, 3, "/images/tours/hue.jpg", true, false, 25, "Huế - Cố Đô Di Sản", 3500000m, null, "Khám phá cố đô Huế với các di sản văn hóa thế giới và ẩm thực cung đình.", "Máy bay", null },
-                    { 6, 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP. Hồ Chí Minh", "Đà Lạt", "Tour Đà Lạt 3 ngày 2 đêm. Tham quan Thung lũng Tình Yêu, hồ Tuyền Lâm, đồi chè Cầu Đất, chợ đêm Đà Lạt.", null, 3, "/images/tours/dalat.jpg", true, true, 30, "Đà Lạt - Thành Phố Ngàn Hoa", 3200000m, null, "Nghỉ dưỡng tại thành phố sương mù với khí hậu mát mẻ quanh năm.", "Xe du lịch", null }
+                    { 1, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Kiên Giang", "Tour nghỉ dưỡng cao cấp.", null, 3, "https://images.unsplash.com/photo-1589782109277-516cd42b8bb7?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 30, "Phú Quốc: Nghỉ dưỡng Đảo Ngọc", 5500000m, "Sáng: Check-in Grand World - Xem show Tinh hoa Việt Nam | Trưa: Thưởng thức Bún Quậy Kiến Xây | Chiều: Vui chơi VinWonders", "Vui chơi VinWonders & Safari.", "PQ001", "Máy bay", null },
+                    { 2, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Phú Quốc", "Kiên Giang", "Tour mạo hiểm biển đảo.", null, 1, "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?auto=format&fit=crop&w=800&q=80", null, true, true, false, true, true, false, 20, "Phú Quốc: Tour 4 Đảo Cano", 1800000m, "Sáng: Cano đi Hòn Mây Rút | Trưa: Ăn hải sản bè nổi | Chiều: Check-in Cầu Hôn (Kiss Bridge)", "Lặn ngắm san hô & Check-in hòn Thơm.", "PQ002", "Cano", null },
+                    { 3, 1, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Đà Nẵng", "Nghỉ dưỡng & Giải trí.", null, 3, "https://images.unsplash.com/photo-1559592442-741efca65ca6?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 40, "Đà Nẵng: Siêu phẩm Bà Nà Hills", 4200000m, "Sáng: Cáp treo Bà Nà - Cầu Vàng | Trưa: Buffet 100 món | Chiều: Vui chơi Fantasy Park", "Check-in Cầu Vàng - Fantasy Park.", "DN001", "Máy bay", null },
+                    { 4, 4, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Lâm Đồng", "Nghỉ dưỡng nhẹ nhàng.", null, 3, "https://images.unsplash.com/photo-1588665042459-7f79f220310e?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, true, 25, "Đà Lạt: Thiên đường Sống ảo", 3200000m, "Sáng: Vườn hoa Thành phố | Trưa: Ăn Lẩu gà lá é | Chiều: Cafe Still Cafe phong cách Nhật", "Check-in các vườn hoa & Cafe hot.", "DL001", "Xe du lịch", null },
+                    { 5, 4, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đà Lạt", "Lâm Đồng", "Mạo hiểm núi rừng.", null, 1, "https://images.unsplash.com/photo-1559599189-fe84dea4eb79?auto=format&fit=crop&w=800&q=80", null, true, false, false, false, true, true, 15, "Đà Lạt: Trekking Langbiang", 1500000m, "Sáng: 04h00 Săn mây Cầu Đất | Trưa: Picnic đỉnh Langbiang | Chiều: Trượt thác Datanla", "Chinh phục đỉnh núi - Săn mây.", "DL002", "Xe Jeep", null },
+                    { 6, 4, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hà Nội", "Lào Cai", "Chinh phục đỉnh cao.", null, 3, "https://images.unsplash.com/photo-1504457047772-27faf1c00561?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, true, 25, "Sapa: Chinh phục Fansipan", 3800000m, "Sáng: Cáp treo Fansipan ngắm thung lũng | Trưa: Buffet trên núi | Chiều: Bản Cát Cát", "Cáp treo Fansipan - Bản Cát Cát.", "SP001", "Xe giường nằm", null },
+                    { 7, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hà Nội", "Quảng Ninh", "Kỳ quan thiên nhiên.", null, 2, "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 40, "Hạ Long: Du thuyền 5 sao", 5500000m, "Ngày 1: Lên tàu - Tiệc Sunset trên boong | Trưa: Ăn hải sản | Chiều: Chèo Kayak", "Ngủ đêm trên vịnh di sản.", "HL001", "Du thuyền", null },
+                    { 8, 4, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hà Nội", "Ninh Bình", "Di sản kép thế giới.", null, 1, "https://images.unsplash.com/photo-1655712530188-75c1c4e97eb6?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, true, 50, "Ninh Bình: Tràng An - Hang Múa", 1500000m, "Sáng: Chinh phục Hang Múa ngắm lúa chín | Trưa: Đặc sản thịt dê | Chiều: Thuyền Tràng An", "Chèo thuyền & Leo núi.", "NB001", "Xe du lịch", null },
+                    { 9, 5, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Huế", "Thừa Thiên Huế", "Tìm về lịch sử.", null, 1, "https://images.unsplash.com/photo-1590424744295-971268634782?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, false, 30, "Huế: Cố Đô Trầm Mặc", 1200000m, "Sáng: Đại Nội - Chùa Thiên Mụ | Trưa: Cơm cung đình | Chiều: Lăng Khải Định", "Đại Nội - Lăng Tẩm - Sông Hương.", "HUE01", "Xích lô", null },
+                    { 10, 5, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đà Nẵng", "Quảng Nam", "Lãng mạn - Hoài niệm.", null, 1, "https://images.unsplash.com/photo-1555921015-5532091f6026?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, false, 50, "Hội An: Phố Cổ Lung Linh", 900000m, "Chiều: Thăm Chùa Cầu - Làng Gốm | Tối: Thả đèn hoa đăng sông Hoài - Cafe Faifo", "Đèn lồng - Thả hoa đăng.", "HA001", "Đi bộ", null },
+                    { 11, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Khánh Hòa", "Full dịch vụ.", null, 3, "https://images.unsplash.com/photo-1623941457173-0499e0df2438?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 50, "Nha Trang: Nghỉ dưỡng Vinpearl", 5200000m, "Ngày 1: Cáp treo ra đảo | Ngày 2: VinWonders - Show Nhạc nước | Ngày 3: Tắm bùn khoáng nóng", "Đảo Hòn Tre - Thiên đường vui chơi.", "NT001", "Máy bay", null },
+                    { 12, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Bình Thuận", "Check-in cực hot.", null, 2, "https://images.unsplash.com/photo-1571508601936-6ca847b47ae4?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, true, false, 30, "Mũi Né: Săn Hoàng Hôn Bàu Trắng", 1500000m, "Sáng: Săn bình minh đồi cát | Trưa: Ăn bánh xèo | Chiều: Xe Jeep địa hình Bàu Trắng", "Đồi cát trắng - Xe Jeep.", "MN001", "Xe du lịch", null },
+                    { 13, 1, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "TP. Hồ Chí Minh", "Sài Gòn hoa lệ.", null, 1, "https://images.unsplash.com/photo-1583417311718-c29e46a7be7f?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, false, 40, "Sài Gòn: Ngắm sông từ Bitexco", 1100000m, "Sáng: Dinh Độc Lập - Nhà Thờ Đức Bà | Trưa: Cơm tấm | Chiều: Landmark 81", "Dinh Độc Lập - Bưu Điện - Landmark.", "HCM01", "Xe buýt 2 tầng", null },
+                    { 14, 3, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Bà Rịa - Vũng Tàu", "Lộng lẫy - Cổ điển.", null, 2, "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 20, "Vũng Tàu: Nghỉ dưỡng The Imperial", 4500000m, "Ngày 1: Đón khách - Tea party | Ngày 2: Tắm biển riêng - Thăm Bạch Dinh", "Khách sạn phong cách Victoria.", "VT001", "Xe du lịch", null },
+                    { 15, 5, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Cần Thơ", "Văn hóa miền Tây.", null, 2, "https://images.unsplash.com/photo-1599321451299-a1b7e466ce78?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, true, false, 50, "Cần Thơ: Chợ Nổi & Miệt Vườn", 1200000m, "Ngày 1: Thăm nhà cổ Bình Thủy | Ngày 2: 05h00 Chợ nổi Cái Răng - Vườn Mỹ Khánh", "Cái Răng - Mỹ Khánh - Sông nước.", "CT001", "Xe du lịch", null },
+                    { 16, 2, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Thái Lan", "Tour du lịch giải trí.", null, 5, "https://images.unsplash.com/photo-1504214208698-ea1919a2f9e0?auto=format&fit=crop&w=800&q=80", null, true, true, true, true, false, false, 30, "Thái Lan: Nghỉ dưỡng Pattaya biển xanh", 6990000m, "Sáng: Bay đến Bangkok | Trưa: Lẩu Thái Tomyum | Chiều: Tắm biển Đảo San Hô | Tối: Xem show Alcazar", "Đảo San Hô - Show chuyển giới Alcazar.", "THAI1", "Máy bay", null },
+                    { 17, 2, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Nhật Bản", "Kỳ nghỉ đẳng cấp.", null, 6, "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, false, true, 20, "Nhật Bản: Nghỉ dưỡng Núi Phú Sĩ", 28900000m, "Sáng: Thăm làng cổ Oshino Hakkai | Trưa: Mì Ramen | Chiều: Tắm khoáng nóng Onsen ngắm Núi Phú Sĩ", "Tắm Onsen - Ngắm núi Phú Sĩ.", "JPN01", "Máy bay", null },
+                    { 18, 2, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Hàn Quốc", "Mùa thu vàng rực rỡ.", null, 5, "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, false, true, 25, "Hàn Quốc: Nghỉ dưỡng Đảo Nami", 15900000m, "Sáng: Di chuyển đến đảo Nami | Trưa: Gà nướng cay | Chiều: Check-in hàng cây ngân hạnh", "Phim trường lãng mạn - Nami Island.", "KOR01", "Máy bay", null },
+                    { 19, 2, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Singapore", "Trải nghiệm sang trọng.", null, 3, "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, false, false, 25, "Singapore: Nghỉ dưỡng Marina Bay Sands", 12500000m, "Sáng: Thăm Garden by the Bay | Trưa: Cơm gà Hải Nam | Chiều: Tắm hồ bơi vô cực cao nhất thế giới", "Hồ bơi vô cực - Garden by the Bay.", "SIN01", "Máy bay", null },
+                    { 20, 2, new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, new DateTime(2026, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "TP.HCM", "Pháp", "Tour lãng mạn mộng mơ.", null, 7, "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80", null, true, false, true, true, false, false, 15, "Pháp: Nghỉ dưỡng bên dòng sông Seine", 65000000m, "Sáng: Thăm Tháp Eiffel | Trưa: Ăn món Pháp | Chiều: Du thuyền sông Seine | Tối: Rượu vang Pháp", "Tháp Eiffel - Bảo tàng Louvre.", "FRA01", "Máy bay", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -366,6 +427,22 @@ namespace DoAn_DangKyTourDuLich.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_BookingId",
+                table: "Reviews",
+                column: "BookingId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_TourId",
+                table: "Reviews",
+                column: "TourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId_BookingId",
+                table: "Reviews",
+                columns: new[] { "UserId", "BookingId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tours_CategoryId",
                 table: "Tours",
                 column: "CategoryId");
@@ -391,6 +468,9 @@ namespace DoAn_DangKyTourDuLich.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

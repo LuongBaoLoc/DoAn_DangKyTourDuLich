@@ -4,6 +4,7 @@ using DoAn_DangKyTourDuLich.Models;
 
 namespace DoAn_DangKyTourDuLich.Models.ViewModels
 {
+    // 1. Quản lý Đăng ký tài khoản
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Vui lòng nhập họ tên")]
@@ -37,6 +38,7 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 
+    // 2. Quản lý Đăng nhập
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Vui lòng nhập email")]
@@ -53,6 +55,7 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         public bool RememberMe { get; set; }
     }
 
+    // 3. Quản lý Tìm kiếm & Lọc Tour (Cơ bản)
     public class TourSearchViewModel
     {
         public string? Keyword { get; set; }
@@ -72,22 +75,38 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         public int TotalItems { get; set; }
     }
 
+    // 4. CHỨC NĂNG 1: Khảo sát tìm Tour (Thuật toán Scoring)
+    public class SurveyViewModel
+    {
+        [Required(ErrorMessage = "Hãy chọn loại địa điểm bạn thích")]
+        public string DestinationType { get; set; } = "Beach"; // Biển hoặc Núi
+
+        [Required(ErrorMessage = "Hãy chọn hình thức di chuyển")]
+        public string TravelStyle { get; set; } = "Solo"; // Đi lẻ hoặc Theo nhóm
+
+        [Required(ErrorMessage = "Hãy chọn mức ngân sách")]
+        public string Budget { get; set; } = "Low"; // Tiết kiệm hoặc Cao cấp
+    }
+
+    // 5. CHỨC NĂNG 2: Thuật toán Gợi ý Tour liên quan
     public class TourRecommendationViewModel
     {
         public Tour Tour { get; set; } = null!;
-        public double Score { get; set; }
+        public double Score { get; set; } // Điểm số tương đồng
         public bool SameCategory { get; set; }
         public bool SameDestination { get; set; }
         public bool SimilarPrice { get; set; }
-        public List<string> Reasons { get; set; } = new List<string>();
+        public List<string> Reasons { get; set; } = new List<string>(); // Lý do gợi ý (để hiển thị UI)
     }
 
+    // 6. Chi tiết Tour kèm danh sách gợi ý
     public class TourDetailsViewModel
     {
         public Tour Tour { get; set; } = null!;
         public List<TourRecommendationViewModel> RelatedTours { get; set; } = new List<TourRecommendationViewModel>();
     }
 
+    // 7. Thanh toán & Đặt Tour (Checkout)
     public class CheckoutViewModel
     {
         [Required(ErrorMessage = "Vui lòng nhập họ tên")]
@@ -135,7 +154,7 @@ namespace DoAn_DangKyTourDuLich.Models.ViewModels
         [Display(Name = "Em bé (< 2 tuổi)")]
         public int InfantQuantity { get; set; } = 0;
 
-        [Display(Name = "Yêu cầu tách đoàn riêng (Cho khách tập thể)")]
+        [Display(Name = "Yêu cầu tách đoàn riêng")]
         public bool IsPrivateGroup { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tổng số lượng")]

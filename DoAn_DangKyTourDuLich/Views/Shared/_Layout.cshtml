@@ -12,7 +12,6 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary-gradient sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
@@ -91,7 +90,6 @@
         </div>
     </nav>
 
-    <!-- Toast Notifications -->
     @if (TempData["Success"] != null)
     {
         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
@@ -119,12 +117,10 @@
         </div>
     }
 
-    <!-- Main Content -->
     <main>
         @RenderBody()
     </main>
 
-    <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3 mt-5">
         <div class="container">
             <div class="row">
@@ -156,29 +152,37 @@
         </div>
     </footer>
 
-    <div class="floating-contact is-collapsed" data-floating-contact>
+    <div class="floating-contact is-collapsed" id="contactBox">
         <div class="floating-contact__items">
+            <a class="floating-contact__link floating-contact__link--survey"
+                   asp-controller="Tour" asp-action="Survey"
+                   title="Khảo sát tìm Tour">
+                <i class="fas fa-magic" aria-hidden="true"></i>
+            </a>
+
             <a class="floating-contact__link floating-contact__link--facebook"
-               href="https://www.facebook.com/LuongBaoLoc2K5?locale=vi_VN"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Liên hệ Facebook">
+                   href="https://www.facebook.com/LuongBaoLoc2K5?locale=vi_VN"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Liên hệ Facebook">
                 <i class="fab fa-facebook-f" aria-hidden="true"></i>
             </a>
+
             <a class="floating-contact__link floating-contact__link--zalo"
-               href="https://zalo.me/0385353174"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Liên hệ Zalo">
+                   href="https://zalo.me/0385353174"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Liên hệ Zalo">
                 <span>Zalo</span>
             </a>
         </div>
+        
         <button type="button"
                 class="floating-contact__toggle"
-                data-floating-contact-toggle
+                id="contactToggleBtn"
                 aria-expanded="false"
                 aria-label="Đóng mở liên hệ nhanh">
-            <i class="fas fa-xmark" aria-hidden="true"></i>
+            <i class="fas fa-comment-dots" aria-hidden="true"></i>
         </button>
         <span class="floating-contact__dot" aria-hidden="true"></span>
     </div>
@@ -187,15 +191,34 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    
     <script>
-        // Auto-hide toasts after 4 seconds
-        setTimeout(function() {
-            var toasts = document.querySelectorAll('.toast.show');
-            toasts.forEach(function(toast) {
-                var bsToast = new bootstrap.Toast(toast);
-                bsToast.hide();
-            });
-        }, 4000);
+            // Auto-hide toasts after 4 seconds
+            setTimeout(function() {
+                var toasts = document.querySelectorAll('.toast.show');
+                toasts.forEach(function(toast) {
+                    var bsToast = new bootstrap.Toast(toast);
+                    bsToast.hide();
+                });
+            }, 4000);
+
+            // Logic JavaScript để đóng/mở cụm nút góc phải
+            const btnToggle = document.getElementById('contactToggleBtn');
+            const contactBox = document.getElementById('contactBox');
+        
+            if (btnToggle && contactBox) {
+                btnToggle.addEventListener('click', function() {
+                    contactBox.classList.toggle('is-collapsed');
+                
+                    // Đổi icon giữa comment và dấu X
+                    const icon = btnToggle.querySelector('i');
+                    if (contactBox.classList.contains('is-collapsed')) {
+                        icon.className = 'fas fa-comment-dots';
+                    } else {
+                        icon.className = 'fas fa-times';
+                    }
+                });
+            }
     </script>
 </body>
 </html>

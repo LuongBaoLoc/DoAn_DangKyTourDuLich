@@ -100,7 +100,6 @@ namespace DoAn_DangKyTourDuLich.Models
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
         // --- THUỘC TÍNH TÍNH TOÁN (KHÔNG LƯU DB) ---
-        
         [NotMapped]
         [Display(Name = "Chỗ còn trống")]
         public int AvailableSlots => MaxParticipants - CurrentParticipants;
@@ -116,9 +115,7 @@ namespace DoAn_DangKyTourDuLich.Models
             {
                 var images = new List<string>();
                 if (!string.IsNullOrWhiteSpace(ImageUrl)) images.Add(ImageUrl);
-
                 if (string.IsNullOrWhiteSpace(ImageUrlsData)) return images;
-
                 try
                 {
                     var storedImages = JsonSerializer.Deserialize<List<string>>(ImageUrlsData);
@@ -133,7 +130,6 @@ namespace DoAn_DangKyTourDuLich.Models
                 }
                 catch
                 {
-                    // Xử lý trường hợp dữ liệu cũ lưu dạng chuỗi cách nhau bởi dấu chấm phẩy
                     var splitImages = ImageUrlsData.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
                     foreach (var img in splitImages)
                     {
@@ -155,5 +151,18 @@ namespace DoAn_DangKyTourDuLich.Models
             ImageUrl = images.FirstOrDefault();
             ImageUrlsData = images.Count == 0 ? null : JsonSerializer.Serialize(images);
         }
+
+        // --- THUỘC TÍNH PHỤC VỤ THUẬT TOÁN KHẢO SÁT ---
+        [Display(Name = "Tour Biển")]
+        public bool IsBeach { get; set; }
+
+        [Display(Name = "Tour Núi")]
+        public bool IsMountain { get; set; }
+
+        [Display(Name = "Phù hợp đi Nhóm")]
+        public bool IsForGroup { get; set; }
+
+        [Display(Name = "Tour Tiết Kiệm")]
+        public bool IsLowBudget { get; set; }
     }
 }
