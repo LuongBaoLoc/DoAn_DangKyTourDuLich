@@ -239,13 +239,6 @@ dotnet test --verbosity normal
 
 ---
 
-## 👨‍💻 Tác giả
-
-**Lương Bảo Lộc**
-- Email: luongbaoloc2014@gmail.com
-- Facebook: [LuongBaoLoc2K5](https://www.facebook.com/LuongBaoLoc2K5)
-
----
 
 ## 📄 License
 
