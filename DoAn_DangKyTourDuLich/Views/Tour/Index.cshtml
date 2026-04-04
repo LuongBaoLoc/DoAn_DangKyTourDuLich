@@ -1,0 +1,330 @@
+@model TourSearchViewModel
+@{
+    ViewData["Title"] = "Danh sách Tour du lịch";
+}
+
+<div class="container py-4">
+    <section class="page-hero page-hero--compact mb-4" data-reveal="up">
+        <div class="page-hero__content text-center py-4 bg-light rounded-3 shadow-sm mb-4">
+            <span class="badge bg-primary-soft text-primary px-3 py-2 mb-2 text-uppercase fw-bold">Khám Phá Hành Trình</span>
+            <h1 class="page-hero__title mb-2 fw-bold">Danh Sách @Model.TotalItems Tour Du Lịch</h1>
+            <p class="page-hero__subtitle mb-0 text-muted">Lọc nhanh, so sánh dễ dàng và chọn tour phù hợp nhất cho chuyến đi của bạn.</p>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-lg-3 mb-4" data-reveal="left">
+            <div class="filter-sidebar panel-card p-4 shadow-sm rounded-3 bg-white border border-light">
+                <h5 class="fw-bold mb-4 pb-2 border-bottom text-primary">
+                    <i class="fas fa-filter me-2"></i>Bộ lọc tìm kiếm
+                </h5>
+                
+                <form asp-action="Index" method="get">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Từ khóa</label>
+                        <div class="input-group input-group-sm position-relative">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" name="Keyword" value="@Model.Keyword" class="form-control form-control-sm border-start-0 ps-0 tour-autocomplete-input" placeholder="Tên tour, mô tả..." autocomplete="off" data-suggest-url="@Url.Action("Suggestions", "Tour")" />
+                            <div class="tour-autocomplete-list"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Điểm đến</label>
+                        <div class="input-group input-group-sm position-relative">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-map-marker-alt text-muted"></i></span>
+                            <input type="text" name="Destination" value="@Model.Destination" class="form-control form-control-sm border-start-0 ps-0 tour-autocomplete-input" placeholder="VD: Đà Nẵng, Sa Pa" autocomplete="off" data-suggest-url="@Url.Action("Suggestions", "Tour")" />
+                            <div class="tour-autocomplete-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Quy mô đoàn</label>
+                        <select name="GroupSize" class="form-select form-select-sm border-light bg-light">
+                            <option value="">-- Mọi quy mô --</option>
+                            <option value="small">Khách lẻ / Gia đình (< 10 người)</option>
+                            <option value="large">Đoàn tập thể (> 10 người)</option>
+                        </select>
+                        <div class="form-text" style="font-size: 10px;">Đoàn trên 10 người hỗ trợ tách đoàn riêng.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Thời gian</label>
+                        <select name="Duration" class="form-select form-select-sm">
+                            <option value="">-- Mọi thời gian --</option>
+                            @for(int i=1; i<=4; i++) {
+                                <option value="@i" selected="@(Model.Duration == i)">@i ngày</option>
+                            }
+                            <option value="5" selected="@(Model.Duration >= 5)">Từ 5 ngày trở lên</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Loại hình tour</label>
+                        <select name="CategoryId" class="form-select form-select-sm">
+                            <option value="">-- Tất cả loại hình --</option>
+                            @foreach (var cat in Model.Categories)
+                            {
+                                <option value="@cat.Id" selected="@(Model.CategoryId == cat.Id)">@cat.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Mức giá (VNĐ)</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" name="MinPrice" value="@Model.MinPrice" class="form-control form-control-sm" placeholder="Từ..." />
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="MaxPrice" value="@Model.MaxPrice" class="form-control form-control-sm" placeholder="Đến..." />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Sắp xếp theo</label>
+                        <select name="SortBy" class="form-select form-select-sm">
+                            <option value="" selected="@(string.IsNullOrEmpty(Model.SortBy))">Nổi bật nhất</option>
+                            <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Giá: Thấp đến Cao</option>
+                            <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Giá: Cao đến Thấp</option>
+                            <option value="newest" selected="@(Model.SortBy == "newest")">Mới nhất</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary shadow-sm py-2 fw-bold">
+                            <i class="fas fa-search me-2"></i>Tìm kiếm
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-sm py-2">
+                            <i class="fas fa-sync-alt me-2"></i>Làm mới
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border border-light">
+                <h5 class="fw-bold mb-0 text-dark">
+                    <span class="text-primary">@Model.TotalItems</span> Tour đang sẵn sàng
+                </h5>
+                <div class="view-options d-none d-md-block">
+                    <span class="text-muted small">Hiển thị @Model.Tours.Count trên @Model.TotalItems kết quả</span>
+                </div>
+            </div>
+
+            @if (!Model.Tours.Any())
+            {
+                <div class="text-center py-5 bg-white rounded-3 shadow-sm border border-dashed">
+                    <div class="mb-3">
+                        <i class="fas fa-map-marked-alt fa-4x text-light-emphasis"></i>
+                    </div>
+                    <h5 class="text-dark-emphasis">Không tìm thấy tour nào phù hợp với yêu cầu của bạn.</h5>
+                    <p class="text-muted">Bạn hãy thử xóa bớt các bộ lọc hoặc tìm kiếm với từ khóa khác nhé!</p>
+                    <a asp-action="Index" class="btn btn-primary px-4">Xem tất cả tour</a>
+                </div>
+            }
+            else
+            {
+                <div class="row g-4">
+                    @foreach (var tour in Model.Tours)
+                    {
+                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                            <partial name="_TourCardPartial" model="tour" />
+                        </div>
+                    }
+                </div>
+
+                @if (Model.TotalPages > 1)
+                {
+                    <nav class="mt-5">
+                        <ul class="pagination justify-content-center shadow-sm">
+                            @{
+                                // Lưu lại toàn bộ param tìm kiếm để chuyển trang không bị mất lọc
+                                var routeParams = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+                            }
+
+                            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                                <a class="page-link shadow-none" asp-action="Index" asp-all-route-data="routeParams" asp-route-Page="@(Model.Page - 1)">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.Page ? "active" : "")">
+                                    <a class="page-link shadow-none" asp-action="Index" asp-all-route-data="routeParams" asp-route-Page="@i">@i</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link shadow-none" asp-action="Index" asp-all-route-data="routeParams" asp-route-Page="@(Model.Page + 1)">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    /* CSS bổ trợ để giao diện mượt hơn */
+    .bg-primary-soft { background-color: rgba(13, 110, 253, 0.1); }
+    .filter-sidebar { position: sticky; top: 20px; }
+    .page-link { color: #555; border: 1px solid #eee; padding: 10px 18px; transition: 0.2s; }
+    .page-item.active .page-link { background-color: #0d6efd; border-color: #0d6efd; }
+    .pagination { border-radius: 10px; overflow: hidden; }
+    .input-group-text { border-color: #eee; }
+    .form-control, .form-select { border-color: #eee; }
+    .form-control:focus, .form-select:focus { border-color: #0d6efd; box-shadow: none; }
+    .tour-autocomplete-list {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: none;
+        padding: 6px;
+        background: #fff;
+        border: 1px solid #dbeafe;
+        border-radius: 14px;
+        box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+    }
+    .tour-autocomplete-list.is-open { display: block; }
+    .tour-autocomplete-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        text-align: left;
+    }
+    .tour-autocomplete-item:hover, .tour-autocomplete-item.is-active { background: #eff6ff; }
+    .tour-autocomplete-type {
+        color: #2563eb;
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+</style>
+
+<script>
+    (() => {
+        const inputs = document.querySelectorAll('.tour-autocomplete-input');
+
+        inputs.forEach((input) => {
+            const wrapper = input.closest('.position-relative');
+            const list = wrapper?.querySelector('.tour-autocomplete-list');
+            const suggestUrl = input.dataset.suggestUrl;
+
+            if (!list || !suggestUrl) {
+                return;
+            }
+
+            let items = [];
+            let activeIndex = -1;
+            let debounceId;
+
+            const closeList = () => {
+                list.classList.remove('is-open');
+                list.innerHTML = '';
+                items = [];
+                activeIndex = -1;
+            };
+
+            const renderItems = (suggestions) => {
+                if (!suggestions.length) {
+                    closeList();
+                    return;
+                }
+
+                list.innerHTML = suggestions.map((item, index) => `
+                    <button type="button" class="tour-autocomplete-item${index === 0 ? ' is-active' : ''}" data-value="${item.text}">
+                        <span>${item.text}</span>
+                        <span class="tour-autocomplete-type">${item.type}</span>
+                    </button>
+                `).join('');
+
+                items = Array.from(list.querySelectorAll('.tour-autocomplete-item'));
+                activeIndex = 0;
+                list.classList.add('is-open');
+
+                items.forEach((item) => {
+                    item.addEventListener('mousedown', (event) => {
+                        event.preventDefault();
+                        input.value = item.dataset.value || '';
+                        closeList();
+                    });
+                });
+            };
+
+            const setActive = (index) => {
+                if (!items.length) {
+                    return;
+                }
+
+                activeIndex = (index + items.length) % items.length;
+                items.forEach((item, itemIndex) => {
+                    item.classList.toggle('is-active', itemIndex === activeIndex);
+                });
+            };
+
+            input.addEventListener('input', () => {
+                const term = input.value.trim();
+                clearTimeout(debounceId);
+
+                if (term.length < 1) {
+                    closeList();
+                    return;
+                }
+
+                debounceId = setTimeout(async () => {
+                    try {
+                        const response = await fetch(`${suggestUrl}?term=${encodeURIComponent(term)}`);
+                        if (!response.ok) {
+                            closeList();
+                            return;
+                        }
+
+                        renderItems(await response.json());
+                    } catch {
+                        closeList();
+                    }
+                }, 180);
+            });
+
+            input.addEventListener('keydown', (event) => {
+                if (!list.classList.contains('is-open')) {
+                    return;
+                }
+
+                if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    setActive(activeIndex + 1);
+                } else if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    setActive(activeIndex - 1);
+                } else if (event.key === 'Enter' && activeIndex >= 0 && items[activeIndex]) {
+                    event.preventDefault();
+                    input.value = items[activeIndex].dataset.value || '';
+                    closeList();
+                    input.form?.submit();
+                } else if (event.key === 'Escape') {
+                    closeList();
+                }
+            });
+
+            input.addEventListener('blur', () => {
+                window.setTimeout(closeList, 120);
+            });
+        });
+    })();
+</script>

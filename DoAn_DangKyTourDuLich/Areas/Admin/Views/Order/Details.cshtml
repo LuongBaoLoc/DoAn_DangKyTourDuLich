@@ -1,0 +1,239 @@
+@model Order
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng - " + Model.OrderCode;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="fas fa-receipt text-primary me-2"></i>Chi tiết Đơn hàng</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Quay lại</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Order Info -->
+        <div class="card border-0 shadow-sm mb-4" style="border-radius: var(--radius);">
+            <div class="card-header bg-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold">Đơn hàng: <span class="text-primary">@Model.OrderCode</span></h5>
+                    @switch (Model.Status)
+                    {
+                        case OrderStatus.Pending:
+                            <span class="badge bg-warning text-dark badge-status">Chờ xác nhận</span>
+                            break;
+                        case OrderStatus.Confirmed:
+                            <span class="badge bg-info badge-status">Đã xác nhận</span>
+                            break;
+                        case OrderStatus.Completed:
+                            <span class="badge bg-success badge-status">Hoàn thành</span>
+                            break;
+                        case OrderStatus.Cancelled:
+                            <span class="badge bg-danger badge-status">Đã hủy</span>
+                            break;
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">Khách hàng:</div>
+                    <div class="col-8">@Model.CustomerName</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">Email:</div>
+                    <div class="col-8">@Model.CustomerEmail</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">SĐT:</div>
+                    <div class="col-8">@Model.CustomerPhone</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">Địa chỉ:</div>
+                    <div class="col-8">@(Model.CustomerAddress ?? "N/A")</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">Ngày đặt:</div>
+                    <div class="col-8">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 fw-semibold text-muted">Phương thức TT:</div>
+                    <div class="col-8">
+                        @switch (Model.PaymentMethod)
+                        {
+                            case PaymentMethod.CashOnDelivery:
+                                <span>Thanh toán khi nhận tour</span>
+                                break;
+                            case PaymentMethod.BankTransfer:
+                                <span>Chuyển khoản ngân hàng</span>
+                                break;
+                            case PaymentMethod.OnlinePayment:
+                                <span>Thanh toán online</span>
+                                break;
+                        }
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Note))
+                {
+                    <div class="row mb-2">
+                        <div class="col-4 fw-semibold text-muted">Ghi chú:</div>
+                        <div class="col-8">@Model.Note</div>
+                    </div>
+                    var dateMatch = System.Text.RegularExpressions.Regex.Match(Model.Note, @"Ng(?:à|Ã )y:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})(?:\s+([0-9]{2}:[0-9]{2}))?");
+                    if (dateMatch.Success)
+                    {
+                        <div class="row mb-2">
+                            <div class="col-4 fw-semibold text-muted">Khởi hành:</div>
+                            <div class="col-8">@DateTime.Parse($"{dateMatch.Groups[1].Value} {(dateMatch.Groups[2].Success ? dateMatch.Groups[2].Value : "00:00")}").ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+                    }
+                }
+
+                <hr />
+                <h6 class="fw-bold mb-3">Chi tiết Tour đặt:</h6>
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tour</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Tour?.Name
+                                </td>
+                                <td>@item.UnitPrice.ToString("N0") VNĐ</td>
+                                <td>@item.Quantity người</td>
+                                <td class="fw-bold">@item.SubTotal.ToString("N0") VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-primary">
+                            <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                            <td class="fw-bold text-danger fs-5">@Model.TotalAmount.ToString("N0") VNĐ</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                @if(Model.OrderDetails != null && Model.OrderDetails.Any())
+                {
+                    <hr />
+                    <h6 class="fw-bold mb-3"><i class="fas fa-map-marked-alt text-primary me-2"></i>Bản đồ các Tour trong đơn:</h6>
+                    @foreach(var item in Model.OrderDetails)
+                    {
+                        if(item.Tour != null && !string.IsNullOrEmpty(item.Tour.Destination))
+                        {
+                            <div class="mb-3">
+                                <strong class="text-muted d-block mb-2">@item.Tour.Name:</strong>
+                                <div class="trackasia-map ratio ratio-21x9 rounded border overflow-hidden shadow-sm" data-address="@item.Tour.Destination"></div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="fas fa-sync-alt text-primary me-2"></i>Cập nhật trạng thái</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="UpdateStatus" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <div class="d-grid gap-2">
+                        @if (Model.Status != OrderStatus.Confirmed)
+                        {
+                            <button type="submit" name="status" value="1" class="btn btn-info"
+                                    onclick="return confirm('Xác nhận đơn hàng này?')">
+                                <i class="fas fa-check me-1"></i>Xác nhận đơn
+                            </button>
+                        }
+                        @if (Model.Status != OrderStatus.Completed)
+                        {
+                            <button type="submit" name="status" value="2" class="btn btn-success"
+                                    onclick="return confirm('Đánh dấu đơn hàng đã hoàn thành?')">
+                                <i class="fas fa-check-double me-1"></i>Hoàn thành
+                            </button>
+                        }
+                        @if (Model.Status != OrderStatus.Cancelled)
+                        {
+                            <button type="submit" name="status" value="3" class="btn btn-danger"
+                                    onclick="return confirm('Bạn chắc chắn muốn hủy đơn hàng này? Số chỗ sẽ được hoàn lại.')">
+                                <i class="fas fa-times me-1"></i>Hủy đơn
+                            </button>
+                        }
+                    </div>
+                </form>
+
+                <hr class="my-3" />
+                <p class="text-muted small mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Email sẽ tự động gửi đến khách hàng khi bạn cập nhật trạng thái đơn hàng.
+                </p>
+            </div>
+        </div>
+
+        @if (Model.User != null)
+        {
+            <div class="card border-0 shadow-sm mt-3" style="border-radius: var(--radius);">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-user text-primary me-2"></i>Tài khoản</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>@Model.User.FullName</strong></p>
+                    <p class="mb-1 text-muted small">@Model.User.Email</p>
+                    <p class="mb-0 text-muted small">@Model.User.PhoneNumber</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <link href="https://unpkg.com/trackasia-gl@2.0.1/dist/trackasia-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/trackasia-gl@2.0.1/dist/trackasia-gl.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var maps = document.querySelectorAll('.trackasia-map');
+            var apiKey = 'dc84b2e177449582153329307c32a54ed9';
+            
+            maps.forEach(function(el, index) {
+                var address = el.getAttribute('data-address');
+                if (!address) return;
+                
+                el.id = 'trackasia-map-' + index;
+                var geocodeUrl = 'https://maps.track-asia.com/api/v1/autocomplete?text=' + encodeURIComponent(address) + '&key=' + apiKey;
+                
+                fetch(geocodeUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.features && data.features.length > 0) {
+                            var coords = data.features[0].geometry.coordinates;
+                            var map = new trackasiagl.Map({
+                                container: el.id,
+                                style: 'https://maps.track-asia.com/styles/v1/streets.json?key=' + apiKey,
+                                center: { lat: coords[1], lng: coords[0] },
+                                zoom: 14
+                            });
+                            new trackasiagl.Marker().setLngLat(coords).addTo(map);
+                        } else {
+                            el.innerHTML = '<div class="alert alert-warning m-3">Không tìm thấy tọa độ.</div>';
+                            el.classList.remove('ratio', 'ratio-21x9');
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Geocoding error:", err);
+                        el.innerHTML = '<div class="alert alert-danger m-3">Lỗi tải bản đồ.</div>';
+                        el.classList.remove('ratio', 'ratio-21x9');
+                    });
+            });
+        });
+    </script>
+}
