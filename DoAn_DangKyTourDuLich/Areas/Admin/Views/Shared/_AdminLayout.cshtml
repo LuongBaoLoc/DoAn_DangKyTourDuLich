@@ -25,11 +25,39 @@
                asp-area="Admin" asp-controller="Category" asp-action="Index">
                 <i class="fas fa-th-list"></i>Danh mục Tour
             </a>
-            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Tour" ? "active" : "")"
-               asp-area="Admin" asp-controller="Tour" asp-action="Index">
-                <i class="fas fa-map-marked-alt"></i>Quản lý Tour
+            @{
+                var ctrl = ViewContext.RouteData.Values["controller"]?.ToString();
+                var qType = Context.Request.Query["type"].ToString();
+                var qStatus = Context.Request.Query["status"].ToString();
+                bool isTourMenuOpen = ctrl == "Tour" || (ctrl == "Order" && (qType == "private" || qType == "group" || qStatus == "1"));
+                bool isOrderMenu = ctrl == "Order" && !isTourMenuOpen;
+            }
+            <a class="nav-link @(isTourMenuOpen ? "active" : "")"
+               data-bs-toggle="collapse" href="#tourMenu" role="button" aria-expanded="@(isTourMenuOpen ? "true" : "false")" aria-controls="tourMenu">
+                <i class="fas fa-map-marked-alt"></i>Menu Tour
+                <i class="fas fa-chevron-down float-end mt-1" style="font-size: 0.8em; transition: transform 0.3s; @(isTourMenuOpen ? "transform: rotate(180deg);" : "")"></i>
             </a>
-            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Order" ? "active" : "")"
+            <div class="collapse @(isTourMenuOpen ? "show" : "")" id="tourMenu">
+                <nav class="nav flex-column ms-3" style="font-size: 0.9em;">
+                    <a class="nav-link py-2 @(ctrl == "Tour" ? "active text-white" : "text-white-50")" 
+                       asp-area="Admin" asp-controller="Tour" asp-action="Index">
+                        <i class="fas fa-list fa-sm me-2"></i>Tất cả Tour
+                    </a>
+                    <a class="nav-link py-2 @(ctrl == "Order" && qStatus == "1" && string.IsNullOrEmpty(qType) ? "active text-white" : "text-white-50")" 
+                       asp-area="Admin" asp-controller="Order" asp-action="Index" asp-route-status="1">
+                        <i class="fas fa-check-circle fa-sm me-2"></i>Tour đã xác nhận
+                    </a>
+                    <a class="nav-link py-2 @(ctrl == "Order" && qStatus == "1" && qType == "private" ? "active text-white" : "text-white-50")" 
+                       asp-area="Admin" asp-controller="Order" asp-action="Index" asp-route-status="1" asp-route-type="private">
+                        <i class="fas fa-user-friends fa-sm me-2"></i>Tour riêng
+                    </a>
+                    <a class="nav-link py-2 @(ctrl == "Order" && qStatus == "1" && qType == "group" ? "active text-white" : "text-white-50")" 
+                       asp-area="Admin" asp-controller="Order" asp-action="Index" asp-route-status="1" asp-route-type="group">
+                        <i class="fas fa-users fa-sm me-2"></i>Tour ghép
+                    </a>
+                </nav>
+            </div>
+            <a class="nav-link @(isOrderMenu ? "active" : "")"
                asp-area="Admin" asp-controller="Order" asp-action="Index">
                 <i class="fas fa-shopping-cart"></i>Đơn hàng
             </a>

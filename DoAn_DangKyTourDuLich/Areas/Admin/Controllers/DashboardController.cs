@@ -62,6 +62,24 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
                 .Take(10)
                 .ToListAsync();
 
+            var topTours = await _context.OrderDetails
+                .Include(od => od.Tour)
+                .Where(od => od.Order != null && (od.Order.Status == OrderStatus.Confirmed || od.Order.Status == OrderStatus.Completed))
+                .GroupBy(od => new { od.TourId, TourName = od.Tour!.Name, od.Tour.ImageUrl })
+                .Select(g => new TopTourViewModel
+                {
+                    TourId = g.Key.TourId,
+                    TourName = g.Key.TourName,
+                    ImageUrl = g.Key.ImageUrl,
+                    TotalBookings = g.Sum(x => x.Quantity),
+                    TotalRevenue = g.Sum(x => x.SubTotal)
+                })
+                .OrderByDescending(x => x.TotalBookings)
+                .Take(5)
+                .ToListAsync();
+            
+            ViewBag.TopTours = topTours;
+
             return View(recentOrders);
         }
 
@@ -70,6 +88,15 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             public int Month { get; set; }
             public string Label { get; set; } = string.Empty;
             public decimal Revenue { get; set; }
+        }
+
+        public class TopTourViewModel
+        {
+            public int TourId { get; set; }
+            public string TourName { get; set; } = string.Empty;
+            public string? ImageUrl { get; set; }
+            public int TotalBookings { get; set; }
+            public decimal TotalRevenue { get; set; }
         }
     }
 }

@@ -1,4 +1,5 @@
 @model DoAn_DangKyTourDuLich.Models.ViewModels.TourDetailsViewModel
+@inject DoAn_DangKyTourDuLich.Services.HtmlSanitizeService HtmlSanitizer
 @{
     ViewData["Title"] = Model.Tour.Name;
     var tour = Model.Tour;
@@ -49,7 +50,7 @@
                     </div>
                     <h5 class="fw-bold border-start border-primary border-4 ps-2 mb-3">Mô tả chuyến đi</h5>
                     <p class="text-muted" style="line-height: 1.8;">@tour.ShortDescription</p>
-                    <div class="mt-3">@Html.Raw(tour.DetailDescription?.Replace("\n", "<br/>"))</div>
+                    <div class="mt-3">@Html.Raw(HtmlSanitizer.Sanitize(tour.DetailDescription?.Replace("\n", "<br/>") ?? ""))</div>
                 </div>
 
                 <div class="tab-pane fade panel-card p-4 bg-white shadow-sm rounded-3 mb-4" id="schedule">
@@ -79,45 +80,71 @@
                 </div>
 
                 <div class="tab-pane fade panel-card p-4 bg-white shadow-sm rounded-3 mb-4" id="calendar">
-                    <div class="d-flex flex-column flex-md-row gap-4">
-                        <div class="month-selector border-end pe-3">
-                            @{
-                                var currentMonth = DateTime.Now;
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    var mDate = currentMonth.AddMonths(i);
-                                    <button class="btn w-100 mb-2 month-btn @(i == 0 ? "active-month" : "btn-light")"
-                                            onclick="changeMonth(this)" data-month="@mDate.Month" data-year="@mDate.Year">
-                                        @mDate.ToString("MM/yyyy")
-                                    </button>
-                                }
-                            }
+                    <h4 class="text-center fw-bold mb-4">LỊCH KHỞI HÀNH</h4>
+                    <div class="row">
+                        <!-- Left Column: Month Selector -->
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <div class="card border-0 shadow-sm rounded-3 h-100">
+                                <div class="card-body p-3">
+                                    <h6 class="fw-bold mb-4 text-center">Chọn tháng</h6>
+                                    <div class="d-flex flex-column gap-2" id="month-selector-container">
+                                        @{
+                                            var currentMonth = DateTime.Now;
+                                            for (int i = 0; i < 6; i++)
+                                            {
+                                                var mDate = currentMonth.AddMonths(i);
+                                                <button class="btn btn-outline-primary border-0 fw-bold py-2 btn-lg month-btn @(i == 0 ? "active text-white bg-primary" : "text-primary")"
+                                                        onclick="changeMonth(this)" data-month="@mDate.Month" data-year="@mDate.Year" id="month-btn-@mDate.Month-@mDate.Year">
+                                                    @mDate.Month/@mDate.Year
+                                                </button>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="calendar-grid flex-grow-1">
-                            <h6 class="fw-bold text-center text-primary mb-3" id="current-month-display">THÁNG @currentMonth.ToString("MM/yyyy")</h6>
-                            <table class="table table-borderless text-center calendar-table">
-                                <thead>
-                                    <tr>
-                                        <th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th class="text-danger">T7</th><th class="text-danger">CN</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="calendar-body"></tbody>
-                            </table>
-                            <p class="small text-muted text-center mt-2 mb-0">Bạn có thể chọn mọi ngày từ hôm nay trở đi.</p>
-                        </div>
-                    </div>
 
-                    <div id="departure-time-section" class="mt-4 d-none">
-                        <h6 class="fw-bold text-primary mb-3">Chọn giờ khởi hành</h6>
-                        <div class="d-flex flex-wrap gap-2" id="departure-time-list">
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="06:00" onclick="selectDepartureTime(this)">06:00</button>
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="08:00" onclick="selectDepartureTime(this)">08:00</button>
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="10:00" onclick="selectDepartureTime(this)">10:00</button>
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="13:00" onclick="selectDepartureTime(this)">13:00</button>
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="15:00" onclick="selectDepartureTime(this)">15:00</button>
-                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="18:00" onclick="selectDepartureTime(this)">18:00</button>
+                        <!-- Right Column: Calendar Grid -->
+                        <div class="col-md-9">
+                            <div class="card border-0 shadow-sm rounded-3 h-100">
+                                <div class="card-body p-2 p-md-4">
+                                    <div class="d-flex justify-content-center align-items-center mb-4">
+                                        <button class="btn btn-light rounded-circle shadow-sm" onclick="prevMonth()"><i class="fas fa-arrow-left"></i></button>
+                                        <h5 class="fw-bold text-primary mx-4 mb-0" id="current-month-display">THÁNG @currentMonth.Month/@currentMonth.Year</h5>
+                                        <button class="btn btn-light rounded-circle shadow-sm" onclick="nextMonth()"><i class="fas fa-arrow-right"></i></button>
+                                    </div>
+
+                                    <table class="table table-borderless text-center calendar-table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="py-2 text-dark">T2</th>
+                                                <th class="py-2 text-dark">T3</th>
+                                                <th class="py-2 text-dark">T4</th>
+                                                <th class="py-2 text-dark">T5</th>
+                                                <th class="py-2 text-dark">T6</th>
+                                                <th class="text-danger py-2">T7</th>
+                                                <th class="text-danger py-2">CN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="calendar-body"></tbody>
+                                    </table>
+                                    <p class="small text-danger fst-italic mt-4 mb-0 ms-2">Quý khách vui lòng chọn ngày phù hợp</p>
+
+                                    <!-- Departure Time Selection (Hidden by default) -->
+                                    <div id="departure-time-section" class="mt-4 pt-4 border-top d-none px-2">
+                                        <h6 class="fw-bold text-primary mb-3">Chọn giờ khởi hành</h6>
+                                        <div class="d-flex flex-wrap gap-2" id="departure-time-list">
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="06:00" onclick="selectDepartureTime(this)">06:00</button>
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="08:00" onclick="selectDepartureTime(this)">08:00</button>
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="10:00" onclick="selectDepartureTime(this)">10:00</button>
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="13:00" onclick="selectDepartureTime(this)">13:00</button>
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="15:00" onclick="selectDepartureTime(this)">15:00</button>
+                                            <button type="button" class="btn btn-outline-primary time-slot-btn" data-time="18:00" onclick="selectDepartureTime(this)">18:00</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p class="small text-muted mt-2 mb-0">Vui lòng chọn giờ sau khi chọn ngày đi.</p>
                     </div>
                 </div>
 
@@ -184,11 +211,11 @@
                     <div class="price-summary mb-4 p-3 bg-light rounded-3">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Người lớn:</span>
-                            <span class="fw-bold">@tour.DisplayPrice.ToString("N0") đ</span>
+                            <span class="fw-bold" id="sb-price-adult">@tour.DisplayPrice.ToString("N0") đ</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>Trẻ em (5-11):</span>
-                            <span class="fw-bold">@((tour.DisplayPrice / 2).ToString("N0")) đ</span>
+                            <span class="fw-bold" id="sb-price-child">@((tour.DisplayPrice / 2).ToString("N0")) đ</span>
                         </div>
                     </div>
 
@@ -255,12 +282,15 @@
     .timeline-badge { min-width: 70px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 18px; z-index: 1; font-size: 0.8rem; }
     .timeline-content { transition: 0.3s; border-left: 4px solid #0d6efd !important; }
     .timeline-content:hover { background-color: #fff !important; box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important; }
-    .calendar-cell { height: 45px; vertical-align: middle; cursor: pointer; border-radius: 8px; font-size: 0.9rem; }
-    .calendar-cell.has-tour { background-color: #eef6ff; color: #0d6efd; font-weight: bold; border: 1px solid #c5ddf8; }
-    .calendar-cell.has-tour:hover { background-color: #0d6efd; color: white; }
-    .calendar-cell.selected { background-color: #dc3545 !important; color: white !important; }
-    .calendar-cell.disabled-day { color: #c0c7d1; cursor: not-allowed; background-color: #f8f9fa; }
-    .month-btn.active-month { background-color: #0d6efd !important; color: white !important; }
+    .calendar-table th { font-size: 0.95rem; font-weight: 700; padding-bottom: 20px; }
+    .calendar-cell { height: 80px; width: 14.2%; vertical-align: middle; cursor: pointer; border-radius: 8px; font-size: 1rem; transition: all 0.2s; border: 1px solid transparent; }
+    .calendar-cell.has-tour { color: #333; font-weight: bold; }
+    .calendar-cell.has-tour:hover { border: 1px solid #dc3545; background: #fffafb; }
+    .calendar-cell.selected { border: 1px solid #dc3545 !important; color: #333 !important; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15); }
+    .calendar-cell.disabled-day { color: #ccc; cursor: not-allowed; }
+    .calendar-cell.disabled-day:hover { border: 1px solid transparent; }
+    .month-btn { transition: 0.2s; }
+    .month-btn.active { background-color: #0d6efd !important; color: white !important; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
     .time-slot-btn.active { background-color: #0d6efd !important; color: #fff !important; border-color: #0d6efd !important; }
     .recommendation-card { transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 16px; overflow: hidden; }
     .recommendation-card:hover { transform: translateY(-4px); box-shadow: 0 1rem 2rem rgba(13, 110, 253, 0.12) !important; }
@@ -308,12 +338,30 @@
     }
 
     function changeMonth(btn) {
-        document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active-month', 'btn-primary'));
-        btn.classList.add('active-month');
-        const month = btn.dataset.month;
-        const year = btn.dataset.year;
+        document.querySelectorAll('.month-btn').forEach(b => {
+            b.classList.remove('active', 'text-white', 'bg-primary');
+            b.classList.add('text-primary');
+        });
+        btn.classList.add('active', 'text-white', 'bg-primary');
+        btn.classList.remove('text-primary');
+        const month = parseInt(btn.dataset.month);
+        const year = parseInt(btn.dataset.year);
         document.getElementById('current-month-display').innerText = `THÁNG ${month}/${year}`;
         generateCalendar(year, month);
+    }
+
+    function prevMonth() {
+        const activeBtn = document.querySelector('.month-btn.active');
+        if (activeBtn && activeBtn.previousElementSibling) {
+            changeMonth(activeBtn.previousElementSibling);
+        }
+    }
+
+    function nextMonth() {
+        const activeBtn = document.querySelector('.month-btn.active');
+        if (activeBtn && activeBtn.nextElementSibling) {
+            changeMonth(activeBtn.nextElementSibling);
+        }
     }
 
     function generateCalendar(year, month) {
@@ -326,6 +374,11 @@
         const firstDay = new Date(year, month - 1, 1).getDay();
         const daysInMonth = new Date(year, month, 0).getDate();
         const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+        
+        let schedules = [];
+        try {
+            schedules = JSON.parse('@Html.Raw(ViewBag.SchedulesJson ?? "[]")');
+        } catch(e) { }
 
         let date = 1;
         for (let i = 0; i < 6; i++) {
@@ -334,29 +387,60 @@
                 let cell = document.createElement('td');
                 cell.className = 'calendar-cell';
                 if ((i === 0 && j >= startOffset) || (i > 0 && date <= daysInMonth)) {
-                    cell.innerText = date;
+                    
                     const checkDate = new Date(year, month - 1, date);
                     checkDate.setHours(0, 0, 0, 0);
+                    
+                    const selectedMonth = String(month).padStart(2, '0');
+                    const selectedDay = String(date).padStart(2, '0');
+                    const dateStr = `${year}-${selectedMonth}-${selectedDay}`;
+                    const schedule = schedules.find(s => s.date === dateStr);
+                    
+                    let cellHtml = `<div class="date-num" style="font-size:1.1em">${date}</div>`;
+                    
+                    if (schedule) {
+                        cellHtml += `<div class="text-danger fw-bold mt-1" style="font-size:0.8rem">${(schedule.price/1000).toLocaleString('vi-VN')}K</div>`;
+                        cell.classList.add('has-tour', 'admin-tour');
+                    } else if (checkDate >= TODAY) {
+                        cell.classList.add('has-tour', 'custom-tour');
+                    } else {
+                        cell.classList.add('disabled-day');
+                    }
+                    
+                    cell.innerHTML = cellHtml;
+
                     if (checkDate >= TODAY) {
-                        cell.classList.add('has-tour');
                         cell.onclick = function () {
                             document.querySelectorAll('.calendar-cell').forEach(c => c.classList.remove('selected'));
                             this.classList.add('selected');
                             document.getElementById('sidebar-unselected').classList.add('d-none');
                             document.getElementById('sidebar-selected').classList.remove('d-none');
                             document.getElementById('sb-selected-date').innerText = checkDate.toLocaleDateString('vi-VN');
-                            document.getElementById('departure-time-section').classList.remove('d-none');
                             document.querySelectorAll('.time-slot-btn').forEach(btn => btn.classList.remove('active'));
-                            document.getElementById('sb-selected-time').innerText = 'Chưa chọn';
-                            document.getElementById('btn-submit-booking').classList.add('disabled');
-                            const selectedMonth = String(month).padStart(2, '0');
-                            const selectedDay = String(cell.innerText).padStart(2, '0');
-                            selectedDateValue = `${year}-${selectedMonth}-${selectedDay}`;
+                            
+                            selectedDateValue = dateStr;
                             selectedTimeValue = '';
+                            
+                            if (!schedule) {
+                                document.getElementById('departure-time-section').classList.remove('d-none');
+                                document.getElementById('sb-selected-time').innerHTML = '<span class="text-warning small"><i class="fas fa-info-circle"></i> Đoàn riêng (Tối thiểu 10 khách)</span>';
+                                document.getElementById('btn-submit-booking').classList.add('disabled');
+                                
+                                // Reset to default price
+                                document.getElementById('sb-price-adult').innerText = GIA_MOC.toLocaleString('vi-VN') + ' đ';
+                                document.getElementById('sb-price-child').innerText = (GIA_MOC / 2).toLocaleString('vi-VN') + ' đ';
+                            } else {
+                                document.getElementById('departure-time-section').classList.add('d-none');
+                                document.getElementById('sb-selected-time').innerHTML = '<span class="text-success fw-bold">Theo lịch trình (Ghép đoàn)</span>';
+                                document.getElementById('btn-submit-booking').classList.remove('disabled');
+                                
+                                // Update to schedule price
+                                document.getElementById('sb-price-adult').innerText = schedule.price.toLocaleString('vi-VN') + ' đ';
+                                document.getElementById('sb-price-child').innerText = (schedule.price / 2).toLocaleString('vi-VN') + ' đ';
+                            }
+                            
                             document.getElementById('btn-submit-booking').href = `/Tour/Book/@tour.Id?date=${selectedDateValue}`;
                         };
-                    } else {
-                        cell.classList.add('disabled-day');
                     }
                     date++;
                 }

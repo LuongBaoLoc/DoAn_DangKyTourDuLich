@@ -16,6 +16,7 @@ namespace DoAn_DangKyTourDuLich.Data
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
+        public DbSet<TourSchedule> TourSchedules { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +35,11 @@ namespace DoAn_DangKyTourDuLich.Data
                       .WithMany(c => c.Tours)
                       .HasForeignKey(t => t.CategoryId)
                       .OnDelete(DeleteBehavior.Restrict);
+                      
+                entity.HasMany(t => t.TourSchedules)
+                      .WithOne(ts => ts.Tour)
+                      .HasForeignKey(ts => ts.TourId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Cấu hình Order

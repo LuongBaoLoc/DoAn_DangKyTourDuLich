@@ -299,6 +299,39 @@ namespace DoAn_DangKyTourDuLich.Migrations
                     b.ToTable("Tours");
                 });
 
+            modelBuilder.Entity("DoAn_DangKyTourDuLich.Models.TourSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentParticipants")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DepartureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxParticipants")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("TourSchedules");
+                });
+
             modelBuilder.Entity("DoAn_DangKyTourDuLich.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -576,6 +609,17 @@ namespace DoAn_DangKyTourDuLich.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("DoAn_DangKyTourDuLich.Models.TourSchedule", b =>
+                {
+                    b.HasOne("DoAn_DangKyTourDuLich.Models.Tour", "Tour")
+                        .WithMany("TourSchedules")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tour");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -644,6 +688,8 @@ namespace DoAn_DangKyTourDuLich.Migrations
                     b.Navigation("OrderDetails");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("TourSchedules");
                 });
 
             modelBuilder.Entity("DoAn_DangKyTourDuLich.Models.User", b =>

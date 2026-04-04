@@ -39,7 +39,6 @@
                         <th>Danh mục</th>
                         <th>Giá</th>
                         <th>Điểm đến</th>
-                        <th>Chỗ trống</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
@@ -72,11 +71,6 @@
                             <td class="fw-bold">@tour.Price.ToString("N0")đ</td>
                             <td>@tour.Destination</td>
                             <td>
-                                <span class="@(tour.AvailableSlots <= 5 ? "text-danger fw-bold" : "")">
-                                    @tour.AvailableSlots / @tour.MaxParticipants
-                                </span>
-                            </td>
-                            <td>
                                 @if (tour.IsActive)
                                 {
                                     <span class="badge bg-success">Hiển thị</span>
@@ -87,19 +81,24 @@
                                 }
                             </td>
                             <td>
-                                <a asp-action="Details" asp-route-id="@tour.Id" class="btn btn-sm btn-outline-info" title="Xem">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a asp-action="Edit" asp-route-id="@tour.Id" class="btn btn-sm btn-outline-primary" title="Sửa">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form asp-action="Delete" asp-route-id="@tour.Id" method="post" class="d-inline"
-                                      onsubmit="return confirm('Bạn chắc chắn muốn xóa tour này?')">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <div class="d-flex flex-nowrap gap-1">
+                                    <a asp-action="Details" asp-route-id="@tour.Id" class="btn btn-sm btn-outline-info" title="Xem">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a asp-action="Schedules" asp-route-id="@tour.Id" class="btn btn-sm btn-outline-warning" title="Quản lý lịch">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@tour.Id" class="btn btn-sm btn-outline-primary" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@tour.Id" method="post" class="m-0"
+                                          onsubmit="return confirm('Bạn chắc chắn muốn xóa tour này?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     }

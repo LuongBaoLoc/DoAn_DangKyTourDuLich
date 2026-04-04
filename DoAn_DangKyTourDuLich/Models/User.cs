@@ -15,7 +15,7 @@ namespace DoAn_DangKyTourDuLich.Models
         public string? Address { get; set; }
 
         [Display(Name = "Ngày tạo")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

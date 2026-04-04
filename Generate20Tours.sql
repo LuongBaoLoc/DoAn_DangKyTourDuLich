@@ -6,9 +6,23 @@ DELETE FROM [OrderDetails];
 DELETE FROM [Orders];
 DELETE FROM [Reviews];
 DELETE FROM [Tours];
+DELETE FROM [Categories];
 DBCC CHECKIDENT ('Tours', RESEED, 0);
+DBCC CHECKIDENT ('Categories', RESEED, 0);
 
--- 2. NẠP FULL 15 TỈNH X 5 TOUR = 75 TOURS CHI TIẾT
+-- 2. NẠP DANH MỤC (Categories) TRƯỚC
+SET IDENTITY_INSERT [Categories] ON;
+INSERT INTO [Categories] ([Id], [Name], [Description], [ImageUrl], [DisplayOrder], [IsActive])
+VALUES 
+(1, N'Du Lịch Nghỉ Dưỡng',  N'Trải nghiệm đẳng cấp tại các resort và khách sạn 5 sao sang trọng', '/images/categories/nghi-duong.jpg',    1, 1),
+(2, N'Tour Quốc Tế',        N'Hành trình khám phá văn hóa, di sản và cảnh quan khắp năm châu',     '/images/categories/quoc-te.jpg',       2, 1),
+(3, N'Tour Teambuilding',   N'Hoạt động gắn kết đồng đội, gala dinner cho doanh nghiệp',           '/images/categories/team-building.jpg', 3, 1),
+(4, N'Khám Phá & Mạo Hiểm', N'Trekking, lặn biển, chinh phục thiên nhiên hoang sơ hùng vĩ',        '/images/categories/mao-hiem.jpg',      4, 1),
+(5, N'Văn Hóa & Ẩm Thực',   N'Tìm về cội nguồn di sản và thưởng thức tinh túy ẩm thực vùng miền',  '/images/categories/am-thuc.jpg',       5, 1);
+SET IDENTITY_INSERT [Categories] OFF;
+GO
+
+-- 3. NẠP FULL 15 TỈNH X 5 TOUR = 75 TOURS CHI TIẾT
 INSERT INTO [Tours] 
 (
     [Name], [ShortDescription], [DetailDescription], [Price], 

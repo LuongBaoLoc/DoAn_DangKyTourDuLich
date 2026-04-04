@@ -1,4 +1,5 @@
 @model Order
+@inject DoAn_DangKyTourDuLich.Services.HtmlSanitizeService HtmlSanitizer
 @{
     ViewData["Title"] = "Hóa Đơn / Đặt tour thành công";
 }
@@ -114,7 +115,7 @@
                             {
                                 <div class="bg-light p-3 rounded text-dark small mt-3 border border-secondary border-opacity-25" style="border-left: 3px solid #1a56ad !important;">
                                     <h6 class="fw-bold mb-2"><i class="fas fa-users text-primary me-2"></i>Thông tin hành khách & Ghi chú:</h6>
-                                    @Html.Raw(Model.Note.Replace("\n", "<br/>"))
+                                    @Html.Raw(HtmlSanitizer.Sanitize(Model.Note.Replace("\n", "<br/>")))
                                 </div>
                             }
                         </div>
@@ -171,6 +172,9 @@
                     
                     <!-- Print & Actions -->
                     <div class="card-footer bg-light p-4 text-center d-print-none border-top">
+                        <a asp-controller="Tour" asp-action="DownloadInvoice" asp-route-orderId="@Model.Id" class="btn btn-outline-danger px-4 fw-bold me-2 shadow-sm rounded-pill">
+                            <i class="fas fa-file-pdf me-2"></i>Tải Hóa Đơn PDF
+                        </a>
                         <button onclick="window.print()" class="btn btn-outline-secondary px-4 fw-bold me-2 shadow-sm rounded-pill">
                             <i class="fas fa-print me-2"></i>In Hóa Đơn
                         </button>

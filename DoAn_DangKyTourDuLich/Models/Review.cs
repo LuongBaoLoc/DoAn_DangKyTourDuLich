@@ -45,7 +45,7 @@ namespace DoAn_DangKyTourDuLich.Models
         public string? HideReason { get; set; }
 
         [Display(Name = "Ngày tạo")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedAt { get; set; }

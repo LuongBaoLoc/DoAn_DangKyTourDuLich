@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {}
+    "D:\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {}
   },
   "projects": {
-    "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {
+    "D:\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+        "projectUniqueName": "D:\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
         "projectName": "DoAn_DangKyTourDuLich",
-        "projectPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
+        "projectPath": "D:\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Huy\\WED\\DoAn_DuLich\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\obj\\",
+        "outputPath": "D:\\DoAn_DangKyTourDuLich\\DoAn_DangKyTourDuLich\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -53,6 +54,10 @@
             "CloudinaryDotNet": {
               "target": "Package",
               "version": "[1.28.0, )"
+            },
+            "HtmlSanitizer": {
+              "target": "Package",
+              "version": "[9.0.892, )"
             },
             "MailKit": {
               "target": "Package",
@@ -87,6 +92,14 @@
             "QRCoder": {
               "target": "Package",
               "version": "[1.4.3, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2026.2.4, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -108,7 +121,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

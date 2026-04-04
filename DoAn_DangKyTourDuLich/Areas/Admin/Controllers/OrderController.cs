@@ -21,7 +21,7 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             _emailService = emailService;
         }
 
-        public async Task<IActionResult> Index(OrderStatus? status)
+        public async Task<IActionResult> Index(OrderStatus? status, string? type)
         {
             var query = _context.Orders
                 .Include(o => o.OrderDetails)
@@ -33,6 +33,19 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
             {
                 query = query.Where(o => o.Status == status.Value);
                 ViewBag.CurrentStatus = status;
+            }
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                if (type.ToLower() == "private")
+                {
+                    query = query.Where(o => o.Note != null && o.Note.ToUpper().Contains("ĐOÀN RIÊNG"));
+                }
+                else if (type.ToLower() == "group")
+                {
+                    query = query.Where(o => o.Note == null || !o.Note.ToUpper().Contains("ĐOÀN RIÊNG"));
+                }
+                ViewBag.CurrentType = type;
             }
 
             var orders = await query.OrderByDescending(o => o.OrderDate).ToListAsync();

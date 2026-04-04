@@ -94,6 +94,54 @@
         font-weight: 700;
         white-space: nowrap;
     }
+
+    /* Category Glassmorphism Cards */
+    .category-glass-card {
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    }
+    .category-glass-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+        z-index: 1;
+        transition: opacity 0.4s ease, background 0.4s ease;
+    }
+    .category-glass-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+    }
+    .category-glass-card:hover::before {
+        opacity: 0.9;
+        background: linear-gradient(to top, rgba(26,115,232,0.85) 0%, rgba(0,0,0,0.2) 100%);
+    }
+    .glass-overlay {
+        z-index: 2;
+    }
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.4);
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .category-glass-card:hover .icon-circle {
+        transform: scale(1.1) rotate(10deg);
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+    .shadow-text {
+        text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        transition: transform 0.3s ease;
+    }
+    .category-glass-card:hover .shadow-text {
+        transform: translateY(-2px);
+    }
 </style>
 
 <script>
@@ -212,26 +260,32 @@
 <!-- Categories Section -->
 @if (categories.Any())
 {
-    <section class="py-5 section-shell">
+    <section class="py-5 section-shell bg-light">
         <div class="container">
-            <div class="text-center mb-4" data-reveal="up">
-                <h2 class="section-title">Danh Mục Tour</h2>
-                <p class="section-subtitle">Chọn loại tour phù hợp với bạn</p>
+            <div class="text-center mb-5" data-reveal="up">
+                <h2 class="section-title">Khám Phá Qua Câu Chuyện</h2>
+                <p class="section-subtitle">Mỗi danh mục là một màu sắc khác biệt cho chuyến hành trình của bạn</p>
             </div>
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 @{
-                    var icons = new[] { "fa-mountain-sun", "fa-plane", "fa-umbrella-beach", "fa-tree", "fa-landmark" };
+                    var icons = new[] { "fa-spa", "fa-plane-departure", "fa-users-viewfinder", "fa-person-hiking", "fa-utensils" };
                 }
                 @for (int i = 0; i < categories.Count; i++)
                 {
                     var cat = categories[i];
-                    var icon = i < icons.Length ? icons[i] : "fa-map";
-                    <div class="col-6 col-md-4 col-lg" data-reveal="up">
-                        <a asp-controller="Tour" asp-action="Index" asp-route-CategoryId="@cat.Id" class="text-decoration-none">
-                            <div class="category-card">
-                                <div class="category-icon"><i class="fas @icon"></i></div>
-                                <h6 class="fw-bold text-dark">@cat.Name</h6>
-                                <small class="text-muted">@(cat.Tours?.Count ?? 0) tour</small>
+                    var icon = i < icons.Length ? icons[i] : "fa-compass";
+                    <div class="col-12 col-sm-6 col-lg" data-reveal="up" style="transition-delay: @(i * 100)ms">
+                        <a asp-controller="Tour" asp-action="Index" asp-route-CategoryId="@cat.Id" class="text-decoration-none d-block h-100">
+                            <div class="category-glass-card h-100 position-relative overflow-hidden rounded-4 shadow-sm" style="background-image: url('@cat.ImageUrl'); background-size: cover; background-position: center; min-height: 280px;">
+                                <div class="glass-overlay d-flex flex-column justify-content-end p-4 h-100 w-100 position-absolute top-0 start-0">
+                                    <div class="icon-circle mb-3">
+                                        <i class="fas @icon text-white fs-4"></i>
+                                    </div>
+                                    <h5 class="fw-bold text-white mb-1 shadow-text">@cat.Name</h5>
+                                    <span class="badge bg-white text-primary fw-bold px-3 py-2 mt-2 align-self-start shadow-sm" style="border-radius: 20px;">
+                                        @(cat.Tours?.Count ?? 0) Tour
+                                    </span>
+                                </div>
                             </div>
                         </a>
                     </div>

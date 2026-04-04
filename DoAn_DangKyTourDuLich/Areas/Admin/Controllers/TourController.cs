@@ -260,5 +260,66 @@ namespace DoAn_DangKyTourDuLich.Areas.Admin.Controllers
                 }
             }
         }
+
+        public async Task<IActionResult> Schedules(int id)
+        {
+            var tour = await _context.Tours
+                .Include(t => t.TourSchedules)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            return View(tour);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddSchedule(int tourId, DateTime departureDate, int maxParticipants, decimal price)
+        {
+            var tour = await _context.Tours.FindAsync(tourId);
+            if (tour == null) return NotFound();
+
+            // Check duplicate
+            var isAny = await _context.Set<TourSchedule>()
+                .AnyAsync(s => s.TourId == tourId && s.DepartureDate.Date == departureDate.Date);
+
+            if (isAny)
+            {
+                TempData["Error"] = "Lịch khởi hành vào ngày này đã tồn tại.";
+                return RedirectToAction(nameof(Schedules), new { id = tourId });
+            }
+
+            var schedule = new TourSchedule
+            {
+                TourId = tourId,
+                DepartureDate = departureDate,
+                MaxParticipants = maxParticipants,
+                Price = price, // Price = 0 implies it uses the original Tour display price (per your model setup)
+                IsActive = true
+            };
+
+            _context.Set<TourSchedule>().Add(schedule);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Thêm lịch trình thành công!";
+            return RedirectToAction(nameof(Schedules), new { id = tourId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSchedule(int id, int tourId)
+        {
+            var schedule = await _context.Set<TourSchedule>().FindAsync(id);
+            if (schedule == null) return NotFound();
+
+            _context.Set<TourSchedule>().Remove(schedule);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Đã xóa lịch trình thành công.";
+            return RedirectToAction(nameof(Schedules), new { id = tourId });
+        }
     }
 }

@@ -83,7 +83,7 @@ namespace DoAn_DangKyTourDuLich.Models
         public bool IsFeatured { get; set; } = false;
 
         [Display(Name = "Ngày tạo")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedAt { get; set; }
@@ -98,6 +98,7 @@ namespace DoAn_DangKyTourDuLich.Models
         // --- LIÊN KẾT BẢNG ---
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public virtual ICollection<TourSchedule> TourSchedules { get; set; } = new List<TourSchedule>();
 
         // --- THUỘC TÍNH TÍNH TOÁN (KHÔNG LƯU DB) ---
         

@@ -74,7 +74,7 @@ namespace DoAn_DangKyTourDuLich.Models
         public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.CashOnDelivery;
 
         [Display(Name = "Ngày đặt")]
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedAt { get; set; }
