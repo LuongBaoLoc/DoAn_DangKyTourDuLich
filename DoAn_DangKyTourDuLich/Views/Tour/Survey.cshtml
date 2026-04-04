@@ -1,0 +1,101 @@
+﻿@model DoAn_DangKyTourDuLich.Models.ViewModels.SurveyViewModel
+
+@{
+    ViewData["Title"] = "Khảo sát tìm Tour";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary-gradient text-white text-center py-4">
+                    <h2 class="font-weight-bold mb-0 text-white"><i class="fas fa-magic mr-2"></i> Tìm Tour Phù Hợp Với Bạn</h2>
+                    <p class="mb-0 mt-2 text-white-50">Trả lời 3 câu hỏi nhanh để hệ thống đề xuất tour tốt nhất</p>
+                </div>
+                <div class="card-body p-5">
+                    <form asp-action="Survey" method="post">
+                        <div class="mb-4">
+                            <label class="h5 mb-3 text-dark fw-bold"><i class="fas fa-map-marked-alt text-primary me-2"></i> 1. Bạn thích không khí như thế nào?</label>
+                            
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" id="beach" asp-for="DestinationType" value="Beach" checked>
+                                <label class="form-check-label" for="beach" style="cursor: pointer; font-size: 1.1rem;">
+                                    Biển xanh cát trắng (Nha Trang, Phú Quốc...)
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" id="mountain" asp-for="DestinationType" value="Mountain">
+                                <label class="form-check-label" for="mountain" style="cursor: pointer; font-size: 1.1rem;">
+                                    Núi non hùng vĩ, khí hậu se lạnh (Sapa, Đà Lạt...)
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="city" asp-for="DestinationType" value="City">
+                                <label class="form-check-label" for="city" style="cursor: pointer; font-size: 1.1rem;">
+                                    Thành phố, Sông nước, Văn hóa (Sài Gòn, Cần Thơ, Huế...)
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="text-muted opacity-25" />
+
+                        <div class="mb-4 mt-4">
+                            <label class="h5 mb-3 text-dark fw-bold"><i class="fas fa-users text-primary me-2"></i> 2. Bạn đi cùng ai?</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" id="solo" asp-for="TravelStyle" value="Solo" checked>
+                                <label class="form-check-label" for="solo" style="cursor: pointer; font-size: 1.1rem;">
+                                    Đi lẻ / Cặp đôi (Cần sự riêng tư, lãng mạn)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="group" asp-for="TravelStyle" value="Group">
+                                <label class="form-check-label" for="group" style="cursor: pointer; font-size: 1.1rem;">
+                                    Đi theo nhóm bạn / Gia đình (Cần sự náo nhiệt, gắn kết)
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="text-muted opacity-25" />
+
+                        <div class="mb-4 mt-4">
+                            <label class="h5 mb-3 text-dark fw-bold"><i class="fas fa-wallet text-primary me-2"></i> 3. Ngân sách dự kiến của bạn?</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" id="low" asp-for="Budget" value="Low" checked>
+                                <label class="form-check-label" for="low" style="cursor: pointer; font-size: 1.1rem;">
+                                    Tiết kiệm (Tối ưu chi phí)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="high" asp-for="Budget" value="High">
+                                <label class="form-check-label" for="high" style="cursor: pointer; font-size: 1.1rem;">
+                                    Thoải mái (Trải nghiệm cao cấp, sang trọng)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm" style="border-radius: 8px;">
+                                <i class="fas fa-search-location me-2"></i> Khám phá Tour dành cho tôi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .form-check-input {
+        width: 1.2em;
+        height: 1.2em;
+        margin-top: 0.15em;
+    }
+</style>o
