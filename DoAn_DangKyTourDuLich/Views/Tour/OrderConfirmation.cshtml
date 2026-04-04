@@ -1,0 +1,235 @@
+@model Order
+@inject DoAn_DangKyTourDuLich.Services.HtmlSanitizeService HtmlSanitizer
+@{
+    ViewData["Title"] = "Hóa Đơn / Đặt tour thành công";
+}
+
+@inject DoAn_DangKyTourDuLich.Services.QRCodeService QRCodeService
+
+@{
+    var firstTour = Model.OrderDetails.FirstOrDefault()?.Tour?.Name ?? "Tour du lịch";
+    var ticketInfo = QRCodeService.GetBookingTicketInfo(Model.OrderCode, Model.CustomerName, firstTour, Model.OrderDate, Model.TotalAmount);
+    var qrCodeBase64 = QRCodeService.GenerateQRCodeBase64(ticketInfo);
+
+    // Extract basic Tour info from the first detail item
+    var tourItem = Model.OrderDetails.FirstOrDefault()?.Tour;
+}
+
+<div class="bg-light py-5">
+    <div class="container">
+
+        <!-- Progress Steps (Visual Only) -->
+        <div class="row justify-content-center mb-5 d-print-none">
+            <div class="col-8 d-flex justify-content-between position-relative">
+                <div class="position-absolute top-50 start-0 w-100" style="height: 2px; background-color: #ddd; z-index: 1;"></div>
+                
+                <div class="text-center position-relative" style="z-index: 2;">
+                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 45px; height: 45px;">
+                        <i class="fas fa-check fs-5"></i>
+                    </div>
+                    <div class="fw-bold text-success small text-uppercase">Nhập thông tin</div>
+                </div>
+                <div class="text-center position-relative" style="z-index: 2;">
+                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 45px; height: 45px;">
+                        <i class="fas fa-check fs-5"></i>
+                    </div>
+                    <div class="fw-bold text-success small text-uppercase">Thanh toán</div>
+                </div>
+                <div class="text-center position-relative" style="z-index: 2;">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-2 shadow" style="width: 45px; height: 45px;">
+                        <i class="fas fa-flag-checkered fs-5"></i>
+                    </div>
+                    <div class="fw-bold text-primary small text-uppercase">Hoàn tất</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <!-- Alert Message -->
+                @if (TempData["Error"] != null || Model.Status == OrderStatus.Cancelled)
+                {
+                    <div class="alert alert-danger d-flex align-items-center mb-4 border-0 shadow-sm d-print-none" role="alert" style="border-radius: 12px;">
+                        <i class="fas fa-times-circle fa-3x me-3"></i>
+                        <div>
+                            <h4 class="alert-heading fw-bold mb-1">Thanh toán không thành công!</h4>
+                            <p class="mb-0">@(TempData["Error"] ?? "Giao dịch đã bị hủy hoặc thất bại.")</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm d-print-none" role="alert" style="border-radius: 12px;">
+                        <i class="fas fa-check-circle fa-3x me-3"></i>
+                        <div>
+                            <h4 class="alert-heading fw-bold mb-1">Giao dịch thành công!</h4>
+                            <p class="mb-0">@(TempData["Success"] ?? "Cảm ơn bạn đã tin tưởng và chọn dịch vụ của chúng tôi. Dưới đây là biên lai xác nhận của bạn.")</p>
+                        </div>
+                    </div>
+                }
+
+                @if (TempData["Error"] == null && Model.Status != OrderStatus.Cancelled)
+                {
+                    <!-- INVOICE SECTION -->
+                    <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;" id="invoice-section">
+                    <!-- Invoice Header -->
+                    <div class="bg-dark text-white p-4 p-md-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        <div class="mb-3 mb-md-0 text-center text-md-start">
+                            <h2 class="fw-bold mb-1 text-uppercase" style="letter-spacing: 1px;">Hóa Đơn Dịch Vụ</h2>
+                            <p class="text-white-50 mb-0">Mã giao dịch: <strong>@Model.OrderCode</strong></p>
+                        </div>
+                        <div class="text-center text-md-end">
+                            <h4 class="fw-bold mb-1">CÔNG TY DU LỊCH</h4>
+                            <p class="text-white-50 small mb-0">Tịnh Biên, An Giang, Việt Nam<br/>Hotline: 038 535 3174</p>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Body -->
+                    <div class="card-body p-4 p-md-5 bg-white">
+                        <div class="row mb-5">
+                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                <h6 class="text-uppercase text-muted fw-bold mb-3">Khách hàng</h6>
+                                <h5 class="fw-bold text-dark mb-1">@Model.CustomerName</h5>
+                                <div class="text-muted small">
+                                    <p class="mb-1"><i class="fas fa-phone-alt me-2 text-primary"></i>@Model.CustomerPhone</p>
+                                    <p class="mb-1"><i class="fas fa-envelope me-2 text-primary"></i>@Model.CustomerEmail</p>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2 text-primary"></i>@(string.IsNullOrEmpty(Model.CustomerAddress) ? "Không có" : Model.CustomerAddress)</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-sm-end">
+                                <h6 class="text-uppercase text-muted fw-bold mb-3">Chi tiết thanh toán</h6>
+                                <div class="text-muted small">
+                                    <p class="mb-1"><span class="fw-bold text-dark">Ngày tạo:</span> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                                    <p class="mb-1"><span class="fw-bold text-dark">Phương thức:</span> @Model.PaymentMethod.ToString()</p>
+                                    <p class="mb-1"><span class="fw-bold text-dark">Trạng thái thanh toán:</span> 
+                                        @{
+                                            var statusColor = Model.Status == OrderStatus.Completed || Model.Status == OrderStatus.Confirmed ? "text-success" : "text-warning";
+                                            var statusText = Model.Status == OrderStatus.Completed || Model.Status == OrderStatus.Confirmed ? "Đã xác nhận" : "Chờ xác nhận";
+                                        }
+                                        <strong class="@statusColor"><i class="fas fa-circle ms-1" style="font-size:0.6rem;"></i> @statusText</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tour Information -->
+                        <div class="mb-4">
+                            <h6 class="bg-light p-3 rounded text-uppercase fw-bold text-primary mb-3 border-start border-primary border-4">1. Chi tiết chuyến đi</h6>
+                            <h5 class="fw-bold text-dark mb-2">@firstTour</h5>
+                            @if (tourItem != null)
+                            {
+                                <div class="d-flex text-muted small gap-3 mb-2">
+                                    <span><i class="fas fa-map-marker-alt text-danger me-1"></i> @tourItem.Destination</span>
+                                    <span><i class="fas fa-clock text-warning me-1"></i> @tourItem.Duration ngày</span>
+                                </div>
+                            }
+                            
+                            <!-- Displaying parsed note details if available -->
+                            @if (!string.IsNullOrEmpty(Model.Note))
+                            {
+                                <div class="bg-light p-3 rounded text-dark small mt-3 border border-secondary border-opacity-25" style="border-left: 3px solid #1a56ad !important;">
+                                    <h6 class="fw-bold mb-2"><i class="fas fa-users text-primary me-2"></i>Thông tin hành khách & Ghi chú:</h6>
+                                    @Html.Raw(HtmlSanitizer.Sanitize(Model.Note.Replace("\n", "<br/>")))
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Billing Table -->
+                        <div class="mb-5">
+                            <h6 class="bg-light p-3 rounded text-uppercase fw-bold text-primary mb-3 border-start border-primary border-4">2. Bảng kê chi phí</h6>
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-striped">
+                                    <thead class="bg-light">
+                                        <tr class="text-uppercase text-muted small">
+                                            <th class="py-3">Mô tả mục dịch vụ</th>
+                                            <th class="py-3 text-center">Tổng SL</th>
+                                            <th class="py-3 text-end">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.OrderDetails)
+                                        {
+                                            <tr>
+                                                <td class="py-3 fw-bold">Dịch vụ ghép Tour - @item.Tour?.Name</td>
+                                                <td class="py-3 text-center">@item.Quantity</td>
+                                                <td class="py-3 text-end fw-bold">@item.SubTotal.ToString("N0") đ</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot class="border-top border-dark border-2">
+                                        <tr>
+                                            <td colspan="2" class="text-end py-3 fw-bold fs-5 text-uppercase">Tổng Cộng</td>
+                                            <td class="text-end py-3 fw-bold fs-4 text-danger">@Model.TotalAmount.ToString("N0") VNĐ</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- QR Code Footer -->
+                        <div class="row align-items-center mt-5">
+                            <div class="col-8 text-muted small">
+                                <p class="mb-1"><i class="fas fa-info-circle text-primary me-1"></i>Vui lòng xuất trình mã QR bên cạnh cho hướng dẫn viên khi tham gia tour.</p>
+                                <p class="mb-0">Mọi thắc mắc xin vui lòng liên hệ trực tiếp qua số Hotline. Chúc bạn có một chuyến đi vui vẻ!</p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="d-inline-block text-center position-relative">
+                                    <div class="bg-white p-2 rounded border border-light shadow-sm">
+                                        <img src="data:image/png;base64,@qrCodeBase64" alt="QR Code" style="width: 110px; height: 110px;" />
+                                    </div>
+                                    <div class="small fw-bold text-primary mt-1">E-Ticket QR</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Print & Actions -->
+                    <div class="card-footer bg-light p-4 text-center d-print-none border-top">
+                        <a asp-controller="Tour" asp-action="DownloadInvoice" asp-route-orderId="@Model.Id" class="btn btn-outline-danger px-4 fw-bold me-2 shadow-sm rounded-pill">
+                            <i class="fas fa-file-pdf me-2"></i>Tải Hóa Đơn PDF
+                        </a>
+                        <button onclick="window.print()" class="btn btn-outline-secondary px-4 fw-bold me-2 shadow-sm rounded-pill">
+                            <i class="fas fa-print me-2"></i>In Hóa Đơn
+                        </button>
+                        <a asp-controller="Tour" asp-action="MyOrders" class="btn btn-primary px-4 fw-bold shadow-sm rounded-pill">
+                            <i class="fas fa-list-alt me-2"></i>Xem lịch sử đặt tour
+                        </a>
+                    </div>
+                </div>
+                }
+                else
+                {
+                    <div class="card border-0 shadow-sm text-center p-5 bg-white" style="border-radius: 12px;">
+                        <div class="mb-4">
+                            <i class="fas fa-file-invoice-dollar fa-4x text-muted opacity-50"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-3">Đơn đặt tour chưa được thanh toán</h4>
+                        <p class="text-muted mb-4">Hóa đơn sẽ chỉ được hiển thị khi giao dịch thanh toán thành công.<br/>Khách hàng có thể tiến hành đặt lại tour nếu bị hủy nhầm.</p>
+                        <div>
+                            <a asp-controller="Tour" asp-action="Index" class="btn btn-primary shadow-sm px-4 rounded-pill fw-bold">
+                                <i class="fas fa-search me-2"></i> Khám phá tour mới
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <div class="text-center mt-4 mb-5 d-print-none">
+                    <a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none"><i class="fas fa-arrow-left me-1"></i> Quay lại trang chủ</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    @@media print {
+        body { background: white; }
+        .container { max-width: 100%; padding: 0; }
+        .card { box-shadow: none !important; border: 1px solid #ddd !important; }
+        .card-body { padding: 2rem !important; }
+    }
+</style>

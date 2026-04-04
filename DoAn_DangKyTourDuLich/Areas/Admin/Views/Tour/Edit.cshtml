@@ -1,0 +1,206 @@
+@model Tour
+@{
+    ViewData["Title"] = "Sửa Tour";
+}
+
+<h2 class="fw-bold mb-4"><i class="fas fa-edit text-primary me-2"></i>Sửa Tour</h2>
+
+<div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CurrentParticipants" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <!-- THÔNG TIN CƠ BẢN -->
+            <h5 class="text-primary fw-bold mb-3"><i class="fas fa-info-circle me-2"></i>Thông tin cơ bản</h5>
+            <div class="row mb-4">
+                <div class="col-md-12 mb-3">
+                    <label asp-for="Name" class="form-label fw-semibold"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Nhập tên tour" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TourCode" class="form-label fw-semibold"></label>
+                    <input asp-for="TourCode" value="@(string.IsNullOrEmpty(Model.TourCode) ? $"T{Model.Id:D3}" : Model.TourCode)" class="form-control bg-light" readonly title="Mã tour được tạo tự động và không thể thay đổi" />
+                    <span asp-validation-for="TourCode" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CategoryId" class="form-label fw-semibold"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="@(ViewBag.Categories as SelectList)">
+                        <option value="">-- Chọn danh mục --</option>
+                    </select>
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="ShortDescription" class="form-label fw-semibold"></label>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="2" placeholder="Mô tả ngắn gọn về tour..."></textarea>
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="DetailDescription" class="form-label fw-semibold"></label>
+                    <textarea asp-for="DetailDescription" class="form-control" rows="4" placeholder="Mô tả chi tiết, các điểm đặc sắc..."></textarea>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- LỊCH TRÌNH & ĐỊA ĐIỂM -->
+            <h5 class="text-primary fw-bold mb-3"><i class="fas fa-map-marker-alt me-2"></i>Lịch trình & Địa điểm</h5>
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DepartureLocation" class="form-label fw-semibold"></label>
+                    <input asp-for="DepartureLocation" class="form-control" placeholder="Nơi khởi hành" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Destination" class="form-label fw-semibold"></label>
+                    <input asp-for="Destination" class="form-control" placeholder="Điểm đến" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="DepartureDate" class="form-label fw-semibold"></label>
+                    <input asp-for="DepartureDate" class="form-control" type="date" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Duration" class="form-label fw-semibold"></label>
+                    <input asp-for="Duration" class="form-control" type="number" placeholder="Số ngày" min="1" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Transportation" class="form-label fw-semibold"></label>
+                    <input asp-for="Transportation" class="form-control" placeholder="Máy bay, ô tô..." />
+                </div>
+                <div class="col-12 mb-3">
+                    <label asp-for="Schedule" class="form-label fw-semibold"></label>
+                    <textarea asp-for="Schedule" class="form-control" rows="4" placeholder="Ngày 1: ..., Ngày 2: ...."></textarea>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- GIÁ CẢ & NGƯỜI THAM GIA -->
+            <h5 class="text-primary fw-bold mb-3"><i class="fas fa-dollar-sign me-2"></i>Giá cả & Người tham gia</h5>
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Price" class="form-label fw-semibold"></label>
+                    <div class="input-group">
+                        <input asp-for="Price" class="form-control" type="number" placeholder="0" />
+                        <span class="input-group-text">VNĐ</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DiscountPrice" class="form-label fw-semibold"></label>
+                    <div class="input-group">
+                        <input asp-for="DiscountPrice" class="form-control" type="number" placeholder="0" />
+                        <span class="input-group-text">VNĐ</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MaxParticipants" class="form-label fw-semibold"></label>
+                    <input asp-for="MaxParticipants" class="form-control" type="number" placeholder="30" />
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- HÌNH ẢNH -->
+            <h5 class="text-primary fw-bold mb-3"><i class="fas fa-image me-2"></i>Hình ảnh</h5>
+            <div class="row mb-4">
+                <!-- Hình ảnh chính -->
+                <div class="col-lg-6 mb-3">
+                    <div class="card bg-light border-dashed">
+                        <div class="card-body p-4">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="fas fa-photo-video me-2 text-primary"></i>Hình ảnh chính
+                            </label>
+                            <input type="file" name="mainImage" class="form-control" accept="image/*" />
+                            <small class="text-muted d-block mt-2">
+                                <i class="fas fa-info-circle me-1"></i>Để trống nếu không đổi ảnh chính.
+                            </small>
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <div class="mt-3">
+                                    <p class="small fw-semibold text-muted mb-2">Ảnh hiện tại:</p>
+                                    <img src="@Model.ImageUrl" alt="Ảnh chính" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ảnh thư viện -->
+                <div class="col-lg-6 mb-3">
+                    <div class="card bg-light border-dashed">
+                        <div class="card-body p-4">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="fas fa-images me-2 text-primary"></i>Ảnh thư viện (phụ)
+                            </label>
+                            <input type="file" name="galleryImages" class="form-control" accept="image/*" multiple />
+                            <small class="text-muted d-block mt-2">
+                                <i class="fas fa-info-circle me-1"></i>Để trống nếu không đổi. Nếu tải ảnh mới, bộ ảnh cũ sẽ được thay thế.
+                            </small>
+                            @if (Model.GalleryImages.Any())
+                            {
+                                <div class="mt-3">
+                                    <p class="small fw-semibold text-muted mb-2">Ảnh thư viện hiện tại:</p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach (var image in Model.GalleryImages)
+                                        {
+                                            @if (image != Model.ImageUrl)
+                                            {
+                                                <div class="position-relative">
+                                                    <img src="@image" alt="Ảnh tour" class="rounded" style="width: 80px; height: 60px; object-fit: cover;" title="@image" />
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- TRẠNG THÁI -->
+            <h5 class="text-primary fw-bold mb-3"><i class="fas fa-toggle-on me-2"></i>Trạng thái</h5>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsActive" class="form-check-label fw-semibold">Hiển thị tour</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsFeatured" class="form-check-label fw-semibold">Tour nổi bật</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- BUTTONS -->
+            <div class="d-flex gap-2 justify-content-between">
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save me-2"></i>Cập nhật</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Hủy</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <style>
+        .border-dashed {
+            border: 2px dashed #dee2e6 !important;
+        }
+        .form-check-input {
+            width: 2rem;
+            height: 2rem;
+        }
+        .form-label {
+            margin-bottom: 0.75rem;
+        }
+    </style>
+}

@@ -1,0 +1,239 @@
+@model Order
+@{
+    ViewData["Title"] = "Đánh giá chuyến đi";
+}
+
+@section Styles {
+    <style>
+        .star-rating {
+            font-size: 2.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .star-rating:hover,
+        .star-rating.active {
+            color: #ffc107 !important;
+        }
+        .star-rating {
+            color: #ddd;
+            transition: color 0.2s;
+        }
+        .image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        .upload-zone {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #007bff;
+            background: #e7f1ff;
+        }
+    </style>
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-center mb-2">
+                        <i class="fas fa-star text-warning me-2"></i>Đánh giá chuyến đi
+                    </h2>
+                    <p class="text-center text-muted mb-4">Chia sẻ trải nghiệm của bạn để giúp du khách khác</p>
+
+                    @if (!ViewBag.CanReview)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Không thể đánh giá:</strong> @ViewBag.CanReviewReason
+                        </div>
+                        <a href="/Review/MyOrders" class="btn btn-secondary">Quay lại danh sách đơn hàng</a>
+                    }
+                    else
+                    {
+                        <!-- Thông tin đơn hàng -->
+                        <div class="bg-light p-4 rounded mb-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="mb-2"><strong>Mã đơn hàng:</strong> <span class="text-primary">@Model.OrderCode</span></p>
+                                    <p class="mb-2"><strong>Khách hàng:</strong> @Model.CustomerName</p>
+                                    @if (Model.OrderDetails.Any())
+                                    {
+                                        var tour = Model.OrderDetails.FirstOrDefault()?.Tour;
+                                        <p class="mb-0"><strong>Tour:</strong> @tour?.Name</p>
+                                    }
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <p class="mb-0"><small class="text-muted">Ngày đặt:</small><br>@Model.OrderDate.ToString("dd/MM/yyyy")</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (ViewBag.ExistingReview != null)
+                        {
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Bạn đã gửi đánh giá trước đây. Cập nhật dưới đây để thay đổi đánh giá.
+                            </div>
+                        }
+
+                        <form method="post" asp-action="AddReview" enctype="multipart/form-data">
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+
+                            <!-- Xếp hạng sao -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Bạn xếp hạng chuyến đi này bao nhiêu sao?</label>
+                                <div class="d-flex gap-2 justify-content-start" id="ratingContainer">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <input type="hidden" name="rating" id="ratingInput" />
+                                        <i class="fas fa-star star-rating" data-rating="@i" style="color: #ddd;"></i>
+                                    }
+                                </div>
+                                <span class="text-danger" id="ratingError"></span>
+                            </div>
+
+                            <!-- Nhận xét -->
+                            <div class="mb-4">
+                                <label for="comment" class="form-label fw-semibold">
+                                    Nhận xét của bạn
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="comment" name="comment" 
+                                          rows="5" placeholder="Chia sẻ trải nghiệm, điểm mạnh, điểm yếu..." 
+                                          required minlength="10" maxlength="1000"></textarea>
+                                <small class="text-muted">Tối thiểu 10 ký tự, tối đa 1000 ký tự</small>
+                                <div class="form-text">Số ký tự: <span id="charCount">0</span>/1000</div>
+                            </div>
+
+                            <!-- Upload ảnh -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    Thêm ảnh từ chuyến đi (Tùy chọn)
+                                    <span class="badge bg-info ms-2">Tối đa 3 ảnh</span>
+                                </label>
+                                <p class="text-muted">Chấp nhận: JPG, PNG, WebP | Tối đa 2MB/ảnh</p>
+
+                                <div class="upload-zone" id="dropZone">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; color: #6c757d; margin-bottom: 10px;"></i>
+                                    <p class="mb-2">Kéo thả ảnh vào đây hoặc <strong>click để chọn</strong></p>
+                                    <input type="file" name="images" id="imageInput" multiple accept=".jpg,.jpeg,.png,.webp" 
+                                           style="display: none;" />
+                                </div>
+
+                                <div id="imagePreviewContainer" class="d-flex flex-wrap mt-3"></div>
+                            </div>
+
+                            <!-- Nút submit -->
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i class="fas fa-check-circle me-2"></i>Gửi đánh giá
+                                </button>
+                                <a href="/Review/MyOrders" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-times-circle me-2"></i>Huỷ bỏ
+                                </a>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let selectedRating = 0;
+
+            // Star rating click
+            $('.star-rating').click(function () {
+                selectedRating = parseInt($(this).data('rating'));
+                $('#ratingInput').val(selectedRating);
+
+                $('.star-rating').each(function () {
+                    if (parseInt($(this).data('rating')) <= selectedRating) {
+                        $(this).css('color', '#ffc107');
+                    } else {
+                        $(this).css('color', '#ddd');
+                    }
+                });
+            });
+
+            // Character count
+            $('#comment').on('input', function () {
+                $('#charCount').text($(this).val().length);
+            });
+
+            // Image upload
+            const dropZone = $('#dropZone');
+            const imageInput = $('#imageInput');
+            const previewContainer = $('#imagePreviewContainer');
+
+            dropZone.click(() => imageInput.click());
+
+            dropZone.on('dragover', e => {
+                e.preventDefault();
+                dropZone.css('border-color', '#007bff').css('background', '#e7f1ff');
+            });
+
+            dropZone.on('dragleave', () => {
+                dropZone.css('border-color', '#dee2e6').css('background', '#f8f9fa');
+            });
+
+            dropZone.on('drop', e => {
+                e.preventDefault();
+                dropZone.css('border-color', '#dee2e6').css('background', '#f8f9fa');
+                const files = e.originalEvent.dataTransfer.files;
+                imageInput.get(0).files = files;
+                handleFiles(files);
+            });
+
+            imageInput.change(function () {
+                handleFiles(this.files);
+            });
+
+            function handleFiles(files) {
+                if (files.length > 3) {
+                    alert('Tối đa 3 ảnh');
+                    return;
+                }
+
+                previewContainer.empty();
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const html = `<div class="position-relative" style="margin: 5px;">
+                            <img src="${e.target.result}" style="max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 8px;" />
+                        </div>`;
+                        previewContainer.append(html);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Form submit validation
+            $('form').submit(function (e) {
+                if ($('#ratingInput').val() == 0) {
+                    e.preventDefault();
+                    $('#ratingError').text('Vui lòng chọn xếp hạng').show();
+                    return false;
+                }
+                $('#ratingError').hide();
+                return true;
+            });
+        });
+    </script>
+}
