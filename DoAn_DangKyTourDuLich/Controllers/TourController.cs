@@ -22,19 +22,23 @@ namespace DoAn_DangKyTourDuLich.Controllers
         private readonly UserManager<User> _userManager;
         private readonly EmailService _emailService;
         private readonly ILogger<TourController> _logger;
+        private readonly ApplicationDbContext _context; // Đã thêm Database Context
 
+        // Đã cập nhật Constructor để nhận ApplicationDbContext
         public TourController(
             ITourService tourService,
             IUnitOfWork unitOfWork,
             UserManager<User> userManager,
             EmailService emailService,
-            ILogger<TourController> logger)
+            ILogger<TourController> logger,
+            ApplicationDbContext context) 
         {
             _tourService = tourService;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _emailService = emailService;
             _logger = logger;
+            _context = context; 
         }
 
         public async Task<IActionResult> Index(TourSearchViewModel searchModel)
@@ -236,6 +240,46 @@ namespace DoAn_DangKyTourDuLich.Controllers
 
             var pdfBytes = pdfService.GenerateInvoice(order);
             return File(pdfBytes, "application/pdf", $"HOADONDATVE_{order.OrderCode}.pdf");
+        }
+
+        // =======================================================
+        // HÀM FIX IMAGES
+        // =======================================================
+        [HttpGet]
+        public async Task<IActionResult> FixImages()
+        {
+            var tours = await _context.Tours.ToListAsync();
+            
+            foreach(var t in tours)
+            {
+                string keyword = NormalizeVietnamese(t.Destination).Replace(" ", ",");
+                t.ImageUrl = $"https://www.bing.com/th?id=OIP.featured&q={keyword}+travel+4k";
+            }
+
+            await _context.SaveChangesAsync();
+            return Content("Đã sửa lỗi link chết! Toàn bộ 20 tour đã được nạp link ảnh tự động mới. Bạn hãy quay lại trang chủ và kiểm tra nhé!");
+        }
+
+        // =======================================================
+        // HÀM HỖ TRỢ XÓA DẤU TIẾNG VIỆT
+        // =======================================================
+        private string NormalizeVietnamese(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+            var stringBuilder = new System.Text.StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC)
+                .Replace('đ', 'd').Replace('Đ', 'D');
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DoAn_DangKyTourDuLich")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34e058ff7bb46142426b4279c931a1348084dff2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b3b40638d7c540e748e8dd206d7fd7ce84441da")]
 [assembly: System.Reflection.AssemblyProductAttribute("DoAn_DangKyTourDuLich")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DoAn_DangKyTourDuLich")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
